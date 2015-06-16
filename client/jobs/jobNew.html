@@ -1,0 +1,12 @@
+<template name="jobNew">
+    <h3>New Job Info</h3>
+    <label for="name">Job Name: </label><input id="name" type="text"/>
+    <label for="number">Job Number: </label><input id="number" type="number"/>
+    {{ > address}}
+    <label for="estimatedStart">Job Number: </label><input id="estimatedStart" type="date"/>
+    <label for="estimatedFinish">Job Number: </label><input id="estimatedFinish" type="date"/>
+    <label for="type">Job Number: </label><select id="type"><option>Business</option><option>Residential</option></select>
+    {{ > customerNew}}
+    {{ > foremanSelect}}
+    <input id="createJob" type="submit" value="Create Job"/>
+</template>

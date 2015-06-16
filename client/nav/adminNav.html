@@ -1,0 +1,33 @@
+<head>
+  <title>Admin Nav</title>
+</head>
+
+<template name="adminNav">
+  <h1>Admin Navigation</h1>
+  <nav>
+    <ul>
+      <li>
+        <a href="/leadsNew">New Leads</a>
+      </li>
+      <li>
+        <a href="/leadsMy">My Leads</a>
+      </li>
+      <li>
+        <a href="/leadsUser">Leads by User</a>
+      </li>
+      <li>
+        <a href="/jobsNew">New Jobs</a>
+      </li>
+      <li>
+        <a href="/jobsMy">My Jobs</a>
+      </li>
+      <li>
+        <a href="/jobsUser">Jobs by User</a>
+      </li>
+    </ul>
+  </nav>
+  <article>
+    {{> yield}}
+  </article>
+</template>
+
