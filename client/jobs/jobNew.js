@@ -1,11 +1,14 @@
 Meteor.methods({
   createJob: function (){
-    //ProtinData.update({userId: this.userId}, { $inc: {total: amount}});
-    //History.insert({
-    //  value : amount,
-    //  date : new Date().toTimeString(),
-    //  userId : this.userId
-    //});
+    Jobs.insert({name: $('#name').val(),
+    estStartDate: $('#estStartDate').val(),
+    estFinishDate: $('#estFinishDate').val(),
+    startDate: $('#startDate').val(),
+    finishDate: $('#finishDate').val(),
+    notes: this.notes,
+    type: this.type,
+    user_id: $('#foremanSelect').val(),
+    });
     Router.go('jobsMy');
   }
 });

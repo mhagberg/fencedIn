@@ -1,20 +1,14 @@
 <template name="jobHistory">
     <h3>Job History</h3>
     <h4>Check-Ins:</h4>
-    <ul>
-        <li>
-            <h5>7/17/1976 - 7:09 am<span>Picture: X</span><span>Contact Customer: X</span><span>Tools/Materials: X</span> </h5>
-        </li>
-        <li>
-            <h5>7/17/1976 - 7:09 am<span>Picture: X</span><span>Contact Customer: X</span><span>Tools/Materials: X</span> </h5>
-        </li>
-        <li>
-            <h5>7/17/1976 - 7:09 am<span>Picture: X</span><span>Contact Customer: X</span><span>Tools/Materials: X</span> </h5>
-        </li>
-        <li>
-            <h5>7/17/1976 - 7:09 am<span>Picture: X</span><span>Contact Customer: X</span><span>Tools/Materials: X</span> </h5>
-        </li>
-    </ul>
+    {{#each jobCheckInItem job_id}}
+    <h5>
+        {{checkInTime}}  &nbsp;
+        {{job_id}} &nbsp;
+        <label for="dailyPicture">Picture</label> <input id="dailyPicture" type="checkbox" disabled="true" checked="{{dailyPicture}}"/>
+        <label for="contactCustomer">Contact Customer: </label> <input id="contactCustomer" type="checkbox" disabled="true" checked="{{contactCustomer}}"/>
+        <label for="tools">Tools/Materials:</label><input id="tools" type="checkbox" disabled="true" checked="{{toolsMaterials}}"/></h5>
+    {{/each}}
     <h4>Site Pictures:</h4>
     <ul>
         <li>
@@ -32,8 +26,10 @@
         </li>
     </ul>
     <h4>Job Progress:</h4>
-    <h5>Estimated Start Date:</h5><label>7/17/1976</label>
-    <h5>Actual Start Date:</h5><label>7/17/1976</label>
-    <h5>Estimated Finish Date:</h5><label>7/17/1976</label>
-    <h5>Actual Finish Date:</h5><label>7/17/1976</label>
+    {{#with job}}
+    <h5>Estimated Start Date:</h5><label>{{estStartDate}}</label>
+    <h5>Actual Start Date:</h5><label>{{startDate}}</label>
+    <h5>Estimated Finish Date:</h5><label>{{estFinishDate}}</label>
+    <h5>Actual Finish Date:</h5><label>{{finishDate}}</label>
+    {{/with}}
 </template>
