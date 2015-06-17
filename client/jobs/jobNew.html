@@ -1,12 +1,13 @@
 <template name="jobNew">
     <h3>New Job Info</h3>
-    <label for="name">Job Name: </label><input id="name" type="text"/>
-    <label for="number">Job Number: </label><input id="number" type="number"/>
-    {{ > address}}
-    <label for="estStart">Est Start: </label><input id="estStart" type="date"/>
-    <label for="estFinish">Est Finish: </label><input id="estFinish" type="date"/>
-    <label for="type">Type: </label><select id="type"><option>Business</option><option>Residential</option></select>
-    {{ > customerNew}}
+    <div><label for="name">Job Name: </label><input id="name" type="text"/></div>
+    <div><label for="number">Job Number: </label><input id="number" type="text"/></div>
+    {{ > addressTemplate}}
+    <div><label for="estStart">Est Start: </label><input id="estStart" type="date"/></div>
+    <div><label for="estFinish">Est Finish: </label><input id="estFinish" type="date"/></div>
+    <div><label for="notes">Notes: </label><textarea id="notes" ></textarea></div>
+    <div><label for="type">Type: </label><select id="type"><option>Business</option><option>Residential</option></select></div>
+    <!--{{ > customerNew}}    -->
     {{ > foremanSelect}}
-    <input id="createJob" type="submit" value="Create Job"/>
+    <div align="center"> <input id="createJob" type="submit" style="height: 50px; width: 300px;" value="Create Job"/></div>
 </template>

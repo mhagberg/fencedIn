@@ -1,13 +1,31 @@
 <template name="jobHistory">
-    <h3>Job History</h3>
-    <h4>Check-Ins:</h4>
+    <div><h2>Job History</h2></div>
+    <h4>Job Details:</h4>
+    {{#with job}}
+    <h5>Job Name: {{name}}</h5>
+    <h5>Job Number: {{number}}</h5>
+    {{/with}}
+    {{#with address}}
+    <h5>Job Address: {{address1}}</h5>
+    <h5>Job Address 2: {{address2}}</h5>
+    <h5>Job city: {{city}}</h5>
+    <h5>Job Zip Code: {{zip}}</h5>
+    {{/with}}
+    {{#with job}}
+    <h5>Job Create Date: {{createDate}}</h5>
+    <h5>Job Est Start Date: {{estStartDate}}</h5>
+    <h5>Job Est Finish Date: {{estFinishDate}}</h5>
+    <h5>Job Start Date: {{startDate}}</h5>
+    <h5>Job Finish Date: {{finishDate}}</h5>
+    <h5>Job Notes: {{notes}}</h5>
+    <h5>Job Type: {{type}}</h5>
+    {{/with}}
+    <h4>Check-Ins: <span><a href="/jobCheckIn">Check-in</a>&nbsp;&nbsp;&nbsp;<a href="/jobFinish">Mark Job as Finished</a></span></h4>
     {{#each jobCheckInItem job_id}}
-    <h5>
-        {{checkInTime}}  &nbsp;
-        {{job_id}} &nbsp;
+        <h5>CheckIn Time: {{checkInTime}}  Job Number :{{job_id}} User_Id {{user_id}}</h5>
         <label for="dailyPicture">Picture</label> <input id="dailyPicture" type="checkbox" disabled="true" checked="{{dailyPicture}}"/>
         <label for="contactCustomer">Contact Customer: </label> <input id="contactCustomer" type="checkbox" disabled="true" checked="{{contactCustomer}}"/>
-        <label for="tools">Tools/Materials:</label><input id="tools" type="checkbox" disabled="true" checked="{{toolsMaterials}}"/></h5>
+        <label for="tools">Tools/Materials:</label><input id="tools" type="checkbox" disabled="true" checked="{{toolsMaterials}}"/>
     {{/each}}
     <h4>Site Pictures:</h4>
     <ul>

@@ -1,0 +1,6 @@
+<template name="jobs">
+    <h3>Jobs<span><input id="newJobBtn" type="submit" value="New Job"/></span></h3>
+    {{#each job}}
+    <h3>{{name}} : {{number}}<span> <a href="/jobCheckIn">Check-in</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/jobHistory">History</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/jobFinish">Mark Job as Finished</a></span></h3>
+    {{/each}}
+</template>

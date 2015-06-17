@@ -1,12 +1,15 @@
 Meteor.methods({
   checkIn: function (){
-    //ProtinData.update({userId: this.userId}, { $inc: {total: amount}});
-    //History.insert({
-    //  value : amount,
-    //  date : new Date().toTimeString(),
-    //  userId : this.userId
-    //});
-    Router.go('jobsMy');
+    JobCheckIns.insert(
+        {
+          job_id: $('#job_id').val(),
+          user_Id: $('#user_Id').val(),
+          contactCustomer:$('#contactCustomer').is(":checked"),
+          dailyPicture:$('#dailyPicture').is(":checked"),
+          toolMaterials:$('#toolMaterials').is(":checked"),
+          checkInTime: new Date(),
+          checkInLocation: "444444-0009-887"
+        });
   }
 });
 
@@ -15,7 +18,17 @@ Template.jobCheckIn.events({
     e.preventDefault();
     Meteor.call('checkIn', function(error){
       if (error)
-        return alert(error.reason);
+        return console.error(error.reason);
     });
+    Router.go('jobsMy');
+  }
+});
+
+Template.jobCheckIn.helpers({
+  job: function(jobId){
+    return Jobs.findOne();
+  },
+  user: function(userId){
+    return Users.findOne();
   }
 });

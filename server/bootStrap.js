@@ -3,35 +3,35 @@ Meteor.startup(function () {
   if (Address.find().count() === 0) {
     Address.insert({
       _id : "1",
-      address : "190 W 70 E",
+      address1 : "190 W 70 E",
       address2 : "",
       city : "Seattle",
       zip : "97754"
     });
     Address.insert({
       _id : "2",
-      address : "12 W 300 E",
+      address1 : "12 W 300 E",
       address2 : "",
       city : "Tacoma",
       zip : "84041"
     });
     Address.insert({
       _id : "3",
-      address : "1234 W 300 E",
+      address1 : "1234 W 300 E",
       address2 : "",
       city : "Tacoma",
       zip : "84041"
     });
     Address.insert({
       _id : "4",
-      address : "1234 W 300 E",
+      address1 : "1234 W 300 E",
       address2 : "",
       city : "Tacoma",
       zip : "84041"
     });
     Address.insert({
       _id : "5",
-      address : "1234 W 300 E",
+      address1 : "1234 W 300 E",
       address2 : "",
       city : "Tacoma",
       zip : "84041"
@@ -159,55 +159,6 @@ Meteor.startup(function () {
           checkInTime: checkInTime,
           checkInLocation: "someGeoCode"
         });
-    JobCheckIns.insert({
-          _id:"5",
-          job_id : "2",
-          user_id : "2",
-          contactCustomer : true,
-          toolMaterials : true,
-          dailyPicture : true,
-          checkInTime: checkInTime,
-          checkInLocation: "someGeoCode"
-        });
-    JobCheckIns.insert({
-          _id:"6",
-          job_id : "2",
-          user_id : "2",
-          contactCustomer : true,
-          toolMaterials : true,
-          dailyPicture : true,
-          checkInTime: checkInTime,
-          checkInLocation: "someGeoCode"
-        });
-    JobCheckIns.insert({
-          _id:"7",
-          job_Id : "3",
-          contactCustomer : true,
-          toolMaterials : true,
-          dailyPicture : true,
-          checkInTime: checkInTime,
-          checkInLocation: "someGeoCode"
-        });
-    JobCheckIns.insert({
-            _id:"8",
-            job_id : "3",
-            user_id : "3",
-            contactCustomer : true,
-            toolMaterials : true,
-            dailyPicture : true,
-            checkInTime: checkInTime,
-            checkInLocation: "someGeoCode"
-        });
-    JobCheckIns.insert({
-            _id:"9",
-            job_id : "4",
-            user_id : "4",
-            contactCustomer : true,
-            toolMaterials : true,
-            dailyPicture : true,
-            checkInTime: checkInTime,
-            checkInLocation: "someGeoCode"
-        });
     }
 
   if (Jobs.find().count() === 0) {
@@ -216,6 +167,9 @@ Meteor.startup(function () {
           _id:"1",
           user_id: "1",
           name : "Smith",
+          number: "nh1234",
+          address_id: "1",
+          createDate: new Date(),
           estStartDate : createDate,
           estFinishDate : createDate ,
           startDate : createDate ,
@@ -227,6 +181,9 @@ Meteor.startup(function () {
           _id : "2",
           user_id: "2",
           name : "Big Tree Apartments",
+					number: "nh1234",
+          address_id: "2",
+          createDate: new Date(),
           estStartDate : createDate,
           estFinishDate : createDate ,
           startDate : createDate ,
@@ -238,6 +195,9 @@ Meteor.startup(function () {
           _id : "3",
           user_id: "3",
           name : "Bellview School District",
+          number: "nh1234",
+          address_id: "3",
+          createDate: new Date(),
           estStartDate : createDate,
           estFinishDate : createDate ,
           startDate : createDate ,
@@ -249,6 +209,9 @@ Meteor.startup(function () {
           _id : "4",
           user_id: "1",
           name : "Peterson",
+          number: "nh1234",
+          address_id: "4",
+          createDate: new Date(),
           estStartDate : createDate,
           estFinishDate : createDate ,
           startDate : createDate ,

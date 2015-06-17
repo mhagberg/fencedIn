@@ -1,21 +1,17 @@
-Meteor.methods({
-  jobNew: function (){
-    //ProtinData.update({userId: this.userId}, { $inc: {total: amount}});
-    //History.insert({
-    //  value : amount,
-    //  date : new Date().toTimeString(),
-    //  userId : this.userId
-    //});
-    Router.go('jobNew');
-  }
-});
 
 Template.jobsMy.events({
   'click #newJobBtn' : function(e) {
     e.preventDefault();
-    Meteor.call('jobNew', function(error){
-      if (error)
-        return alert(error.reason);
-    });
+    Router.go('jobNew');
   }
+});
+
+user_id = 5;   //Mike Hagberg //temp until I figure out how to load data on page load
+
+
+Template.jobsMy.helpers({
+   job: function() {
+     //return Jobs.find({user_id: user_id}, {sort: {createDate:-1}, limit:10});
+     return Jobs.find({}, {sort: {createDate:-1}, limit:10});
+   }
 });
