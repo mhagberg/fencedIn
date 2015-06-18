@@ -124,41 +124,41 @@ Meteor.startup(function () {
           job_id : "1",
           user_id : "1",
           contactCustomer : true,
-          toolMaterials : true,
+          toolsMaterials : true,
           dailyPicture : true,
           checkInTime: checkInTime,
           checkInLocation: "someGeoCode"
         });
-    JobCheckIns.insert({
-          _id:"2",
-          job_id : "1",
-          user_id : "1",
-          contactCustomer : true,
-          toolMaterials : true,
-          dailyPicture : true,
-          checkInTime : checkInTime.setDate(checkInTime.getDate() + 5),
-          checkInLocation: "someGeoCode"
-        });
-    JobCheckIns.insert({
-          _id:"3",
-          job_id : "1",
-          user_id : "1",
-          contactCustomer : true,
-          toolMaterials : true,
-          dailyPicture : true,
-          checkInTime: checkInTime,
-          checkInLocation: "someGeoCode"
-        });
-    JobCheckIns.insert({
-          _id:"4",
-          job_id : "2",
-          user_id : "2",
-          contactCustomer : true,
-          toolMaterials : true,
-          dailyPicture : true,
-          checkInTime: checkInTime,
-          checkInLocation: "someGeoCode"
-        });
+    //JobCheckIns.insert({
+    //      _id:"2",
+    //      job_id : "1",
+    //      user_id : "1",
+    //      contactCustomer : true,
+    //      toolsMaterials : true,
+    //      dailyPicture : true,
+    //      checkInTime : checkInTime.setDate(checkInTime.getDate() + 5),
+    //      checkInLocation: "someGeoCode"
+    //    });
+    //JobCheckIns.insert({
+    //      _id:"3",
+    //      job_id : "1",
+    //      user_id : "1",
+    //      contactCustomer : true,
+    //      toolsMaterials : true,
+    //      dailyPicture : true,
+    //      checkInTime: checkInTime,
+    //      checkInLocation: "someGeoCode"
+    //    });
+    //JobCheckIns.insert({
+    //      _id:"4",
+    //      job_id : "2",
+    //      user_id : "2",
+    //      contactCustomer : true,
+    //      toolsMaterials : true,
+    //      dailyPicture : true,
+    //      checkInTime: checkInTime,
+    //      checkInLocation: "someGeoCode"
+    //    });
     }
 
   if (Jobs.find().count() === 0) {

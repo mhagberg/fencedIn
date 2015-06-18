@@ -32,12 +32,18 @@ Router.map(function() {
     path: '/jobsUser'
   });
 
-  this.route('jobHistory', {
-    path: '/jobHistory'
+  this.route('/jobHistory/:job_id', function() {
+    var job = Jobs.findOne({_id: this.params.job_id});
+    var address = Address.findOne({job_id: this.params.job_id});
+    var checkIns = JobCheckIns.find({job_id: this.params.job_id}, {sort: {checkInTime: -1}});
+    var jobHistory = {job : job, address : address, checkIns : checkIns};
+    this.render('jobHistory', {data: jobHistory});
   });
 
-  this.route('jobCheckIn', {
-    path: '/jobCheckIn'
+  this.route('/jobCheckIn/:job_id', function() {
+    this.render('jobCheckIn', {
+      data: function() {return Jobs.findOne({_id: this.params.job_id})
+    }});
   });
 
   this.route('jobNew', {

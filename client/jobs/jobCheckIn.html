@@ -1,9 +1,9 @@
 <template name="jobCheckIn">
     <input type="hidden" id="job_id" value="{{job._id}}"/>
-    <input type="hidden" id="user_id" value="{{user._id}}"/>
+    <input type="hidden" id="user_id" value="{{job.user_id}}"/>
     <h3>Job Check-In</h3>
     <label for="contactCustomer">Talked To Customer today: </label> <input id="contactCustomer" type="checkbox">
-    <label for="toolMaterials">Have required tools/Materials today: </label> <input id="toolMaterials" type="checkbox">
+    <label for="toolsMaterials">Have required tools/Materials today: </label> <input id="toolsMaterials" type="checkbox">
     <label for="dailyPicture">Picture of job site today: </label> <input id="dailyPicture" type="checkbox">
     <input id="checkIn" type="submit" value="Check-In"/>
 </template>
