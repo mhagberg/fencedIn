@@ -11,6 +11,9 @@
             <div class="col-s1"><h3>{{name}} : {{number}}</h3></div>
             <div class="col-sm-1"><button type="button" class="btn btn-primary" id="checkInBtn" data-job-id="{{_id}}">Check In</button></div>
             <div class="col-sm-1"><button type="button" class="btn btn-warning" id="historyBtn" data-job-id="{{_id}}">History</button></div>
+            {{#unless finishDate}}
+            <div class="col-sm-1"><button type="button" class="btn btn-warning" id="finishBtn" data-job-id="{{_id}}">Job Completed</button></div>
+            {{/unless}}
         </div>
     </div>
     {{/each}}

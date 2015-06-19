@@ -1,0 +1,9 @@
+<template name="fencerSelect">
+    <h3>Select the fencer assign to the job today:</h3>
+    <div><select id="fencerSelector">
+        <option label=""></option>
+        {{#each fencer}}
+        <option label="{{name}}">{{_id}}</option>
+        {{/each}}
+    </select></div>
+</template>

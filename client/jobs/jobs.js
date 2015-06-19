@@ -6,12 +6,18 @@ Template.jobs.events({
   },
   'click #checkInBtn' : function(e) {
     e.preventDefault();
-    console.debug(this);
     Router.go('/jobCheckIn/'+this._id);
   },
   'click #historyBtn' : function(e) {
     e.preventDefault();
     Router.go('/jobHistory/'+this._id);
+  },
+  'click #finishBtn' : function(e) {
+    e.preventDefault();
+    result = Jobs.update({_id: this._id}, {
+      $set: {finishDate: new Date()}
+    });
+    console.debug(result);
   }
 });
 

@@ -1,0 +1,9 @@
+<template name="salesmanSelect">
+    <h3>Select the Salesman that sold the job:</h3>
+    <div><select id="salesmanSelector">
+        <option label=""></option>
+        {{#each salesman}}
+        <option label="{{name}}">{{_id}}</option>
+        {{/each}}
+    </select></div>
+</template>

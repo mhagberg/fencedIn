@@ -1,5 +1,5 @@
 Template.foremanSelect.helpers({
-  user : function() {
-    return Users.find({}, {sort : {name : -1}});
+  foreman : function() {
+    return Foreman.find();
   }
 });
