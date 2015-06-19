@@ -33,11 +33,13 @@ Router.map(function() {
   });
 
   this.route('/jobHistory/:job_id', function() {
-    var job = Jobs.findOne({_id: this.params.job_id});
-    var address = Address.findOne({job_id: this.params.job_id});
-    var checkIns = JobCheckIns.find({job_id: this.params.job_id}, {sort: {checkInTime: -1}});
+    var job = Jobs.findOne({_id: this.params._id});
+    var address = Address.findOne({job_id: this.params._id});
+    var checkIns = JobCheckIns.find({job_id: this.params._id}, {sort: {checkInTime: -1}});
     var jobHistory = {job : job, address : address, checkIns : checkIns};
-    this.render('jobHistory', {data: jobHistory});
+    this.render('jobHistory', {data: function (){
+      return jobHistory;
+    } });
   });
 
   this.route('/jobCheckIn/:job_id', function() {

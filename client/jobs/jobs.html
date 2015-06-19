@@ -1,8 +1,17 @@
 <template name="jobs">
-    <h3>Jobs</h3><button id="newJobBtn" type="button" class="btn btn-primary">New Job</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-1"><h3>Jobs</h3></div>
+            <div class="col-sm-1"><button id="newJobBtn" type="button" class="btn btn-primary">New Job</button></div>
+        </div>
+    </div>
     {{#each job}}
-    <h3>{{name}} : {{number}}</h3>
-    <button type="button" class="btn btn-primary" id="checkInBtn" data-job-id="{{_id}}">Check In</button>
-    <button type="button" class="btn btn-warning" id="historyBtn" data-job-id="{{_id}}">History</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-s1"><h3>{{name}} : {{number}}</h3></div>
+            <div class="col-sm-1"><button type="button" class="btn btn-primary" id="checkInBtn" data-job-id="{{_id}}">Check In</button></div>
+            <div class="col-sm-1"><button type="button" class="btn btn-warning" id="historyBtn" data-job-id="{{_id}}">History</button></div>
+        </div>
+    </div>
     {{/each}}
 </template>

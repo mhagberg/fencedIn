@@ -23,7 +23,7 @@ createJob: function (){
           notes : $('#notes').val(),
           type : $('#type').val()
         });
-    Router.go('jobsMy');
+    Router.go('jobs');
   }
 });
 

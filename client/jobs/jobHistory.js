@@ -1,16 +1,16 @@
-Template.jobHistory.helpers({
-  jobCheckInItem: function(jobId) {
-    return JobCheckIns.find({job_id: jobId},{sort:{checkInTime:-1},limit: 5});
-    //return JobCheckIns.find({},{sort:{checkInTime:-1}});
+
+Template.jobHistory.events({
+  'click #newJobBtn' : function(e) {
+    e.preventDefault();
+    Router.go('jobNew');
   },
-
-  job: function(jobId){
-         //return Jobs.findOne();
-         return Jobs.findOne({_id: jobId})
-      },
-
-  address: function(jobId){
-    //return Address.findOne();
-    return Address.findOne({_id: jobId})
+  'click #checkInBtn' : function(e) {
+    e.preventDefault();
+    console.debug(this);
+    Router.go('/jobCheckIn/'+this._id);
+  },
+  'click #historyBtn' : function(e) {
+    e.preventDefault();
+    Router.go('/jobHistory/'+this._id);
   }
 });

@@ -16,7 +16,7 @@ Template.jobs.events({
 });
 
 Template.jobs.helpers({
-  job: function(jobId){
+  job: function(){
     return Jobs.find({}, {sort: {createDate:-1}});
   }
 });
