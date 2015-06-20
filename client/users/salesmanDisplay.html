@@ -1,6 +1,6 @@
 <template name="salesmanDisplay">
-    {{#with salesman}}
-    <div class="col-sm-1"><h5>Salesman: </h5></div>
-    <div class="col-sm-1">{{name}}</div>
-    {{/with}}
+    <div class="row">
+        <div class="col-sm-1"><h5>Salesman: </h5></div>
+        <div class="col-sm-1">{{salesman salesmanId}}</div>
+    </div>
 </template>

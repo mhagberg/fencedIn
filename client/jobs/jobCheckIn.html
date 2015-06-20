@@ -4,9 +4,49 @@
     <input type="hidden" id="job_id" value="{{_id}}"/>
     <input type="hidden" id="user_id" value="{{user_id}}"/>
     <h3>Job Check-In</h3>
+    <label for="loadTime">Travel Time (in minutes): </label>
+    <select id="loadTime" class="form-control">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>10</option>
+        <option>15</option>
+        <option>20</option>
+        <option>25</option>
+        <option>30</option>
+        <option>40</option>
+        <option>50</option>
+        <option>60</option>
+        <option>90</option>
+        <option>120</option>
+    </select>
+    <label for="travelTime">Travel Time (in minutes: </label>
+    <select id="travelTime" class="form-control">
+        <option>5</option>
+        <option>10</option>
+        <option>15</option>
+        <option>20</option>
+        <option>25</option>
+        <option>30</option>
+        <option>35</option>
+        <option>40</option>
+        <option>45</option>
+        <option>50</option>
+        <option>55</option>
+        <option>60</option>
+        <option>90</option>
+        <option>120</option>
+        <option>180</option>
+    </select>
+    <label for="additionalMaterials">Additional Materials Required: </label>
+            <input type="text" id="additionalMaterials" class="form-control" rows="3"/>
     <label for="contactCustomer">Talked To Customer today: </label> <input id="contactCustomer" class="form-control" type="checkbox">
     <label for="toolsMaterials">Have required tools/Materials today: </label> <input id="toolsMaterials" class="form-control" type="checkbox">
     <label for="dailyPicture">Picture of job site today: </label> <input id="dailyPicture" class="form-control" type="checkbox">
+            <label for="notes">General daily notes: </label>
+            <textarea id="notes" class="form-control" rows="3"></textarea>
     {{ > foremanSelect}}
     {{ > fencerSelect}}
     <button id="checkIn" type="button" class="btn btn-info">Check-In</button>

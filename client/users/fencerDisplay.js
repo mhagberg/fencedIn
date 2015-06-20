@@ -1,6 +1,6 @@
 Template.fencerDisplay.helpers({
   fencer : function(fencerId) {
-    console.debug('fencerDisplay.fencerId: '+ fencerId);
-    return Fencer.find({_id: fencerId});
+    var fenceGu = Fencer.findOne({_id: fencerId});
+    return fenceGu.name;
   }
 });

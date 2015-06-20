@@ -35,13 +35,13 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-md-12"> <h5>CheckIn Time: {{checkInTime}}  Job Number :{{job_id}}</h5></div>
+            <div class="col-md-4"><label>Load Time (in minutes): </label> {{loadTime}}</div>
+            <div class="col-md-4"><label>Travel Time (in minutes): </label> {{travelTime}}</div>
+            <div class="col-md-4"><label>Additional Materials Required:  </label> {{addMaterials}}</div>
+            <div class="col-md-4"><label>General daily notes:  </label> {{notes}}</div>
             <div class="col-md-4"><label for="dailyPicture">Picture</label> <input id="dailyPicture" type="checkbox" disabled="true" checked="{{dailyPicture}}"/></div>
             <div class="col-md-4"><label for="contactCustomer">Contact Customer: </label> <input id="contactCustomer" type="checkbox" disabled="true" checked="{{contactCustomer}}"/></div>
             <div class="col-md-4"><label for="tools">Tools/Materials:</label><input id="tools" type="checkbox" disabled="true" checked="{{toolsMaterials}}"/></div>
-            <div class="col-sm-1"><h5>foreman: </h5></div>
-            <div class="col-sm-1">{{foreman_id}}</div>
-            <div class="col-sm-1"><h5>Fencer: </h5></div>
-            <div class="col-sm-1">{{fencer_id}}</div>
         </div>
         {{ > foremanDisplay foremanId=foreman_id}}
         {{ > fencerDisplay fencerId=fencer_id}}

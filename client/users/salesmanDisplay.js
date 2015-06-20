@@ -1,6 +1,6 @@
 Template.salesmanDisplay.helpers({
   salesman : function(salesmanId) {
-    foremanIconsole.debug('salesmanId'+ salesmanId);
-    return Salesman.find({_id: salesmanId});
+    var salesGuy = Salesman.findOne({_id: salesmanId});
+    return salesGuy.name;
   }
 });
