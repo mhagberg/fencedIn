@@ -7,6 +7,7 @@
 meteor-platform
 insecure
 iron:router
-twbs:bootstrap
 autopublish
 momentjs:moment
+less
+nemo64:bootstrap
