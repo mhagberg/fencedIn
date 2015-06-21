@@ -31,22 +31,106 @@
         {{/with}}
     </div>
     </div>
-    {{#each checkIns}}
-    <div class="container-fluid">
-        <div class="row">
-        <div class="col-md-12"> <h5>CheckIn Time: {{checkInTime}}  Job Number :{{job_id}}</h5></div>
-            <div class="col-md-4"><label>Load Time (in minutes): </label> {{loadTime}}</div>
-            <div class="col-md-4"><label>Travel Time (in minutes): </label> {{travelTime}}</div>
-            <div class="col-md-4"><label>Additional Materials Required:  </label> {{addMaterials}}</div>
-            <div class="col-md-4"><label>General daily notes:  </label> {{notes}}</div>
-            <div class="col-md-4"><label for="dailyPicture">Picture</label> <input id="dailyPicture" type="checkbox" disabled="true" checked="{{dailyPicture}}"/></div>
-            <div class="col-md-4"><label for="contactCustomer">Contact Customer: </label> <input id="contactCustomer" type="checkbox" disabled="true" checked="{{contactCustomer}}"/></div>
-            <div class="col-md-4"><label for="tools">Tools/Materials:</label><input id="tools" type="checkbox" disabled="true" checked="{{toolsMaterials}}"/></div>
-        </div>
-        {{ > foremanDisplay foremanId=foreman_id}}
-        {{ > fencerDisplay fencerId=fencer_id}}
-    </div>
+    <table class="table table-striped">
+        <tr>
+            <td>
+                Time
+            </td>
+            <td>
+                Job #
+            </td>
+            <td>
+                Load Time
+                (in minutes)
+            </td>
+            <td>
+                Travel Time
+                (in minutes)
+            </td>
+            <td>
+                Had all
+                Tools &
+                Materials
+            </td>
+            <td>
+                Additional
+                Materials
+                Required
+            </td>
+            <td>
+                Contact
+                Customer
+            </td>
+            <td>
+                Daily
+                Picture
+            </td>
+            <td>
+                Foreman
+            </td>
+            <td>
+                Fencer
+            </td>
+            <td>
+                Daily
+                Notes
+            </td>
+        </tr>
+        {{#each checkIns}}
+        <tr>
+            <td>
+                <!--{{checkInTime}}-->
+                {{formatDate checkInTime "long"}}
+                <!--Mon 02.09.2013 18:00-->
+            </td>
+            <td>
+                {{jobNumber}}
+            </td>
+            <td>
+                {{loadTime}}
+            </td>
+            <td>
+                {{travelTime}}
+            </td>
+            <td>
+                {{#if toolsMaterials}}
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                {{/if}}
+                {{#unless toolsMaterials}}
+                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                {{/unless}}
+            </td>
+            <td>
+               {{addMaterials}}
+            </td>
+            <td>
+                {{#if contactCustomer}}
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                {{/if}}
+                {{#unless contactCustomer}}
+                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                {{/unless}}
+            </td>
+            <td>
+                {{#if dailyPicture}}
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                {{/if}}
+                {{#unless dailyPicture}}
+                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                {{/unless}}
+            </td>
+            <td>
+                {{ > foremanDisplay foremanId=foreman_id}}
+            </td>
+            <td>
+                {{ > fencerDisplay fencerId=fencer_id}}
+            </td>
+            <td>
+                {{notes}}
+            </td>
+        </tr>
     {{/each}}
+    </table>
 
     <div class="container-fluid">
         <div class="row">
