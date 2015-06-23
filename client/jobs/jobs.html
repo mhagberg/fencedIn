@@ -1,20 +1,44 @@
 <template name="jobs">
-    <div class="container-fluid">
+    <div class="container-fluid gutter" >
         <div class="row">
             <div class="col-sm-1"><h3>Jobs</h3></div>
+        </div>
+        <div class="row">
             <div class="col-sm-1"><button id="newJobBtn" type="button" class="btn btn-primary">New Job</button></div>
         </div>
-    </div>
-    {{#each job}}
-    <div class="container-fluid">
         <div class="row">
-            <div class="col-s1"><h3>{{name}} : {{number}}</h3></div>
-            <div class="col-sm-1"><button type="button" class="btn btn-primary" id="checkInBtn" data-job-id="{{_id}}">Check In</button></div>
-            <div class="col-sm-1"><button type="button" class="btn btn-warning" id="historyBtn" data-job-id="{{_id}}">History</button></div>
-            {{#unless finishDate}}
-            <div class="col-sm-1"><button type="button" class="btn btn-warning" id="finishBtn" data-job-id="{{_id}}">Job Completed</button></div>
-            {{/unless}}
+            <table class="table table-bordered table-striped table-responsive" >
+                <thead>
+                    <tr>
+                        <td>Job Name</td>
+                        <td>Job Number</td>
+                        <td colspan="3">Actions</td>
+                    </tr>
+                </thead>
+                <tbody>
+                {{#each job}}
+                    <tr>
+                        <td>
+                            {{name}}
+                        </td>
+                        <td>
+                            {{number}}
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success btn-sm" id="checkInBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-warning btn-sm" id="historyBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></button>
+                        </td>
+                        <td>
+                        {{#unless finishDate}}
+                            <button type="button" class="btn btn-danger btn-sm" id="finishBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></button>
+                        {{/unless}}
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
         </div>
     </div>
-    {{/each}}
 </template>

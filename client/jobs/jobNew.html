@@ -1,19 +1,24 @@
 <template name="jobNew">
-    <h3>New Job Info</h3>
-    <form>
-        <div class="form-group">
-    <div><label for="name">Job Name: </label><input id="name" type="text"/></div>
-    <div><label for="number">Job Number: </label><input id="number" class="form-control" type="text"/></div>
-    {{ > addressTemplate}}
-    <div><label for="estStart">Est Start: </label><input id="estStart" class="form-control" type="date"/></div>
-    <div><label for="estFinish">Est Finish: </label><input id="estFinish" class="form-control" type="date"/></div>
-    <div><label for="notes">Notes: </label><textarea class="form-control" id="notes" ></textarea></div>
+    <div class="container-fluid gutter">
+        <div class="row">
+            <h3>New Job Info</h3>
+        </div>
+        <div class="row">
+            <form>
+                <div class="form-group">
+                    <div><label for="name">Job Name: </label><input class="form-control" id="name" type="text"/></div>
+                    <div><label for="number">Job Number: </label><input id="number" class="form-control" type="text"/></div>
+                    {{ > addressTemplate}}
+                    <div><label for="estStart">Est Start: </label><input id="estStart" class="form-control" type="date"/></div>
+                    <div><label for="estFinish">Est Finish: </label><input id="estFinish" class="form-control" type="date"/></div>
+                    <div><label for="notes">Notes: </label><textarea class="form-control" id="notes" ></textarea></div>
 
-    <div><label for="type">Type: </label><select class="form-control" id="type"><option>Business</option><option>Residential</option></select></div>
-    <!--{{ > customerNew}}    -->
-    {{ > foremanSelect}}
-    {{ > salesmanSelect}}
-    <div align="center"> <input class="form-control" id="createJob" type="submit" style="height: 50px; width: 300px;" value="Create Job"/></div>
+                    <div><label for="type">Type: </label><select class="form-control" id="type"><option>Business</option><option>Residential</option></select></div>
+                    {{ > foremanSelect}}
+                    {{ > salesmanSelect}}
+                    <div align="center"> <button id="createJob" type="button" class="btn btn-success btn-bg">Create Job</button></div>
+                </div>
+            </form>
+        </div>
     </div>
-    </form>
 </template>

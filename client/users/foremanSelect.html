@@ -1,6 +1,6 @@
 <template name="foremanSelect">
-    <h3>Select the foreman you want to assign to this job:</h3>
-    <div><select id="foremanSelector">
+    <label for="foremanSelector">Select the foreman assign to the job today:</label>
+    <div><select class="form-control" id="foremanSelector">
         <option label=""></option>
         {{#each foreman}}
         <option label="{{name}}">{{_id}}</option>

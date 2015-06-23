@@ -1,6 +1,6 @@
 <template name="fencerSelect">
-    <h3>Select the fencer assign to the job today:</h3>
-    <div><select id="fencerSelector">
+    <label for="fencerSelector">Select the fencer assign to the job today:</label>
+    <div><select class="form-control" id="fencerSelector">
         <option label=""></option>
         {{#each fencer}}
         <option label="{{name}}">{{_id}}</option>

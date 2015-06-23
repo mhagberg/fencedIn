@@ -16,8 +16,8 @@
     "dropdowns"            : true,
     "button-groups"        : false,
     "input-groups"         : false,
-    "navs"                 : false,
-    "navbar"               : false,
+    "navs"                 : true,
+    "navbar"               : true,
     "breadcrumbs"          : false,
     "pagination"           : false,
     "pager"                : false,
@@ -52,3 +52,4 @@
     "responsive-utilities" : false
   }
 }
+
