@@ -14,14 +14,16 @@
     <div class="col-md-4"><h5>Job Zip Code: {{zip}}</h5></div>
     {{/with}}
     {{#with job}}
-    <div class="col-md-4"><h5>Job Create Date: {{createDate}}</h5></div>
-    <div class="col-md-4"><h5>Job Est Start Date: {{estStartDate}}</h5></div>
-    <div class="col-md-4"><h5>Job Est Finish Date: {{estFinishDate}}</h5></div>
-    <div class="col-md-4"><h5>Job Start Date: {{startDate}}</h5></div>
-    <div class="col-md-4"><h5>Job Finish Date: {{finishDate}}</h5></div>
+    <div class="col-md-4"><h5>Job Create Date: {{formatDate createDate "long"}}</h5></div>
+    <div class="col-md-4"><h5>Job Est Start Date: {{formatDate estStartDate "long"}}</h5></div>
+    <div class="col-md-4"><h5>Job Est Finish Date: {{formatDate estFinishDate "long"}}</h5></div>
+    <div class="col-md-4"><h5>Job Start Date: {{formatDate startDate "long"}}</h5></div>
+    <div class="col-md-4"><h5>Job Finish Date: {{formatDate finishDate "long"}}</h5></div>
     <div class="col-md-4"><h5>Job Notes: {{notes}}</h5></div>
-    <div class="col-md-12"><h5>Job Type: {{type}}</h5></div>
+    <div class="col-md-4"><h5>Job Type: {{type}}</h5></div>
     {{/with}}
+    <div class="col-md-4"><h5>Foreman: {{foreman.name}}</h5></div>
+    <div class="col-md-4"><h5>Salesman: {{salesman.name}}</h5></div>
     </div>
     </div>
     <div class="container-fluid gutter">
@@ -128,14 +130,5 @@
     {{/each}}
         </tbody>
     </table>
-        <div class="row">
-            <div class="col-md-4"><h4>Job Progress:</h4></div>
-            {{#with job}}
-            <div class="col-md-4"><h5>Estimated Start Date:</h5><label>{{estStartDate}}</label></div>
-            <div class="col-md-4"><h5>Actual Start Date:</h5><label>{{startDate}}</label></div>
-            <div class="col-md-4"><h5>Estimated Finish Date:</h5><label>{{estFinishDate}}</label></div>
-            <div class="col-md-4"><h5>Actual Finish Date:</h5><label>{{finishDate}}</label></div>
-            {{/with}}
-        </div>
     </div>
 </template>

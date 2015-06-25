@@ -1,6 +1,6 @@
 var DateFormats = {
-  short: "DD MMMM - YYYY",
-  long: "ddd - DD/MM/YY : h:mm a"
+  inputDate: "YYYY-MM-DD",
+  long: "ddd - MM/DD/YYYY : h:mm a"
 };
 
 // Use UI.registerHelper..

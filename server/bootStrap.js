@@ -128,7 +128,7 @@ Meteor.startup(function () {
           estStartDate : createDate,
           estFinishDate : createDate ,
           startDate : createDate ,
-          finishDate : createDate,
+          finishDate : null,
           notes : "Rod Iron Fence, 2 Gates, 3 custom weds.",
           type: "Residential"
         });

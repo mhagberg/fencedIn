@@ -13,7 +13,8 @@ Template.jobNew.events({
     Jobs.insert(
         {
           address_id: address_Id,
-          user_id: $('#foremanSelector').val(),
+          foreman_id: $('#foremanSelector').val(),
+          salesman_id: $('#salesmanSelector').val(),
           name : $('#name').val(),
           number: $('#number').val(),
           createDate: new Date(),
