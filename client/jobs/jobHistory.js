@@ -1,16 +1,17 @@
 
 Template.jobHistory.events({
-  'click #newJobBtn' : function(e) {
-    e.preventDefault();
-    Router.go('jobNew');
-  },
   'click #checkInBtn' : function(e) {
     e.preventDefault();
-    console.debug(this);
     Router.go('/jobCheckIn/'+this._id);
   },
-  'click #historyBtn' : function(e) {
+  'click #finishBtn' : function(e) {
     e.preventDefault();
-    Router.go('/jobHistory/'+this._id);
+    result = Jobs.update({_id: this._id}, {
+      $set: {finishDate: new Date()}
+    });
+  },
+  'click #editJobBtn' : function(e) {
+    e.preventDefault();
+    Router.go('/jobEdit/'+this._id);
   }
 });
