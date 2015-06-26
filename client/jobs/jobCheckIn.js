@@ -23,6 +23,6 @@ Template.jobCheckIn.events({
           $set : {startDate : new Date()}
         });
     }
-    Router.go('jobs');
+    Router.go('/jobHistory/'+jobId);
   }
 });
