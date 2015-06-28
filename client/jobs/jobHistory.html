@@ -1,35 +1,47 @@
 <template name="jobHistory">
     <div class="container-fluid gutter">
     <div class="row">
-    <div class="col-md-12"><h2>Job History</h2></div>
-    <div class="col-md4"><h4>Job Details:</h4></div>
+        <div class="col-md4"><h2 class="text-center">Job History</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-md4"><h4>Job Details:</h4></div>
+    </div>
+    <div class="row">
+        {{#with job}}
+        <div class="col-md-4"> <h5>Job Name: {{name}}</h5> </div>
+        <div class="col-md-4"><h5>Job Number: {{number}}</h5></div>
+        <div class="col-md-4"><h5>Job Create Date: {{formatDate createDate "long"}}</h5></div>
+        {{/with}}
+    </div>
+    <div class="row">
+        {{#with address}}
+        <div class="col-md-4"><h5>Job Address: {{address1}}</h5></div>
+        <div class="col-md-4"><h5>Job Address 2: {{address2}}</h5></div>
+        <div class="col-md-4"><h5>Job city: {{city}}</h5></div>
+        <div class="col-md-4"><h5>Job Zip Code: {{zip}}</h5></div>
+        {{/with}}
+    </div>
     {{#with job}}
-    <div class="col-md-4"> <h5>Job Name: {{name}}</h5> </div>
-    <div class="col-md-4"><h5>Job Number: {{number}}</h5></div>
+    <div class="row">
+        <div class="col-md-4"><h5>Job Est Start Date: {{formatDate estStartDate "long"}}</h5></div>
+        <div class="col-md-4"><h5>Job Est Finish Date: {{formatDate estFinishDate "long"}}</h5></div>
+        <div class="col-md-4"><h5>Job Start Date: {{formatDate startDate "long"}}</h5></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"><h5>Job Finish Date: {{formatDate finishDate "long"}}</h5></div>
+        <div class="col-md-4"><h5>Job Notes: {{notes}}</h5></div>
+        <div class="col-md-4"><h5>Job Type: {{type}}</h5></div>
+    </div>
     {{/with}}
-    {{#with address}}
-    <div class="col-md-4"><h5>Job Address: {{address1}}</h5></div>
-    <div class="col-md-4"><h5>Job Address 2: {{address2}}</h5></div>
-    <div class="col-md-4"><h5>Job city: {{city}}</h5></div>
-    <div class="col-md-4"><h5>Job Zip Code: {{zip}}</h5></div>
-    {{/with}}
-    {{#with job}}
-    <div class="col-md-4"><h5>Job Create Date: {{formatDate createDate "long"}}</h5></div>
-    <div class="col-md-4"><h5>Job Est Start Date: {{formatDate estStartDate "long"}}</h5></div>
-    <div class="col-md-4"><h5>Job Est Finish Date: {{formatDate estFinishDate "long"}}</h5></div>
-    <div class="col-md-4"><h5>Job Start Date: {{formatDate startDate "long"}}</h5></div>
-    <div class="col-md-4"><h5>Job Finish Date: {{formatDate finishDate "long"}}</h5></div>
-    <div class="col-md-4"><h5>Job Notes: {{notes}}</h5></div>
-    <div class="col-md-4"><h5>Job Type: {{type}}</h5></div>
-    {{/with}}
-    <div class="col-md-4"><h5>Foreman: {{foreman.name}}</h5></div>
-    <div class="col-md-4"><h5>Salesman: {{salesman.name}}</h5></div>
+    <div class="row">
+        <div class="col-md-4"><h5>Foreman: {{foreman.name}}</h5></div>
+        <div class="col-md-4"><h5>Salesman: {{salesman.name}}</h5></div>
     </div>
     </div>
     <div class="container-fluid gutter">
         <div class="row">
             {{#with job}}
-            <div class="col-md-4"><button type="button" class="btn btn-primary" id="checkInBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true">Check In</span></button></div>
+            <div class="col-md-4"><button type="button" class="btn-primary btn-xs" id="checkInBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true">Check In</span></button></div>
             <div class="col-md-4"><button type="button" class="btn btn-warning" id="editJobBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true">Edit Job</span></button></div>
             {{#unless finishDate}}
             <div class="col-md-4"><button type="button" class="btn btn-danger" id="finishBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-saved" aria-hidden="true">Finish</span></button></div>
@@ -39,42 +51,42 @@
     <table class="table table-striped table-bordered" padd>
         <thead>
         <tr>
-            <td>
-                Time
+            <td class="table-text-small">
+                Check-In Time
             </td>
-            <td>
+            <td class="table-text-small">
                 Load Time
                 (in minutes)
             </td>
-            <td>
+            <td class="table-text-small">
                 Travel Time
                 (in minutes)
             </td>
-            <td>
+            <td class="table-text-small">
                 Had all
                 Tools &
                 Materials
             </td>
-            <td>
+            <td class="table-text-small">
                 Additional
                 Materials
                 Required
             </td>
-            <td>
+            <td class="table-text">
                 Contact
                 Customer
             </td>
-            <td>
+            <td class="table-text">
                 Daily
                 Picture
             </td>
-            <td>
+            <td class="table-text">
                 Foreman
             </td>
-            <td>
+            <td class="table-text">
                 Fencer
             </td>
-            <td>
+            <td class="table-text" colspan="3">
                 Daily
                 Notes
             </td>
@@ -83,18 +95,18 @@
         <tbody>
         {{#each checkIns}}
         <tr>
-            <td>
+            <td class="table-text">
                 <!--{{checkInTime}}-->
                 {{formatDate checkInTime "long"}}
                 <!--Mon 02.09.2013 18:00-->
             </td>
-            <td>
+            <td class="table-text">
                 {{loadTime}}
             </td>
-            <td>
+            <td class="table-text">
                 {{travelTime}}
             </td>
-            <td>
+            <td class="table-text">
                 {{#if toolsMaterials}}
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 {{/if}}
@@ -102,10 +114,10 @@
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
                 {{/unless}}
             </td>
-            <td>
+            <td class="table-text">
                {{addMaterials}}
             </td>
-            <td>
+            <td class="table-text">
                 {{#if contactCustomer}}
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 {{/if}}
@@ -113,7 +125,7 @@
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
                 {{/unless}}
             </td>
-            <td>
+            <td class="table-text">
                 {{#if dailyPicture}}
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 {{/if}}
@@ -121,13 +133,13 @@
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
                 {{/unless}}
             </td>
-            <td>
+            <td class="table-text">
                 {{ > foremanDisplay foremanId=foreman_id}}
             </td>
-            <td>
+            <td class="table-text">
                 {{ > fencerDisplay fencerId=fencer_id}}
             </td>
-            <td>
+            <td class="table-text" colspan="3">
                 {{notes}}
             </td>
         </tr>

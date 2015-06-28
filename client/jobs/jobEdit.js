@@ -11,7 +11,7 @@ Template.jobEdit.events({
         }
     });
     var jobId = $('#jobId').val();
-    var updatedJobId =Jobs.update({_id: jobId},
+    Jobs.update({_id: jobId},
         {
           $set :{
             address_id: updateAddressId,
@@ -27,6 +27,6 @@ Template.jobEdit.events({
             type : $('#type').val()
           }
         });
-    Router.go('/jobHistory/'+updatedJobId);
+    Router.go('/jobHistory/'+jobId);
   }
 });

@@ -1,4 +1,5 @@
 var DateFormats = {
+  inputDateTime: "YYYY-MM-DDTHH:mm:ss",
   inputDate: "YYYY-MM-DD",
   long: "ddd - MM/DD/YYYY : h:mm a"
 };

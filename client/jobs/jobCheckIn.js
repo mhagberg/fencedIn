@@ -26,3 +26,7 @@ Template.jobCheckIn.events({
     Router.go('/jobHistory/'+jobId);
   }
 });
+
+
+
+

@@ -9,8 +9,7 @@ Template.jobNew.events({
           city: $('#city').val(),
           zip: $('#zip').val()
         });
-    console.debug('estStart : ' + $('#estStartDate').data());
-    Jobs.insert(
+    var jobId = Jobs.insert(
         {
           address_id: address_Id,
           foreman_id: $('#foremanSelector').val(),
@@ -23,6 +22,6 @@ Template.jobNew.events({
           notes : $('#notes').val(),
           type : $('#type').val()
         });
-    Router.go('jobs');
+    Router.go('/jobHistory/'+jobId);
   }
 });

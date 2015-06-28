@@ -45,6 +45,15 @@ Router.map(function() {
     } });
   });
 
+  this.route('/checkInEdit/:checkIn_id', function() {
+    var checkIn = JobCheckIns.findOne({_id: this.params.checkIn_id});
+    var job = Jobs.findOne({job_id: checkIn.job_id});
+    var checkInEdit = {checkIn : checkIn, job : job};
+    this.render('checkInEdit', {data: function (){
+      return checkInEdit;
+    } });
+  });
+
   this.route('/jobHistory/:job_id', function() {
     var job = Jobs.findOne({_id: this.params.job_id});
     var address = Address.findOne({job_id: this.params.job_id});

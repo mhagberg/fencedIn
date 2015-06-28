@@ -1,0 +1,19 @@
+
+<template name="checkInEdit">
+    {{#with checkIn}}
+    <form>
+        <div class="form-group">
+            <input type="hidden" id="checkIn_id" value="{{_id}}"/>
+            <div><label for="checkInTime">Check In Time: </label><input id="checkInTime" class="form-control" type="datetime-local" value="{{formatDate checkInTime 'inputDateTime'}}"/></div>
+        </div>
+    </form>
+    <!--{{ > checkInForm}}-->
+    <div class="container-fluid gutter">
+        <div class="row">
+            <div class="col-md12">
+                <button id="checkInUpdate" type="button" class="btn btn-info">Update Check-In</button>
+            </div>
+        </div>
+    </div>
+    {{/with}}
+</template>

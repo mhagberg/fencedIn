@@ -39,7 +39,7 @@ Template.appBody.onRendered(function() {
         .hide()
         .insertBefore(next)
         .fadeIn(function () {
-          listFadeInHold.release();
+            LaunchScreen.hold().release();
         });
     },
     removeElement: function(node) {
