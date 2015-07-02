@@ -1,83 +1,86 @@
 <template name="checkInForm">
-    <div class="container-fluid gutter">
-        <div class="row">
-            <div class="col-md-12">
-                <form>
-                    <div class="form-group">
-                        <input type="hidden" id="job_id" value="{{_id}}"/>
-                        <h3>Job Check-In</h3>
-                        <label for="loadTime">Travel Time (in minutes): </label>
-                        <select id="loadTime" class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>10</option>
-                            <option>15</option>
-                            <option>20</option>
-                            <option>25</option>
-                            <option>30</option>
-                            <option>40</option>
-                            <option>50</option>
-                            <option>60</option>
-                            <option>90</option>
-                            <option>120</option>
-                        </select>
-                        <label for="travelTime">Travel Time (in minutes: </label>
-                        <select id="travelTime" class="form-control">
-                            <option>5</option>
-                            <option>10</option>
-                            <option>15</option>
-                            <option>20</option>
-                            <option>25</option>
-                            <option>30</option>
-                            <option>35</option>
-                            <option>40</option>
-                            <option>45</option>
-                            <option>50</option>
-                            <option>55</option>
-                            <option>60</option>
-                            <option>90</option>
-                            <option>120</option>
-                            <option>180</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label for="toolsMaterials">
-                                <input id="toolsMaterials"  type="checkbox" value="">
-                                Have required tools/Materials today:
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="additionalMaterials">Additional Materials Required: </label>
-                        <input type="text" id="additionalMaterials" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox">
-                            <input type="checkbox" id="contactCustomer"  checked="{{checked}}" name="checked">
-                            <span class="checkbox-custom"></span>
-                            Talked To Customer today
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label for="dailyPicture">
-                                <input id="dailyPicture" type="checkbox" value="">
-                                Picture of job site today:
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="notes">General daily notes: </label>
-                        <textarea id="notes" class="form-control" rows="3"></textarea>
-                        {{ > foremanSelect}}
-                        {{ > fencerSelect}}
-                    </div>
-                </form>
+    <form>
+        <div class="form-group">
+            <input type="hidden" id="job_id" value="{{job_id}}"/>
+            <input type="hidden" id="checkIn_id" value="{{_id}}"/>
+            <div class="col-md-11">
+                <label for="checkInTime">Check In Time: </label>
+                <input id="checkInTime" class="form-control" type="datetime-local" value="{{formatDate checkInTime 'inputDateTime'}}"/>
             </div>
         </div>
-    </div>
+        <div class="form-group">
+            <div class="col-md-11">
+                <label for="loadTime">Load Time (in minutes): </label>
+                <select id="loadTime" class="form-control">
+                    <option {{isSelected 1 loadTime}}>1</option>
+                    <option {{isSelected 2 loadTime}}>2</option>
+                    <option {{isSelected 3 loadTime}}>3</option>
+                    <option {{isSelected 4 loadTime}}>4</option>
+                    <option {{isSelected 5 loadTime}}>5</option>
+                    <option {{isSelected 10 loadTime}}>10</option>
+                    <option {{isSelected 15 loadTime}}>15</option>
+                    <option {{isSelected 20 loadTime}}>20</option>
+                    <option {{isSelected 25 loadTime}}>25</option>
+                    <option {{isSelected 30 loadTime}}>30</option>
+                    <option {{isSelected 40 loadTime}}>40</option>
+                    <option {{isSelected 50 loadTime}}>50</option>
+                    <option {{isSelected 60 loadTime}}>60</option>
+                    <option {{isSelected 90 loadTime}}>90</option>
+                    <option {{isSelected 120 loadTime}}>120</option>
+                </select>
+            </div>
+            <div class="col-md-11">
+                <label for="travelTime">Travel Time (in minutes: </label>
+                <select id="travelTime" class="form-control" name="travelTime">
+                    <option {{isSelected 5 travelTime}}>5</option>
+                    <option {{isSelected 10 travelTime}}>10</option>
+                    <option {{isSelected 15 travelTime}}>15</option>
+                    <option {{isSelected 20 travelTime}}>20</option>
+                    <option {{isSelected 25 travelTime}}>25</option>
+                    <option {{isSelected 30 travelTime}}>30</option>
+                    <option {{isSelected 35 travelTime}}>35</option>
+                    <option {{isSelected 40 travelTime}}>40</option>
+                    <option {{isSelected 45 travelTime}}>45</option>
+                    <option {{isSelected 50 travelTime}}>50</option>
+                    <option {{isSelected 55 travelTime}}>55</option>
+                    <option {{isSelected 60 travelTime}}>60</option>
+                    <option {{isSelected 90 travelTime}}>90</option>
+                    <option {{isSelected 120 travelTime}}>120</option>
+                    <option {{isSelected 180 travelTime}}>180</option>
+                </select>
+            </div>
+            <div class="col-md-11">
+                <label for="toolsMaterials">
+                    <input id="toolsMaterials"  type="checkbox" checked="{{toolsMaterials}}">
+                    Have required tools/Materials today:
+                </label>
+            </div>
+            <div class="col-md-11">
+                <label>Additional Materials Required: </label>
+                <textarea  class="form-control" id="additionalMaterials" rows="3">{{additionalMaterials}}</textarea>
+            </div>
+            <div class="col-md-11">
+                <label for="contactCustomer">
+                    <input id="contactCustomer"  type="checkbox" checked="{{contactCustomer}}">
+                    Talked To Customer today:
+                </label>
+            </div>
+            <div class="col-md-11">
+                <label for="dailyPicture">
+                    <input id="dailyPicture" type="checkbox" checked="{{dailyPicture}}">
+                    Picture of job site today:
+                </label>
+            </div>
+            <div class="col-md-11">
+                <label for="notes">General daily notes: </label>
+                <textarea id="notes" class="form-control" name="notes" rows="3">{{notes}}</textarea>
+            </div>
+            <div class="col-md-11">
+                {{ > foremanSelect}}
+            </div>
+            <div class="col-md-11">
+                {{ > fencerSelect}}
+            </div>
+        </div>
+    </form>
 </template>

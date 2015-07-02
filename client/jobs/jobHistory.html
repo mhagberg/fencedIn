@@ -115,7 +115,7 @@
                 {{/unless}}
             </td>
             <td class="table-text">
-               {{addMaterials}}
+               {{additionalMaterials}}
             </td>
             <td class="table-text">
                 {{#if contactCustomer}}
@@ -141,6 +141,9 @@
             </td>
             <td class="table-text" colspan="3">
                 {{notes}}
+            </td>
+            <td class="table-text">
+                <div class="col-md-1"><button type="button" class="btn btn-danger btn-xs" id="editCheckIn" data-chedk-in-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></div>
             </td>
         </tr>
     {{/each}}

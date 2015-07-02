@@ -3,7 +3,7 @@
     <div><select class="form-control" id="salesmanSelector">
         <option label=""></option>
         {{#each salesman}}
-        <option label="{{name}}" selected="{{isSelected _id}}">{{_id}}</option>
+        <option label="{{name}}" {{isSelected _id ../salesman_id}}>{{_id}}</option>
         {{/each}}
     </select></div>
 </template>

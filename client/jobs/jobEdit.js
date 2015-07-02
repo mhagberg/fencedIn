@@ -2,7 +2,7 @@ Template.jobEdit.events({
   'click #updateJob' : function(e) {
     e.preventDefault();
     var addressId = $('#addressId').val();
-    var updateAddressId = Address.update({_id: addressId}, {
+    Address.update({_id: addressId}, {
         $set : {
           address1 : $('#address1').val(),
           address2 : $('#address2').val(),
@@ -14,7 +14,7 @@ Template.jobEdit.events({
     Jobs.update({_id: jobId},
         {
           $set :{
-            address_id: updateAddressId,
+            address_id: addressId,
             foreman_id: $('#foremanSelector').val(),
             salesman_id: $('#salesmanSelector').val(),
             name : $('#name').val(),

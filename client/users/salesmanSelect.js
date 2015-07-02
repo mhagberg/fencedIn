@@ -3,11 +3,3 @@ Template.salesmanSelect.helpers({
     return Salesman.find();
   }
 });
-
-Template.salesmanSelect.helpers({
-  isSelected : function(salesmanId) {
-    if (Salesman.findOne({_id: salesmanId}).length)
-      return "selected";
-    else return "";
-  }
-});

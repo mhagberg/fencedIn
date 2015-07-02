@@ -11,7 +11,7 @@ Template.jobCheckIn.events({
           loadTime : $('#loadTime').val(),
           travelTime : $('#travelTime').val(),
           notes : $('#notes').val(),
-          additionalMaterials : $('#additionalMaterials').val(""),
+          additionalMaterials : $('#additionalMaterials').val(),
           contactCustomer : $('#contactCustomer').is(":checked"),
           dailyPicture : $('#dailyPicture').is(":checked"),
           toolsMaterials : $('#toolsMaterials').is(":checked"),

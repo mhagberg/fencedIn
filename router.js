@@ -40,6 +40,8 @@ Router.map(function() {
     var job = Jobs.findOne({_id: this.params.job_id});
     var address = Address.findOne({_id: job.address_id});
     var jobEdit = {job : job, address : address};
+    console.debug("address: " + address);
+    console.debug("job.address_id: " + job.address_id);
     this.render('jobEdit', {data: function (){
       return jobEdit;
     } });
@@ -67,9 +69,10 @@ Router.map(function() {
   });
 
   this.route('/jobCheckIn/:job_id', function() {
-    this.render('jobCheckIn', {
-      data: function() {return Jobs.findOne({_id: this.params.job_id})
-    }});
+    var checkIn = {job_id:Jobs.findOne({_id: this.params.job_id})._id}
+    this.render('jobCheckIn', {data: function() {
+      return checkIn}
+    });
   });
 
   this.route('jobNew', {

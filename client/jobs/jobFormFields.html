@@ -17,11 +17,13 @@
                     <div><label for="finish">Finish: </label><input id="finish" class="form-control" type="date" value="{{formatDate job.finishDate 'inputDate'}}"/></div>
                     <div><label for="notes">Notes: </label><textarea class="form-control" id="notes">{{job.notes}}</textarea></div>
                     <div><label for="type">Type: </label><select class="form-control" id="type">
-                        <option selected="{{isJobTypeSelected job._id 'Business'}}">Business</option>
-                        <option selected="{{isJobTypeSelected job._id 'Residential'}}">Residential</option>
+                        <option {{isJobTypeSelected job._id 'Business'}}>Business</option>
+                        <option {{isJobTypeSelected job._id 'Residential'}}>Residential</option>
                     </select></div>
+                    {{#with job}}
                     {{ > foremanSelect}}
                     {{ > salesmanSelect}}
+                    {{/with}}
                 </div>
             </form>
         </div>
