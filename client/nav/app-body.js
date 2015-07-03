@@ -72,7 +72,19 @@ Template.appBody.helpers({
     return Session.get(USER_MENU_KEY);
   },
   jobs: function() {
-    return Jobs.find({},{sort:{createDate:-1}});
+     var jobs = Jobs.find({},{sort:{createDate:-1}});
+     var jobCheckInCounts = {};
+     jobs.forEach(function(job){
+        var count = JobCheckIns.find({job_id : job._id}).count();
+        jobCheckInCounts[job._id] = count;
+     });
+  return {jobs: jobs, jobCheckInCounts: jobCheckInCounts}
+  },
+  jobCheckInCount: function(jobCheckInCounts, jobId) {
+    if (jobCheckInCounts && jobId) {
+      return jobCheckInCounts[jobId];
+    }
+    return false;
   },
   activeListClass: function() {
     var current = Router.current();

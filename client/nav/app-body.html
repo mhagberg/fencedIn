@@ -25,15 +25,14 @@
 
       <div class="list-jobs">
         <a class="js-new-list link-list-new"><span class="icon-plus"></span>New Job</a>
-
-        {{#each jobs}}
+        {{#each jobs.jobs}}
           <a href="/jobHistory/{{_id}}" class="list-job {{activeListClass}}" title="{{name}}">
             {{#if userId}}
               <span class="icon-lock"></span>
             {{/if}}
-            {{#if incompleteCount}}
-              <span class="count-list">{{incompleteCount}}</span>
-            {{/if}}
+            <!--{{#if jobCheckInCount jobCheckInCounts _id}}-->
+              <span class="count-list">{{jobCheckInCount jobs.jobCheckInCounts _id}}</span>
+            <!--{{/if}}           -->
             {{name}}
           </a>
         {{/each}}
