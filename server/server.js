@@ -7,7 +7,7 @@ Meteor.startup(function() {
 
 Meteor.methods({
   updateCheckIn: function (checkInId,foremanId,fencerId,loadTime,travelTime,notes,additionalMaterials
-      ,contactCustomer,dailyPicture,toolsMaterials,checkInTime,checkInLocation
+      ,contactCustomer,dailyPicture,toolsMaterials,checkInTime, checkOutTime,checkInLocation
   ){
     JobCheckIns.update({_id : checkInId},
         {
@@ -22,6 +22,9 @@ Meteor.methods({
             dailyPicture : dailyPicture,
             toolsMaterials : toolsMaterials,
             checkInTime : checkInTime,
+            checkOutTime : checkOutTime,
+            systemCheckInTime : new Date(),
+            systemCheckOutTime : null,
             checkInLocation : checkInLocation
           }
         });

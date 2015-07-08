@@ -14,8 +14,9 @@ Template.checkInEdit.events({
     var dailyPicture = $('#dailyPicture').is(":checked");
     var toolsMaterials = $('#toolsMaterials').is(":checked");
     var checkInTime = $('#checkInTime').val();
+    var checkOutTime = $('#checkOutTime').val();
     Meteor.call('updateCheckIn', checkInId,foremanId,fencerId,loadTime,travelTime,
-        notes,additionalMaterials,contactCustomer,dailyPicture,toolsMaterials,checkInTime,"location", function(error, id){
+        notes,additionalMaterials,contactCustomer,dailyPicture,toolsMaterials,checkInTime,checkOutTime,"location", function(error, id){
       if (error) {
         return alert(error.reason);
       }

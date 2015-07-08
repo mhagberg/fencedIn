@@ -16,6 +16,9 @@ Template.jobCheckIn.events({
           dailyPicture : $('#dailyPicture').is(":checked"),
           toolsMaterials : $('#toolsMaterials').is(":checked"),
           checkInTime : new Date(),
+          checkOutTime : null,
+          systemCheckInTime: new Date(),
+          systemCheckOutTime: null,
           checkInLocation : "444444-0009-887"
         });
     if (!Jobs.findOne({_id : jobId}).startDate) {

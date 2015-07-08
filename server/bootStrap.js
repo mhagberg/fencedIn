@@ -133,4 +133,19 @@ Meteor.startup(function () {
           type: "Residential"
         });
     }
-  });
+  if (JobCheckIns.find({checkOutTime: /.*/}).count() === 0) {
+    var jobs = JobCheckIns.find();
+    jobs.forEach(function(job){
+      JobCheckIns.update(
+          {_id : job._id},
+          {
+            $set : {
+              checkOutTime : null,
+              systemCheckInTime : null,
+              systemCheckOutTime : null
+            }
+          });
+    });
+    };
+  }
+  );

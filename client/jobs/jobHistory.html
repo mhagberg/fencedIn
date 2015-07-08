@@ -41,10 +41,13 @@
     <div class="container-fluid gutter">
         <div class="row">
             {{#with job}}
-            <div class="col-md-4"><button type="button" class="btn-primary btn-xs" id="checkInBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true">Check In</span></button></div>
-            <div class="col-md-4"><button type="button" class="btn btn-warning" id="editJobBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true">Edit Job</span></button></div>
+            <div class="col-md-3"><button type="button" class="btn-primary btn-xs" id="checkInBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true">Check-In</span></button></div>
+            {{#if showCheckOutOnLastCheckIn}}
+            <div class="col-md-3"><button type="button" class="btn-success btn-xs" id="checkOutBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true">Check-Out</span></button></div>
+            {{/if}}
+            <div class="col-md-3"><button type="button" class="btn btn-warning" id="editJobBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true">Edit Job</span></button></div>
             {{#unless finishDate}}
-            <div class="col-md-4"><button type="button" class="btn btn-danger" id="finishBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-saved" aria-hidden="true">Finish</span></button></div>
+            <div class="col-md-3"><button type="button" class="btn btn-danger" id="finishBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-saved" aria-hidden="true">Finish</span></button></div>
             {{/unless}}
             {{/with}}
         </div>
@@ -55,11 +58,10 @@
                 Check-In Time
             </td>
             <td class="table-text-small">
-                Load Time
-                (in minutes)
+                Check-Out Time
             </td>
             <td class="table-text-small">
-                Travel Time
+                Load & Travel
                 (in minutes)
             </td>
             <td class="table-text-small">
@@ -72,25 +74,25 @@
                 Materials
                 Required
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 Contact
                 Customer
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 Daily
                 Picture
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 Foreman
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 Fencer
             </td>
-            <td class="table-text" colspan="3">
+            <td class="table-text-small" colspan="3">
                 Daily
                 Notes
             </td>
-            <td class="table-text" colspan="3">
+            <td class="table-text-small" colspan="3">
                 Edit CheckIns
             </td>
         </tr>
@@ -98,18 +100,18 @@
         <tbody>
         {{#each checkIns}}
         <tr>
-            <td class="table-text">
-                <!--{{checkInTime}}-->
+            <td class="table-text-small">
                 {{formatDate checkInTime "long"}}
-                <!--Mon 02.09.2013 18:00-->
             </td>
-            <td class="table-text">
-                {{loadTime}}
+            <td class="table-text-small">
+                {{#if checkOutTime}}
+                {{formatDate checkOutTime "long"}}
+                {{/if}}
             </td>
-            <td class="table-text">
-                {{travelTime}}
+            <td class="table-text-small">
+                {{loadTimePlusTravelTime _id}}
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 {{#if toolsMaterials}}
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 {{/if}}
@@ -117,10 +119,10 @@
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
                 {{/unless}}
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                {{additionalMaterials}}
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 {{#if contactCustomer}}
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 {{/if}}
@@ -128,7 +130,7 @@
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
                 {{/unless}}
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 {{#if dailyPicture}}
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 {{/if}}
@@ -136,16 +138,16 @@
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
                 {{/unless}}
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 {{ > foremanDisplay foremanId=foreman_id}}
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 {{ > fencerDisplay fencerId=fencer_id}}
             </td>
-            <td class="table-text" colspan="3">
+            <td class="table-text-small" colspan="3">
                 {{notes}}
             </td>
-            <td class="table-text">
+            <td class="table-text-small">
                 <div class="col-md-1"><button type="button" class="btn btn-warning btn-xs" id="editCheckIn" data-chedk-in-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></div>
             </td>
         </tr>
