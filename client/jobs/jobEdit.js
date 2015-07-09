@@ -19,6 +19,7 @@ Template.jobEdit.events({
             salesman_id: $('#salesmanSelector').val(),
             name : $('#name').val(),
             number: $('#number').val(),
+            phone: $('#phone').val(),
             estStartDate : $('#estStart').val(),
             startDate : $('#start').val(),
             estFinishDate : $('#estFinish').val(),

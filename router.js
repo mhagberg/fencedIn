@@ -58,7 +58,7 @@ Router.map(function() {
 
   this.route('/jobHistory/:job_id', function() {
     var job = Jobs.findOne({_id: this.params.job_id});
-    var address = Address.findOne({job_id: this.params.job_id});
+    var address = Address.findOne({_id: job.address_id});
     var checkIns = JobCheckIns.find({job_id: this.params.job_id}, {sort: {checkInTime: -1}});
     var foreman = Foreman.findOne({_id: job.foreman_id});
     var salesman = Salesman.findOne({_id: job.salesman_id});

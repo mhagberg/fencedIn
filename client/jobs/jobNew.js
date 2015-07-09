@@ -16,6 +16,7 @@ Template.jobNew.events({
           salesman_id: $('#salesmanSelector').val(),
           name : $('#name').val(),
           number: $('#number').val(),
+          phone: $('#phone').val(),
           createDate: new Date(),
           estStartDate : $('#estStart').val(),
           estFinishDate : $('#estFinish').val(),
