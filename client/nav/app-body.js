@@ -72,6 +72,10 @@ Template.appBody.helpers({
     return Session.get(USER_MENU_KEY);
   },
   jobs: function() {
+    //var future = new Date();
+    //future.setDate(future.getDate() + 30);
+    //trying to get rid of old jobs
+    //var jobs = Jobs.find({$or: [{finishDate: {$lt: future}}, {finishDate: {$exists: false}}, {finishDate: ""}]},{sort:{createDate:-1}});
      var jobs = Jobs.find({},{sort:{createDate:-1}});
      var jobCheckInCounts = {};
      jobs.forEach(function(job){
