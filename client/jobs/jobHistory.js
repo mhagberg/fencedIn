@@ -34,7 +34,7 @@ Template.jobHistory.events({
 Template.jobHistory.helpers({
   loadTimePlusTravelTime: function(checkInId){
     var checkIn = JobCheckIns.findOne({_id: checkInId});
-    return checkIn.loadTime + checkIn.travelTime;
+    return Number(checkIn.loadTime) + Number(checkIn.travelTime);
   }
 });
 
