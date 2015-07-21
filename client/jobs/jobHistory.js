@@ -10,11 +10,11 @@ Template.jobHistory.events({
       $set: {finishDate: new Date()}
     });
   },
-  'click #editJobBtn' : function(e) {
+  'click .jobLink' : function(e) {
     e.preventDefault();
-    Router.go('/jobEdit/'+this._id);
+    Router.go('/jobEdit/'+this.job._id);
   },
-  'click #editCheckIn' : function(e) {
+  'click .checkInLink' : function(e) {
     e.preventDefault();
     Router.go('/checkInEdit/'+this._id);
   },

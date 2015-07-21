@@ -1,5 +1,5 @@
 <template name="jobHistory">
-    <div class="container-fluid gutter-small">
+    <div class="container-fluid gutter-small jobLink">
         <div class="row">
         <div class="col-md4"><h2 class="text-center">Job History</h2></div>
         </div>
@@ -65,7 +65,6 @@
             {{#if showCheckOutOnLastCheckIn}}
             <div class="col-md-3"><button type="button" class="btn-success btn-xs" id="checkOutBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true">Check-Out</span></button></div>
             {{/if}}
-            <div class="col-md-3"><button type="button" class="btn btn-warning" id="editJobBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true">Edit Job</span></button></div>
             {{#unless finishDate}}
             <div class="col-md-3"><button type="button" class="btn btn-danger" id="finishBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-saved" aria-hidden="true">Finish</span></button></div>
             {{/unless}}
@@ -112,14 +111,11 @@
                 Daily
                 Notes
             </td>
-            <td class="table-text-small" colspan="3">
-                Edit CheckIns
-            </td>
         </tr>
         </thead>
         <tbody>
         {{#each checkIns}}
-        <tr>
+        <tr class="checkInLink">
             <td class="table-text-small">
                 {{formatDate checkInTime "long"}}
             </td>
@@ -167,9 +163,9 @@
             <td class="table-text-small" colspan="3">
                 {{notes}}
             </td>
-            <td class="table-text-small">
-                <div class="col-md-1"><button type="button" class="btn btn-warning btn-xs" id="editCheckIn" data-chedk-in-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></div>
-            </td>
+            <!--<td class="table-text-small">-->
+                <!--<div class="col-md-1"><button type="button" class="btn btn-warning btn-xs" id="editCheckIn" data-chedk-in-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></div>-->
+            <!--</td>-->
         </tr>
     {{/each}}
         </tbody>
