@@ -13,6 +13,5 @@ UI.registerHelper("hasImage", function(image) {
   if (image){
     result = true;
   }
-  console.debug("boolean value of image: " + result);
   return result;
 });

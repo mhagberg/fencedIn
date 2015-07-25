@@ -138,7 +138,6 @@ Meteor.startup(function () {
       Pictures.insert({
         _id:"1",
         job_id: "1",
-        checkIn_id: "1",
         createDate: new Date(),
         image: null
       });

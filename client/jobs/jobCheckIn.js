@@ -3,7 +3,6 @@ Template.jobCheckIn.events({
     e.preventDefault();
     //we may want to move this to the server so we can gate changes
     var jobId = $('#job_id').val();
-    console.debug("geoLocation: " + Geolocation.currentLocation());
     JobCheckIns.insert(
         {
           job_id : jobId,
@@ -32,11 +31,10 @@ Template.jobCheckIn.events({
 });
 
 
-var onSuccess = function (imageData, jobId, checkInId) {
-  Photos.insert({
+var onSuccess = function (imageData, jobId) {
+  Pictures.insert({
     image: imageData,
     job_id: jobId,
-    checkIn_id: checkInId,
     createDate: new Date()
   });
 };
@@ -46,7 +44,8 @@ Template.jobCheckIn.events({
     MeteorCamera.getPicture(function (error, data) {
       // we have a picture
       if (! error) {
-        onSuccess(data, this.job_id, this._id);
+        console.debug("jobId: " + this.job_id.value);
+        onSuccess(data, this.job_id.value);
       }
     });
   }
