@@ -1,7 +1,6 @@
 Template.jobNew.events({
   'click #createJob' : function(e) {
     e.preventDefault();
-    console.debug("saving address:");
     var address_Id = Address.insert(
         {
           address1: $('#address1').val(),

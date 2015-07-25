@@ -12,3 +12,5 @@ momentjs:moment
 less
 nemo64:bootstrap
 accounts-password
+mdg:geolocation
+mdg:camera

@@ -57,7 +57,8 @@ Router.map(function() {
     var checkIns = JobCheckIns.find({job_id: this.params.job_id}, {sort: {checkInTime: -1}});
     var foreman = Foreman.findOne({_id: job.foreman_id});
     var salesman = Salesman.findOne({_id: job.salesman_id});
-    var jobHistory = {job : job, address : address, checkIns : checkIns, foreman: foreman, salesman: salesman};
+    var pictures = Pictures.find({job_id: job._id});
+    var jobHistory = {job : job, address : address, checkIns : checkIns, foreman: foreman, salesman: salesman, pictures: pictures};
     this.render('jobHistory', {data: function (){
       return jobHistory;
     } });
@@ -70,12 +71,14 @@ Router.map(function() {
     });
   });
 
-  this.route('jobNew', {
+  this.route('home', {
     path: '/',
     action: function() {
       var job = Jobs.findOne({}, {sort: {createDate: -1}, limit: 1});
       Router.go('/jobHistory/'+job._id);
   }});
+
+  this.route('/jobNew');
 
   this.route('foremanSelect', {
     path: '/foremanSelect'
