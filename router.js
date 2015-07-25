@@ -1,8 +1,3 @@
-//Router.configure({
-//  layoutTemplate: 'appBody',
-//  templateNameConverter: 'upperCamelCase'
-//});
-
 Router.configure({
   // we use the  appBody template to define the layout for the entire app
   layoutTemplate: 'appBody',
@@ -28,11 +23,13 @@ dataReadyHold = null;
 if (Meteor.isClient) {
   // Keep showing the launch screen on mobile devices until we have loaded
   // the app's data
-  dataReadyHold = LaunchScreen.hold();
+  if (!LaunchScreen.hidden) {
+    dataReadyHold = LaunchScreen.hold();
+  }
 
   // Show the loading screen on desktop
-  Router.onBeforeAction('loading', {except: ['join', 'signin']});
-  Router.onBeforeAction('dataNotFound', {except: ['join', 'signin']});
+  //Router.onBeforeAction('loading', {except: ['join', 'signin']});
+  //Router.onBeforeAction('dataNotFound', {except: ['join', 'signin']});
 }
 
 Router.map(function() {
@@ -40,8 +37,6 @@ Router.map(function() {
     var job = Jobs.findOne({_id: this.params.job_id});
     var address = Address.findOne({_id: job.address_id});
     var jobEdit = {job : job, address : address};
-    console.debug("address: " + address);
-    console.debug("job.address_id: " + job.address_id);
     this.render('jobEdit', {data: function (){
       return jobEdit;
     } });
@@ -76,8 +71,11 @@ Router.map(function() {
   });
 
   this.route('jobNew', {
-    path: '/'
-  });
+    path: '/',
+    action: function() {
+      var job = Jobs.findOne({}, {sort: {createDate: -1}, limit: 1});
+      Router.go('/jobHistory/'+job._id);
+  }});
 
   this.route('foremanSelect', {
     path: '/foremanSelect'
