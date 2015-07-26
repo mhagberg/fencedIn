@@ -21,10 +21,8 @@
                         <option {{isJobTypeSelected job._id 'Business'}}>Business</option>
                         <option {{isJobTypeSelected job._id 'Residential'}}>Residential</option>
                     </select></div>
-                    {{#with job}}
                     {{ > foremanSelect}}
                     {{ > salesmanSelect}}
-                    {{/with}}
                 </div>
             </form>
         </div>
