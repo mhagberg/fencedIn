@@ -42,8 +42,6 @@ Template.jobHistory.helpers({
   }
 });
 
-
-
 //This function disables buttons when needed
 function disableButtons(counter_max, counter_current){
   $('#show-previous-image, #show-next-image').show();
@@ -84,6 +82,7 @@ function loadGallery(setIDs, setClickAttr){
     $('#image-gallery-title').text($sel.data('title'));
     $('#image-gallery-image').attr('src', $sel.data('image'));
     disableButtons(counter, $sel.data('image-id'));
+    $("#image-gallery").modal("show");
   }
 
   if(setIDs == true){
