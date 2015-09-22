@@ -64,15 +64,18 @@ function loadGallery(setIDs, setClickAttr){
       selector,
       counter = 0;
 
+  selector = $('[data-image-id="' + current_image + '"]');
+  updateGallery(selector);
+
   $('#show-next-image, #show-previous-image').click(function(){
     if($(this).attr('id') == 'show-previous-image'){
       current_image--;
     } else {
       current_image++;
     }
-
     selector = $('[data-image-id="' + current_image + '"]');
     updateGallery(selector);
+
   });
 
   function updateGallery(selector) {
@@ -82,7 +85,6 @@ function loadGallery(setIDs, setClickAttr){
     $('#image-gallery-title').text($sel.data('title'));
     $('#image-gallery-image').attr('src', $sel.data('image'));
     disableButtons(counter, $sel.data('image-id'));
-    $("#image-gallery").modal("show");
   }
 
   if(setIDs == true){
