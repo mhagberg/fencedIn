@@ -90,4 +90,7 @@ Router.map(function() {
   this.route('join');
   this.route('signin');
 
+  this.route('admin', {
+    path: '/admin'
+  });
 });

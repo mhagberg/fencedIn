@@ -137,5 +137,9 @@ Template.appBody.events({
 
   'click .js-new-list': function() {
       Router.go('jobNew');
+  },
+
+  'click .js-admin': function() {
+    Router.go('admin');
   }
 });

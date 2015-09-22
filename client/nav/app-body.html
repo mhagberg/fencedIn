@@ -25,6 +25,7 @@
 
       <div class="list-jobs">
         <a class="js-new-list link-list-new"><span class="icon-plus"></span>New Job</a>
+        <a class="js-admin link-list-new"><span class="icon-cog"></span>Admin</a>
         {{#each jobs.jobs}}
           <a href="/jobHistory/{{_id}}" class="list-job {{activeListClass}} {{#if finishDate}}finished{{/if}}" title="{{name}}">
             {{#if userId}}
