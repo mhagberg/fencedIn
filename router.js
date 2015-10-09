@@ -64,6 +64,8 @@ Router.map(function() {
     } });
   });
 
+
+
   this.route('/jobCheckIn/:job_id', function() {
     var checkIn = {job_id:Jobs.findOne({_id: this.params.job_id})._id}
     this.render('jobCheckIn', {data: function() {
@@ -79,6 +81,58 @@ Router.map(function() {
   }});
 
   this.route('/jobNew');
+
+  this.route('/salesmenList', function() {
+    var salesmen = Salesman.find({disableDate : null});
+    var data = {salesmen: salesmen};
+    this.render('salesmenList', {data: function (){
+      return data;
+    } });
+  });
+
+  this.route('/salesmanForm');
+
+  this.route('/salesmanForm/:salesman_id', function() {
+    var salesman = Salesman.findOne({_id: this.params.salesman_id});
+    this.render('salesmanForm', {data: function() {
+      return salesman}
+    });
+  });
+
+  this.route('/foremenList', function() {
+    var foremen = Foreman.find({disableDate : null});
+    var data = {foremen: foremen};
+    this.render('foremenList', {data: function (){
+      return data;
+    } });
+  });
+
+  this.route('/foremanForm');
+
+  this.route('/foremanForm/:foreman_id', function() {
+    var foreman = Foreman.findOne({_id: this.params.foreman_id});
+    this.render('foremanForm', {data: function() {
+      return foreman}
+    });
+  });
+
+
+  this.route('/fencersList', function() {
+    var fencer = Fencer.find({disableDate : null});
+    var data = {fencer: fencer};
+    this.render('fencersList', {data: function (){
+      return data;
+    } });
+  });
+
+  this.route('/fencerForm');
+
+  this.route('/fencerForm/:fencer_id', function() {
+    var fencer = Fencer.findOne({_id: this.params.fencer_id});
+    this.render('fencerForm', {data: function() {
+      return fencer}
+    });
+  });
 
   this.route('foremanSelect', {
     path: '/foremanSelect'
