@@ -8,7 +8,7 @@ Template.foremenList.events({
     Foreman.update({_id : this._id},
         {
           $set : {
-            disableDate : new Date()
+            disableDate : new Date().getTime()
           }
         });
     Router.go('/foremenList');

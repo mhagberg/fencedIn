@@ -1,9 +1,10 @@
 <template name="salesmanSelect">
     <label for="salesmanSelector">Select the Salesman that sold the job:</label>
-    <div><select class="form-control" id="salesmanSelector">
-        <option label=""></option>
-        {{#each salesman}}
-        <option label="{{name}}" {{isSelected _id ../job.salesman_id}}>{{_id}}</option>
-        {{/each}}
-    </select></div>
+    <div>
+        <select multiple class="form-control" id="salesmanSelector">
+            {{#each salesman}}
+            <option label="{{name}}"  data-value="{{stringify this}}" {{isSelectedMulti _id ../salesmen}}></option>
+            {{/each}}
+        </select>
+    </div>
 </template>

@@ -7,7 +7,7 @@
                 </div>
             </div>
             <div class="col-md-11">
-                {{ > checkInForm}}
+                {{> checkInForm}}
             </div>
         </div>
     </div>
@@ -17,17 +17,6 @@
                 <button id="checkIn" type="button" class="btn btn-info">Check-In</button>
             </div>
         </div>
-    </div>
-
-    <h3>CheckIn Pictures</h3>
-    <div class="row gutter-small">
-        {{#each pictures}}
-        <div class="col-lg-1 col-md-2 col-xs-3 gutter-small">
-            <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="{{formatDate createDate 'long'}}" data-caption="Job Check In Picture" data-image="{{image}}" data-target="#image-gallery">
-                <img class="img-responsive" width='100' src="{{image}}">
-            </a>
-        </div>
-        {{/each}}
     </div>
 </template>
 

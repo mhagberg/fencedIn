@@ -2,12 +2,20 @@ Template.jobCheckIn.events({
   'click #checkIn' : function(e) {
     e.preventDefault();
     //we may want to move this to the server so we can gate changes
+    var foremen = [];
+    $('#foremanSelector').find(':selected').each(function(i, selected){
+      foremen[i] = $(selected).data().value;
+    });
+    var fencers = [];
+    $('#fencerSelector').find(':selected').each(function(i, selected){
+      fencers[i] = $(selected).data().value;
+    });
     var jobId = $('#job_id').val();
     JobCheckIns.insert(
         {
           job_id : jobId,
-          foreman_id : $('#foremanSelector').val(),
-          fencer_id : $('#fencerSelector').val(),
+          foremen : foremen,
+          fencers : fencers,
           loadTime : $('#loadTime').val(),
           travelTime : $('#travelTime').val(),
           notes : $('#notes').val(),
@@ -15,39 +23,18 @@ Template.jobCheckIn.events({
           contactCustomer : $('#contactCustomer').is(":checked"),
           dailyPicture : $('#dailyPicture').is(":checked"),
           toolsMaterials : $('#toolsMaterials').is(":checked"),
-          checkInTime : new Date(),
+          checkInTime : new Date().getTime(),
           checkOutTime : null,
-          systemCheckInTime: new Date(),
+          systemCheckInTime: new Date().getTime(),
           systemCheckOutTime: null,
           checkInLocation : Geolocation.currentLocation()
         });
     if (!Jobs.findOne({_id : jobId}).startDate) {
         Jobs.update({_id : jobId}, {
-          $set : {startDate : new Date()}
+          $set : {startDate : new Date().getTime()}
         });
     }
     Router.go('/jobHistory/'+jobId);
-  }
-});
-
-
-var onSuccess = function (imageData, jobId) {
-  Pictures.insert({
-    image: imageData,
-    job_id: jobId,
-    createDate: new Date()
-  });
-};
-
-Template.jobCheckIn.events({
-  "click #takePicture": function () {
-    MeteorCamera.getPicture(function (error, data) {
-      // we have a picture
-      if (! error) {
-        console.debug("jobId: " + this.job_id.value);
-        onSuccess(data, this.job_id.value);
-      }
-    });
   }
 });
 

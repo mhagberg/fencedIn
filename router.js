@@ -26,10 +26,6 @@ if (Meteor.isClient) {
   if (!LaunchScreen.hidden) {
     dataReadyHold = LaunchScreen.hold();
   }
-
-  // Show the loading screen on desktop
-  //Router.onBeforeAction('loading', {except: ['join', 'signin']});
-  //Router.onBeforeAction('dataNotFound', {except: ['join', 'signin']});
 }
 
 Router.map(function() {
@@ -44,8 +40,9 @@ Router.map(function() {
 
   this.route('/checkInEdit/:checkIn_id', function() {
     var checkIn = JobCheckIns.findOne({_id: this.params.checkIn_id});
-    var job = Jobs.findOne({job_id: checkIn.job_id});
-    var checkInEdit = {checkIn : checkIn, job : job};
+    var job = Jobs.findOne({_id: checkIn.job_id});
+    var pictures = Pictures.find({checkin_id: checkIn._id});
+    var checkInEdit = {checkIn : checkIn, job : job, pictures: pictures};
     this.render('checkInEdit', {data: function (){
       return checkInEdit;
     } });
@@ -55,15 +52,12 @@ Router.map(function() {
     var job = Jobs.findOne({_id: this.params.job_id});
     var address = Address.findOne({_id: job.address_id});
     var checkIns = JobCheckIns.find({job_id: this.params.job_id}, {sort: {checkInTime: -1}});
-    var foreman = Foreman.findOne({_id: job.foreman_id});
-    var salesman = Salesman.findOne({_id: job.salesman_id});
     var pictures = Pictures.find({job_id: job._id});
-    var jobHistory = {job : job, address : address, checkIns : checkIns, foreman: foreman, salesman: salesman, pictures: pictures};
+    var jobHistory = {job : job, address : address, checkIns : checkIns, pictures: pictures};
     this.render('jobHistory', {data: function (){
       return jobHistory;
     } });
   });
-
 
 
   this.route('/jobCheckIn/:job_id', function() {

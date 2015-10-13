@@ -8,15 +8,25 @@ Template.jobNew.events({
           city: $('#city').val(),
           zip: $('#zip').val()
         });
+
+    var foremen = [];
+    $('#foremanSelector').find(':selected').each(function(i, selected){
+      foremen[i] = $(selected).data().value;
+    });
+    var salesmen = [];
+    $('#salesmanSelector').find(':selected').each(function(i, selected){
+      salesmen[i] = $(selected).data().value;
+    });
+
     var jobId = Jobs.insert(
         {
           address_id: address_Id,
-          foreman_id: $('#foremanSelector').val(),
-          salesman_id: $('#salesmanSelector').val(),
+          foremen: foremen,
+          salesmen: salesmen,
           name : $('#name').val(),
           number: $('#number').val(),
           phone: $('#phone').val(),
-          createDate: new Date(),
+          createDate: new Date().getTime(),
           estStartDate : $('#estStart').val(),
           estFinishDate : $('#estFinish').val(),
           notes : $('#notes').val(),

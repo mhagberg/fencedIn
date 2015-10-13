@@ -1,9 +1,10 @@
 <template name="fencerSelect">
     <label for="fencerSelector">Select the fencer assign to the job today:</label>
-    <div><select class="form-control" id="fencerSelector">
-        <option label=""></option>
-        {{#each fencer}}
-        <option label="{{name}}" {{isSelected _id ../fencer_id}}>{{_id}}</option>
-        {{/each}}
-    </select></div>
+    <div>
+        <select multiple class="form-control" id="fencerSelector">
+            {{#each fencer}}
+            <option label="{{name}}" data-value="{{stringify this}}" {{isSelectedMulti _id ../fencers}}></option>
+            {{/each}}
+        </select>
+    </div>
 </template>

@@ -12,7 +12,7 @@ Meteor.startup(function () {
   }
 
   if (Foreman.find().count() === 0) {
-    var createDate = new Date();
+    var createDate = new Date().getTime();
     Foreman.insert(
         {
           _id : "1",
@@ -45,7 +45,7 @@ Meteor.startup(function () {
   }
 
   if (Fencer.find().count() === 0) {
-    var createDate = new Date();
+    var createDate = new Date().getTime();
     Fencer.insert(
         {
           _id : "1",
@@ -78,7 +78,7 @@ Meteor.startup(function () {
   }
 
   if (Salesman.find().count() === 0) {
-    var createDate = new Date();
+    var createDate = new Date().getTime();
     Salesman.insert(
         {
           _id : "1",
@@ -97,12 +97,22 @@ Meteor.startup(function () {
   }
 
   if (JobCheckIns.find().count() === 0) {
-    var checkInTime = new Date();
+    var checkInTime = new Date().getTime();
     JobCheckIns.insert({
           _id:"1",
           job_id : "1",
-          foreman_id : "1",
-          fencer_id : "1",
+          foremen : [{
+                      _id : "2",
+                      name : "Jay",
+                      email : "jay@secomaFence.com",
+                      createDate : new Date().getTime(),
+                      disableDate : null
+                    }],
+          fencers : [{_id : "4",
+                     name : "Trevor",
+                     email : "Brandon@secomaFence.com",
+                     createDate : createDate,
+                     disableDate : null}],
           loadTime: "15",
           travelTime: "15",
           notes: "I like this job",
@@ -116,15 +126,29 @@ Meteor.startup(function () {
     }
 
   if (Jobs.find().count() === 0) {
-    var createDate = new Date();
+    var createDate = new Date().getTime();
       Jobs.insert({
           _id:"1",
-          foreman_id: "1",
-          salesman_id: "1",
+          foremen:  [{
+            _id : "2",
+            name : "Jay",
+            email : "jay@secomaFence.com",
+            createDate : createDate,
+            disableDate : null
+          }],
+          salesmen: [
+            {
+              _id : "1",
+              name : "Nathan",
+              email : "mark@secomaFence.com",
+              createDate : createDate,
+              disableDate : null
+            }
+          ],
           name : "Smith",
           number: "nh1234",
           address_id: "1",
-          createDate: new Date(),
+          createDate: new Date().getTime(),
           estStartDate : createDate,
           estFinishDate : createDate ,
           startDate : createDate ,
@@ -138,24 +162,53 @@ Meteor.startup(function () {
       Pictures.insert({
         _id:"1",
         job_id: "1",
-        createDate: new Date(),
+        createDate: new Date().getTime(),
         image: null
       });
   }
-
-  if (JobCheckIns.find({checkOutTime: /.*/}).count() === 0) {
-    var jobs = JobCheckIns.find();
-    jobs.forEach(function(job){
-      JobCheckIns.update(
-          {_id : job._id},
+  if (Fencer.find().count() === 4) {
+    var salesmen = Salesman.find();
+    salesmen.forEach(function(salesman) {
+      Salesman.update(
+          {_id : salesman._id},
           {
             $set : {
-              checkOutTime : null,
-              systemCheckInTime : null,
-              systemCheckOutTime : null
+              createDate : new Date().getTime()
             }
           });
     });
-    };
+    var fencers = Fencer.find();
+    fencers.forEach(function(fencer) {
+      Fencer.update(
+          {_id : fencer._id},
+          {
+            $set : {
+              createDate : new Date().getTime()
+            }
+          });
+    });
+    var foremen = Foreman.find();
+    foremen.forEach(function(foreman) {
+      Foreman.update(
+          {_id : foreman._id},
+          {
+            $set : {
+              createDate : new Date().getTime()
+            }
+          });
+    });
+
+    var pictures = Pictures.find();
+    pictures.forEach(function(picture) {
+      Pictures.update(
+          {_id : picture._id},
+          {
+            $set : {
+              checkin_id : '0'
+            }
+          });
+    });
   }
-  );
+
+});
+

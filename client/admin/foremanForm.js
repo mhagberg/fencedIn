@@ -14,7 +14,7 @@ Template.foremanForm.events({
           {
             name : $('#name').val(),
             email : $('#email').val(),
-            createDate : new Date()
+            createDate : new Date().getTime()
           });
     }
     Router.go('/foremenList');

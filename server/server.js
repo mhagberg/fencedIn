@@ -6,14 +6,14 @@ Meteor.startup(function() {
 
 
 Meteor.methods({
-  updateCheckIn: function (checkInId,foremanId,fencerId,loadTime,travelTime,notes,additionalMaterials
+  updateCheckIn: function (checkInId,foremen,fencers,loadTime,travelTime,notes,additionalMaterials
       ,contactCustomer,dailyPicture,toolsMaterials,checkInTime, checkOutTime,checkInLocation
   ){
     JobCheckIns.update({_id : checkInId},
         {
           $set : {
-            foreman_id : foremanId,
-            fencer_id : fencerId,
+            foremen : foremen,
+            fencers : fencers,
             loadTime : loadTime,
             travelTime : travelTime,
             notes : notes,

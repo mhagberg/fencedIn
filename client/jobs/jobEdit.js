@@ -10,13 +10,23 @@ Template.jobEdit.events({
           zip : $('#zip').val()
         }
     });
+
+    var foremen = [];
+    $('#foremanSelector').find(':selected').each(function(i, selected){
+      foremen[i] = $(selected).data().value;
+    });
+    var salesmen = [];
+    $('#salesmanSelector').find(':selected').each(function(i, selected){
+      salesmen[i] = $(selected).data().value;
+    });
+
     var jobId = $('#jobId').val();
     Jobs.update({_id: jobId},
         {
           $set :{
             address_id: addressId,
-            foreman_id: $('#foremanSelector').val(),
-            salesman_id: $('#salesmanSelector').val(),
+            foremen: foremen,
+            salesmen: salesmen,
             name : $('#name').val(),
             number: $('#number').val(),
             phone: $('#phone').val(),

@@ -1,5 +1,5 @@
 Template.foremanSelect.helpers({
   foreman : function() {
-    return Foreman.find();
+    return Foreman.find({disableDate : null});
   }
 });
