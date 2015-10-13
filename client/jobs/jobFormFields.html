@@ -25,6 +25,10 @@
                         {{> foremanSelect}}
                         {{> salesmanSelect}}
                     {{/with}}
+                    {{#unless job}}
+                        {{> foremanSelect}}
+                        {{> salesmanSelect}}
+                    {{/unless}}
                 </div>
             </form>
         </div>
