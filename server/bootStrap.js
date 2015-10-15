@@ -158,5 +158,40 @@ Meteor.startup(function () {
         });
     }
 
+  if (Jobs.find({billingContact: null}).count() !== 0) {
+    var jobs = Jobs.find();
+    jobs.forEach(function(job) {
+      JobCheckIns.update(
+          {_id : job._id},
+          {
+            $set : {
+              billingContact : {
+                name : "",
+                phone : "",
+                address : {
+                  address1 : "",
+                  address2 : "",
+                  city : "",
+                  state : "",
+                  zip : ""
+                }
+              },
+              locationContact : {
+                name : "",
+                phone : "",
+                address : {
+                  address1 : "",
+                  address2 : "",
+                  city : "",
+                  state : "",
+                  zip : ""
+                }
+              },
+            }
+          });
+    });
+  }
+
+
 });
 

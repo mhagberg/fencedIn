@@ -5,30 +5,44 @@
         </div>
         <div class="row show-grid gutter-small">
             {{#with job}}
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h5>Job Details:</h5>
                 <address class="bg-primary img-rounded job-info">
                     <abbr title="Name">Job Name:</abbr> {{name}}<br/><br/>
                     <abbr title="Job Number">Job #:</abbr> {{number}}<br><br>
-                    <abbr title="Job Create Date">Create Date:</abbr> {{formatDate createDate "long"}}<br><br>
+                    <abbr title="Job Create Date">Created:</abbr> {{formatDate createDate "long"}}<br><br>
                     <abbr title="Job Type">Job Type:</abbr> {{type}}
                 </address>
             </div>
-            {{/with}}
             <p></p>
 
-            <div class="col-md-4">
-                <h5>Address:</h5>
+            <div class="col-md-3">
+                <h5>Billing Contact:</h5>
                 <address class="bg-primary img-rounded job-info">
-                    {{#with address}}
-                    {{address1}}, {{address2}}<br><br>
-                    {{city}}, WA {{zip}}<br><br>
+                    {{#with billingContact}}
+                        {{name}}, <br/><br/>
+                        {{phone}},<br/><br/>
+                        {{#with address}}
+                            {{address1}}, {{address2}}<br><br>
+                            {{city}}, {{state}}, {{zip}}<br><br>
+                        {{/with}}
                     {{/with}}
-                    <abbr title="Phone">Phone:</abbr> {{job.phone}}
                 </address>
             </div>
-            {{#with job}}
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <h5>Location Contact:</h5>
+                <address class="bg-primary img-rounded job-info">
+                    {{#with locationContact}}
+                        {{name}}, <br/><br/>
+                        {{phone}},<br/><br/>
+                        {{#with address}}
+                            {{address1}}, {{address2}}<br><br>
+                            {{city}}, {{state}}, {{zip}}<br><br>
+                        {{/with}}
+                    {{/with}}
+                </address>
+            </div>
+            <div class="col-md-3">
                 <h5>Job Progress:</h5>
                 <address class="bg-primary img-rounded job-info">
                     <abbr title="Job Est Start Date">Est Start:</abbr> {{formatDate estStartDate "long"}}<br/><br/>
@@ -77,9 +91,32 @@
             <div class="col-md-3"><button type="button" class="btn-success btn-xs" id="checkOutBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true">Check-Out</span></button></div>
             {{/if}}
             {{#unless finishDate}}
-            <div class="col-md-3"><button type="button" class="btn btn-danger" id="finishBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-saved" aria-hidden="true">Finish</span></button></div>
+            <div class="col-md-3"><button type="button" class="btn btn-info" id="finishBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-saved" aria-hidden="true">Finish</span></button></div>
+            {{/unless}}
+            {{#unless hidden}}
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-danger" id="deleteBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-saved" aria-hidden="true">Delete</span></button>
+                </div>
             {{/unless}}
             {{/with}}
+        </div>
+
+        <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="modal-title">Are you sure?</h4>
+                    </div>
+                    <div class="modal-body">
+                        This cannot be undone.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirm-yes-button">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
         </div>
     <table class="table table-striped table-bordered">
         <thead>

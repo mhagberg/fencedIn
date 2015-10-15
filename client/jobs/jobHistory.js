@@ -6,9 +6,18 @@ Template.jobHistory.events({
   },
   'click #finishBtn' : function(e) {
     e.preventDefault();
-    result = Jobs.update({_id: this._id}, {
+      Jobs.update({_id: this._id}, {
       $set: {finishDate: new Date().getTime()}
     });
+  },
+  'click #deleteBtn' : function(e) {
+    e.preventDefault();
+      var x;
+      if (confirm("Click OK if you really want to delete this job?") == true) {
+        Jobs.update({_id: this._id}, {
+        $set: {hidden: true}
+        });
+      }
   },
   'click .jobLink' : function(e) {
     e.preventDefault();

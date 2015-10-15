@@ -5,13 +5,24 @@
         </div>
         <div class="row">
             <form>
-                <input id="addressId" type="hidden" value="{{job.address_id}}"/>
                 <input id="jobId" type="hidden" value="{{job._id}}"/>
                 <div class="form-group">
                     <div><label for="name">Job Name: </label><input class="form-control" id="name" type="text" value="{{job.name}}"/></div>
                     <div><label for="number">Job Number: </label><input id="number" class="form-control" type="text" value="{{job.number}}"/></div>
-                    {{> addressTemplate}}
-                    <div><label for="phone">Phone #: </label><input id="phone" class="form-control tel" type="tel" value="{{job.phone}}"/></div>
+                    {{#with job.billingContact}}
+                        {{> contactTemplate context="Billing"}}
+                    {{/with}}
+                    {{#unless job.billingContact}}
+                        {{> contactTemplate context="Billing"}}
+                    {{/unless}}
+                    <div class="col-md-16"><button type="button" class="btn-primary btn-xs" id="copyContactInfoBtn"><span class="glyphicon glyphicon-copy" aria-hidden="true">Copy Contact Info</span></button></div>
+                    <br/>
+                    {{#with job.locationContact}}
+                        {{> contactTemplate context="Location"}}
+                    {{/with}}
+                    {{#unless job.locationContact}}
+                        {{> contactTemplate context="Location"}}
+                    {{/unless}}
                     <div><label for="estStart">Est Start: </label><input id="estStart" class="form-control " type="date" value="{{formatDate job.estStartDate 'inputDate'}}"/></div>
                     <div><label for="start">Start: </label><input id="start" class="form-control" type="date" value="{{formatDate job.startDate 'inputDate'}}"/></div>
                     <div><label for="estFinish">Est Finish: </label><input id="estFinish" class="form-control" type="date" value="{{formatDate job.estFinishDate 'inputDate'}}"/></div>

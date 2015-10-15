@@ -31,8 +31,7 @@ if (Meteor.isClient) {
 Router.map(function() {
   this.route('/jobEdit/:job_id', function() {
     var job = Jobs.findOne({_id: this.params.job_id});
-    var address = Address.findOne({_id: job.address_id});
-    var jobEdit = {job : job, address : address};
+    var jobEdit = {job : job};
     this.render('jobEdit', {data: function (){
       return jobEdit;
     } });
@@ -50,10 +49,9 @@ Router.map(function() {
 
   this.route('/jobHistory/:job_id', function() {
     var job = Jobs.findOne({_id: this.params.job_id});
-    var address = Address.findOne({_id: job.address_id});
     var checkIns = JobCheckIns.find({job_id: this.params.job_id}, {sort: {checkInTime: -1}});
     var pictures = Pictures.find({job_id: job._id});
-    var jobHistory = {job : job, address : address, checkIns : checkIns, pictures: pictures};
+    var jobHistory = {job : job, checkIns : checkIns, pictures: pictures};
     this.render('jobHistory', {data: function (){
       return jobHistory;
     } });
@@ -70,8 +68,14 @@ Router.map(function() {
   this.route('home', {
     path: '/',
     action: function() {
-      var job = Jobs.findOne({}, {sort: {createDate: -1}, limit: 1});
-      Router.go('/jobHistory/'+job._id);
+      var job = Jobs.findOne({hidden:null}, {sort: {createDate: -1}, limit: 1});
+      console.log("job: " + job);
+      if (job) {
+        Router.go('/jobHistory/' + job._id);
+      } else
+      {
+        Router.go('/jobNew');
+      }
   }});
 
   this.route('/jobNew');
