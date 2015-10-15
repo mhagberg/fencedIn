@@ -158,39 +158,42 @@ Meteor.startup(function () {
         });
     }
 
-  if (Jobs.find({billingContact: null}).count() !== 0) {
-    var jobs = Jobs.find();
-    jobs.forEach(function(job) {
-      JobCheckIns.update(
-          {_id : job._id},
-          {
-            $set : {
-              billingContact : {
-                name : "",
-                phone : "",
-                address : {
-                  address1 : "",
-                  address2 : "",
-                  city : "",
-                  state : "",
-                  zip : ""
-                }
-              },
-              locationContact : {
-                name : "",
-                phone : "",
-                address : {
-                  address1 : "",
-                  address2 : "",
-                  city : "",
-                  state : "",
-                  zip : ""
-                }
-              },
-            }
-          });
-    });
-  }
+  //if (Jobs.find({billingContact: null}).count() !== 0) {
+  //  var jobs = Jobs.find();
+  //  jobs.forEach(function(job) {
+  //    var address = Address.findOne({_id : job.address_id});
+  //    if (address) {
+  //      Jobs.update(
+  //          {_id : job._id},
+  //          {
+  //            $set : {
+  //              billingContact : {
+  //                name : "",
+  //                phone : job.phone,
+  //                address : {
+  //                  address1 : address.address1,
+  //                  address2 : address.address2,
+  //                  city : address.city,
+  //                  state : "WA",
+  //                  zip : address.zip
+  //                }
+  //              },
+  //              locationContact : {
+  //                name : "",
+  //                phone : "",
+  //                address : {
+  //                  address1 : "",
+  //                  address2 : "",
+  //                  city : "",
+  //                  state : "",
+  //                  zip : ""
+  //                }
+  //              },
+  //            }
+  //          });
+  //    }
+  //  });
+  //}
 
 
 });
