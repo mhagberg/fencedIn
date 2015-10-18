@@ -19,6 +19,7 @@ Template.jobNew.events({
               address1 : $('#address1Billing').val(),
               address2 : $('#address2Billing').val(),
               city : $('#cityBilling').val(),
+              state : $('#stateBilling').val(),
               zip : $('#zipBilling').val()
             }
 
@@ -30,6 +31,7 @@ Template.jobNew.events({
               address1 : $('#address1Location').val(),
               address2 : $('#address2Location').val(),
               city : $('#cityLocation').val(),
+              state : $('#stateLocation').val(),
               zip : $('#zipLocation').val()
             }
           },

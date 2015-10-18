@@ -9,17 +9,17 @@
                 <div class="form-group">
                     <div><label for="name">Job Name: </label><input class="form-control" id="name" type="text" value="{{job.name}}"/></div>
                     <div><label for="number">Job Number: </label><input id="number" class="form-control" type="text" value="{{job.number}}"/></div>
-                    {{#with job.billingContact}}
-                        {{> contactTemplate context="Billing"}}
-                    {{/with}}
+                    {{#if job.billingContact}}
+                        {{> contactTemplate context="Billing" contact=job.billingContact}}
+                    {{/if}}
                     {{#unless job.billingContact}}
                         {{> contactTemplate context="Billing"}}
                     {{/unless}}
                     <div class="col-md-16"><button type="button" class="btn-primary btn-xs" id="copyContactInfoBtn"><span class="glyphicon glyphicon-copy" aria-hidden="true">Copy Contact Info</span></button></div>
                     <br/>
-                    {{#with job.locationContact}}
-                        {{> contactTemplate context="Location"}}
-                    {{/with}}
+                    {{#if job.locationContact}}
+                        {{> contactTemplate context="Location" contact=job.locationContact}}
+                    {{/if}}
                     {{#unless job.locationContact}}
                         {{> contactTemplate context="Location"}}
                     {{/unless}}

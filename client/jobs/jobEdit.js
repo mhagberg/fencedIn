@@ -21,6 +21,7 @@ Template.jobEdit.events({
                 address1 : $('#address1Billing').val(),
                 address2 : $('#address2Billing').val(),
                 city : $('#cityBilling').val(),
+                state : $('#stateBilling').val(),
                 zip : $('#zipBilling').val()
               }
             },
@@ -31,6 +32,7 @@ Template.jobEdit.events({
                 address1 : $('#address1Location').val(),
                 address2 : $('#address2Location').val(),
                 city : $('#cityLocation').val(),
+                state : $('#stateLocation').val(),
                 zip : $('#zipLocation').val()
               }
             },
@@ -55,6 +57,7 @@ Template.jobEdit.events({
     $('#address1Location').val($('#address1Billing').val());
     $('#address2Location').val($('#address2Billing').val());
     $('#cityLocation').val($('#cityBilling').val());
+    $('#stateLocation').val($('#stateBilling').val());
     $('#zipLocation').val($('#zipBilling').val());
   }
 });

@@ -1,8 +1,9 @@
 <template name="contactTemplate">
-    <div><label for="contactName{{this.context}}">{{this.context}} Contact Name: </label><input id="contactName{{this.context}}" class="form-control" type="text" value="{{name}}"/></div>
-    <div><label for="contactPhone{{this.context}}">{{this.context}} Contact Phone: </label><input id="contactPhone{{this.context}}" class="form-control tel" type="tel" value="{{phone}}"/></div>
-    <div><label for="address1{{this.context}}">{{this.context}} Address: </label><input class="form-control" id="address1{{this.context}}" type="text" value="{{address.address1}}"/></div>
-    <div><label for="address2{{this.context}}">{{this.context}} Address 2: </label><input class="form-control" id="address2{{this.context}}" type="text" value="{{address.address2}}"/></div>
-    <div><label for="city{{this.context}}">{{this.context}} City: </label><input class="form-control" id="city{{this.context}}" type="text" value="{{address.city}}"/></div>
-    <div><label for="zip{{this.context}}">{{this.context}} Zip Code:</label><input class="form-control" id="zip{{this.context}}" type="text" value="{{address.zip}}"/></div>
+    <div><label for="contactName{{this.context}}">{{this.context}} Contact Name: </label><input id="contactName{{this.context}}" class="form-control" type="text" value="{{this.contact.name}}"/></div>
+    <div><label for="contactPhone{{this.context}}">{{this.context}} Contact Phone: </label><input id="contactPhone{{this.context}}" class="form-control tel" type="tel" value="{{this.contact.phone}}"/></div>
+    <div><label for="address1{{this.context}}">{{this.context}} Address: </label><input class="form-control" id="address1{{this.context}}" type="text" value="{{this.contact.address.address1}}"/></div>
+    <div><label for="address2{{this.context}}">{{this.context}} Address 2: </label><input class="form-control" id="address2{{this.context}}" type="text" value="{{this.contact.address.address2}}"/></div>
+    <div><label for="city{{this.context}}">{{this.context}} City: </label><input class="form-control" id="city{{this.context}}" type="text" value="{{this.contact.address.city}}"/></div>
+    <div><label for="state{{this.context}}">{{this.context}} State:</label><input class="form-control" id="state{{this.context}}" type="text" value="{{this.contact.address.state}}"/></div>
+    <div><label for="zip{{this.context}}">{{this.context}} Zip Code:</label><input class="form-control" id="zip{{this.context}}" type="text" value="{{this.contact.address.zip}}"/></div>
 </template>
