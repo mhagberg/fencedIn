@@ -68,7 +68,7 @@ Router.map(function() {
   this.route('home', {
     path: '/',
     action: function() {
-      var job = Jobs.findOne({hidden:null}, {sort: {createDate: -1}, limit: 1});
+      var job = Jobs.findOne({hidden:null}, {sort: {createDate: -1}});
       console.log("job: " + job);
       if (job) {
         Router.go('/jobHistory/' + job._id);
@@ -122,6 +122,15 @@ Router.map(function() {
       return data;
     } });
   });
+
+  this.route('/hiddenJobs', function() {
+    var jobs = Jobs.find({hidden : true}, { name: 1, number: 1, createDate: 1, finishDate: 1}, {sort:{createDate:-1}});
+    var data = {jobs: jobs};
+    this.render('hiddenJobs', {data: function (){
+      return data;
+    } });
+  });
+
 
   this.route('/fencerForm');
 

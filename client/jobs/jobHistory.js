@@ -10,10 +10,10 @@ Template.jobHistory.events({
       $set: {finishDate: new Date().getTime()}
     });
   },
-  'click #deleteBtn' : function(e) {
+  'click #hideBtn' : function(e) {
     e.preventDefault();
       var x;
-      if (confirm("Click OK if you really want to delete this job?") == true) {
+      if (confirm("Click OK if you really want to hide this job? You will have to go to the admin page to un-hide it.") == true) {
         Jobs.update({_id: this._id}, {
         $set: {hidden: true}
         });

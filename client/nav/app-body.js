@@ -73,7 +73,7 @@ Template.appBody.helpers({
   },
   jobs: function() {
      //var jobs = Jobs.find({$or: [{finishDate: {$lt: future}}, {finishDate: {$exists: false}}, {finishDate: ""}]},{sort:{createDate:-1}});
-     var jobs = Jobs.find({hidden:null},{ name: 1, createDate: 1 },  {sort:{createDate:-1}});
+     var jobs = Jobs.find({hidden:null},{sort:{createDate:-1, name:1,}});
      var jobCheckInCounts = {};
      jobs.forEach(function(job){
         var count = JobCheckIns.find({job_id : job._id}).count();

@@ -10,5 +10,9 @@ Template.admin.events({
   'click .configure-fencer' : function(e) {
     e.preventDefault();
     Router.go('fencersList');
+  },
+  'click .configure-hiddenJobs' : function(e) {
+    e.preventDefault();
+    Router.go('hiddenJobs');
   }
 });
