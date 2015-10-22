@@ -2,36 +2,19 @@
   <div id="container" class="{{menuOpen}} {{cordova}}">
 
     <section id="menu">
-      {{#if currentUser}}
-        <div class="btns-group-vertical">
-          <a href="#" class="js-user-menu btn-secondary">
-            {{#if userMenuOpen}}
-              <span class="icon-arrow-up"></span>
-              {{else}}
-              <span class="icon-arrow-down"></span>
-            {{/if}}
-            {{emailLocalPart}}
-          </a>
-          {{#if userMenuOpen}}
-            <a class="js-logout btn-secondary">Logout</a>
-          {{/if}}
-        </div>
-      {{else}}
         <div class="btns-group">
-          <a href="{{pathFor 'signin'}}" class="btn-secondary">Sign In</a>
-          <a href="{{pathFor 'join'}}" class="btn-secondary">Join</a>
+          {{> filterByForemanSelect}}
         </div>
-      {{/if}}
 
       <div class="list-jobs">
         <a class="js-new-list link-list-new"><span class="icon-plus"></span>New Job</a>
         <a class="js-admin link-list-new"><span class="icon-cog"></span>Admin</a>
-        {{#each jobs.jobs}}
-          <a href="/jobHistory/{{_id}}" class="list-job {{activeListClass}} {{#if finishDate}}finished{{/if}}" title="{{name}}">
+        {{#each jobsList.jobs}}
+          <a href="/jobHistory/{{_id}}/{{selectedForemen}}" class="list-job {{activeListClass}} {{#if finishDate}}finished{{/if}}" title="{{name}}">
             {{#if userId}}
               <span class="icon-lock"></span>
             {{/if}}
-              <span class="count-list">{{jobCheckInCount jobs.jobCheckInCounts _id}}</span>
+              <span class="count-list">{{jobCheckInCount jobsList.jobCheckInCounts _id}}</span>
             {{name}}
           </a>
         {{/each}}

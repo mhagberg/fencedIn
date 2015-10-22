@@ -1,10 +1,12 @@
 var onSuccess = function (imageData, jobId, checkin_id) {
-  Pictures.insert({
+  var pictureId = Pictures.insert({
     image: imageData,
     job_id: jobId,
     checkin_id: checkin_id,
     createDate: new Date().getTime()
   });
+  Session.set('pictureId', pictureId);
+  Session.set('previewImage', imageData);
 };
 
 Template.checkInForm.events({
@@ -12,9 +14,15 @@ Template.checkInForm.events({
     MeteorCamera.getPicture(function (error, data) {
       // we have a picture
       if (! error) {
-        console.debug("jobId: " + this.job_id.value);
         onSuccess(data, this.job_id.value, this.checkIn_id.value);
       }
     });
+  }
+});
+
+Template.checkInForm.helpers({
+  preview : function() {
+    var image = Session.get('previewImage');
+    return data = {image:image};
   }
 });

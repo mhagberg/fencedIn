@@ -12,8 +12,7 @@ Router.configure({
   // the data it's expecting is present
   //waitOn: function() {
   //  return [
-  //    Meteor.subscribe('publicLists'),
-  //    Meteor.subscribe('privateLists')
+  //    Meteor.subscribe('jobs')
   //  ];
   //}
 });
@@ -50,8 +49,19 @@ Router.map(function() {
   this.route('/jobHistory/:job_id', function() {
     var job = Jobs.findOne({_id: this.params.job_id});
     var checkIns = JobCheckIns.find({job_id: this.params.job_id}, {sort: {checkInTime: -1}});
-    var pictures = Pictures.find({job_id: job._id});
+    var pictures = Pictures.find({job_id: this.params.job_id});
     var jobHistory = {job : job, checkIns : checkIns, pictures: pictures};
+    this.render('jobHistory', {data: function (){
+      return jobHistory;
+    } });
+  });
+
+  this.route('/jobHistory/:job_id/:foremenIds', function() {
+    var job = Jobs.findOne({_id: this.params.job_id});
+    var foremenIds = this.params.foremenIds;
+    var checkIns = JobCheckIns.find({job_id: this.params.job_id}, {sort: {checkInTime: -1}});
+    var pictures = Pictures.find({job_id: this.params.job_id});
+    var jobHistory = {job : job, checkIns : checkIns, pictures: pictures, foremen: foremenIds};
     this.render('jobHistory', {data: function (){
       return jobHistory;
     } });
@@ -59,7 +69,8 @@ Router.map(function() {
 
 
   this.route('/jobCheckIn/:job_id', function() {
-    var checkIn = {job_id:Jobs.findOne({_id: this.params.job_id})._id}
+    var checkIn = {job_id:this.params.job_id}
+    delete Session.keys['previewImage'];
     this.render('jobCheckIn', {data: function() {
       return checkIn}
     });
@@ -69,7 +80,6 @@ Router.map(function() {
     path: '/',
     action: function() {
       var job = Jobs.findOne({hidden:null}, {sort: {createDate: -1}});
-      console.log("job: " + job);
       if (job) {
         Router.go('/jobHistory/' + job._id);
       } else

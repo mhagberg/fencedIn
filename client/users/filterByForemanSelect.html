@@ -1,0 +1,13 @@
+<template name="filterByForemanSelect">
+    <div>
+        <h5 for="foremanSelector">Show Jobs Assigned To:</h5>
+    </div>
+    <div>
+        <select class="form-control" id="filterByForemanSelector">
+            <option label="Show All" data-value=""></option>
+            {{#each foreman}}
+            <option label="{{name}}"  data-value="{{_id}}"></option>
+            {{/each}}
+        </select>
+    </div>
+</template>

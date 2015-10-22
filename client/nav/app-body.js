@@ -50,6 +50,30 @@ Template.appBody.onRendered(function() {
   };
 });
 
+Template.appBody.selectedForemenIds = function() {
+  if ($('#filterByForemanSelector').find(':selected').length) {
+    return $('#filterByForemanSelector').find(':selected').data().value;
+  }
+  return "";
+};
+
+
+Template.appBody.buildMeu = function () {
+  var current = Router.current();
+  var foremenIds = current.params.foremenIds;
+  if (foremenIds) {
+    var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':{$in:[foremenIds]}}]}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1},{limit:10});
+  } else {
+    var jobs = Jobs.find({hidden : null}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1}, {limit:50});
+  }
+  var jobCheckInCounts = {};
+  jobs.forEach(function(job){
+    jobCheckInCounts[job._id] = JobCheckIns.find({job_id : job._id}).count();
+  });
+  return {jobs: jobs, jobCheckInCounts: jobCheckInCounts};
+};
+
+
 Template.appBody.helpers({
   // We use #each on an array of one item so that the "list" template is
   // removed and a new copy is added when changing lists, which is
@@ -64,22 +88,17 @@ Template.appBody.helpers({
   cordova: function() {
     return Meteor.isCordova && 'cordova';
   },
-  emailLocalPart: function() {
-    var email = Meteor.user().emails[0].address;
-    return email.substring(0, email.indexOf('@'));
-  },
   userMenuOpen: function() {
     return Session.get(USER_MENU_KEY);
   },
-  jobs: function() {
-     //var jobs = Jobs.find({$or: [{finishDate: {$lt: future}}, {finishDate: {$exists: false}}, {finishDate: ""}]},{sort:{createDate:-1}});
-     var jobs = Jobs.find({hidden:null},{sort:{createDate:-1, name:1}},{createDate:1, name:1});
-     var jobCheckInCounts = {};
-     jobs.forEach(function(job){
-        var count = JobCheckIns.find({job_id : job._id}).count();
-        jobCheckInCounts[job._id] = count;
-     });
-  return {jobs: jobs, jobCheckInCounts: jobCheckInCounts}
+  cordova: function() {
+    return Meteor.isCordova && 'cordova';
+  },
+  jobsList: function() {
+    return Template.appBody.buildMeu();
+  },
+  selectedForemen: function(){
+    return Template.appBody.selectedForemenIds();
   },
   jobCheckInCount: function(jobCheckInCounts, jobId) {
     if (jobCheckInCounts && jobId) {
@@ -112,28 +131,15 @@ Template.appBody.events({
     event.preventDefault();
   },
 
-  'click .js-user-menu': function(event) {
-    Session.set(USER_MENU_KEY, ! Session.get(USER_MENU_KEY));
-    // stop the menu from closing
-    event.stopImmediatePropagation();
-  },
-
   'click #menu a': function() {
     Session.set(MENU_KEY, false);
   },
-
-  'click .js-logout': function() {
-    Meteor.logout();
-    
-    // if we are on a private list, we'll need to go to a public one
-    var current = Router.current();
-    if (current.route.name === 'listsShow' && current.data().userId) {
-      Router.go('listsShow', Lists.findOne({userId: {$exists: false}}));
-    }
-  },
-
   'click .js-new-list': function() {
       Router.go('jobNew');
+  },
+  'change #filterByForemanSelector': function() {
+    var current = Router.current();
+    Router.go('/jobHistory/'+ current.params.job_id +'/'+ Template.appBody.selectedForemenIds());
   },
 
   'click .js-admin': function() {
