@@ -48,7 +48,7 @@ Template.jobEdit.events({
             type : $('#type').val()
           }
         });
-    Router.go('/jobHistory/'+jobId);
+    Router.go('/jobHistory/'+jobId+'/'+foremenFilterParam());
   },
   'click #copyContactInfoBtn' : function(e) {
     e.preventDefault();
