@@ -45,7 +45,7 @@ Template.jobNew.events({
           notes : $('#notes').val(),
           type : $('#type').val()
         });
-    Router.go('/jobHistory/'+jobId);
+    Router.go('/jobHistory/'+jobId+'/'+ foremenFilterParam());
   },
   'click #copyContactInfoBtn' : function(e) {
     e.preventDefault();
@@ -54,6 +54,7 @@ Template.jobNew.events({
     $('#address1Location').val($('#address1Billing').val());
     $('#address2Location').val($('#address2Billing').val());
     $('#cityLocation').val($('#cityBilling').val());
+    $('#stateLocation').val($('#stateBilling').val());
     $('#zipLocation').val($('#zipBilling').val());
   }
 });

@@ -60,7 +60,7 @@ Template.appBody.selectedForemenIds = function() {
 
 Template.appBody.buildMeu = function () {
   var current = Router.current();
-  var foremenIds = current.params.foremenIds;
+  var foremenIds = current.params.foremenId;
   if (foremenIds) {
     var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':{$in:[foremenIds]}}]}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1},{limit:10});
   } else {
@@ -135,7 +135,7 @@ Template.appBody.events({
     Session.set(MENU_KEY, false);
   },
   'click .js-new-list': function() {
-      Router.go('jobNew');
+      Router.go('/jobNew/'+foremenFilterParam());
   },
   'change #filterByForemanSelector': function() {
     var current = Router.current();

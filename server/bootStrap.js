@@ -158,37 +158,24 @@ Meteor.startup(function () {
         });
     }
 
-  //if (Jobs.find({billingContact: null}).count() !== 0) {
-  //  var jobs = Jobs.find();
+  //****** This can be used to set Job foremen for jobs that aren't assigned by have checkins from a foreman
+  //if (Jobs.find({'foremen._id': {$exists:false}}).count()) {
+  //  var jobs = Jobs.find({'foremen._id': {$exists:false}});
   //  jobs.forEach(function(job) {
-  //    var address = Address.findOne({_id : job.address_id});
-  //    if (address) {
+  //    var checkIn = JobCheckIns.findOne({$and:[{job_id:job._id}, {'foremen._id': {$exists:true}}]});
+  //    if (checkIn) {
+  //      var foreman = checkIn.foremen;
   //      Jobs.update(
   //          {_id : job._id},
   //          {
   //            $set : {
-  //              billingContact : {
-  //                name : "",
-  //                phone : job.phone,
-  //                address : {
-  //                  address1 : address.address1,
-  //                  address2 : address.address2,
-  //                  city : address.city,
-  //                  state : "WA",
-  //                  zip : address.zip
-  //                }
-  //              },
-  //              locationContact : {
-  //                name : "",
-  //                phone : "",
-  //                address : {
-  //                  address1 : "",
-  //                  address2 : "",
-  //                  city : "",
-  //                  state : "",
-  //                  zip : ""
-  //                }
-  //              },
+  //              foremen:  [{
+  //                _id : foreman[0]._id,
+  //                name : foreman[0].name,
+  //                email : foreman[0].email,
+  //                createDate : foreman[0].createDate,
+  //                disableDate : foreman[0].disableDate
+  //              }]
   //            }
   //          });
   //    }

@@ -2,7 +2,7 @@
 Template.jobHistory.events({
   'click #checkInBtn' : function(e) {
     e.preventDefault();
-    Router.go('/jobCheckIn/'+this._id);
+    Router.go('/jobCheckIn/'+this._id +'/'+ foremenFilterParam());
   },
   'click #finishBtn' : function(e) {
     e.preventDefault();
@@ -21,11 +21,11 @@ Template.jobHistory.events({
   },
   'click .jobLink' : function(e) {
     e.preventDefault();
-    Router.go('/jobEdit/'+this.job._id);
+    Router.go('/jobEdit/'+this.job._id + '/' + foremenFilterParam());
   },
   'click .checkInLink' : function(e) {
     e.preventDefault();
-    Router.go('/checkInEdit/'+this._id);
+    Router.go('/checkInEdit/'+this._id+'/'+ foremenFilterParam());
   },
   'click #checkOutBtn' : function(e) {
     e.preventDefault();

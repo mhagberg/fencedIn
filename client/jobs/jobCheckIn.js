@@ -41,7 +41,7 @@ Template.jobCheckIn.events({
           checkin_id : checkin_id
         }
     });
-    Router.go('/jobHistory/'+jobId);
+    Router.go('/jobHistory/'+jobId + '/' + foremenFilterParam());
   }
 });
 
