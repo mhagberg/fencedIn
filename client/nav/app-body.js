@@ -1,6 +1,7 @@
 var MENU_KEY = 'menuOpen';
 var JOB_LIMIT = 'jobLimit';
 var FOREMAN_ID = 'foremanId';
+var JOB_SEARCH_TEXT = 'jobSearchText';
 Session.setDefault(MENU_KEY, false);
 
 var USER_MENU_KEY = 'userMenuOpen';
@@ -52,7 +53,7 @@ Template.appBody.onRendered(function() {
   };
 });
 
-Template.appBody.selectedForemenIds = function() {
+Template.appBody.selectedForemanId = function() {
   if ($('#filterByForemanSelector').find(':selected').length) {
     return $('#filterByForemanSelector').find(':selected').data().value;
   }
@@ -63,10 +64,12 @@ Template.appBody.selectedForemenIds = function() {
 Template.appBody.buildMeu = function () {
   var foremanId = Session.get(FOREMAN_ID) ? Session.get(FOREMAN_ID) : '';
   var jobLimit = Session.get(JOB_LIMIT) ? Session.get(JOB_LIMIT) : 5;
+  var jobSearchText = Session.get(JOB_SEARCH_TEXT) ? Session.get(JOB_SEARCH_TEXT) : "";
+  var regex = new RegExp(".*" + jobSearchText + ".*", "i");
   if (foremanId) {
-    var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':foremanId}]}, {limit:jobLimit}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1});
+    var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':foremanId}, {$or:[{name:regex}, {number:regex}]}]}, {limit:jobLimit}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1});
   } else {
-    var jobs = Jobs.find({hidden : null}, {limit:jobLimit}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1});
+    var jobs = Jobs.find({$and:[{hidden : null}, {$or:[{name:regex}, {number:regex}]}]}, {limit:jobLimit}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1});
   }
   var jobCheckInCounts = {};
   jobs.forEach(function(job){
@@ -74,6 +77,16 @@ Template.appBody.buildMeu = function () {
   });
   return {jobs: jobs, jobCheckInCounts: jobCheckInCounts};
 };
+
+Template.appBody.clearFilters = function() {
+  Session.set(JOB_SEARCH_TEXT, "");
+  $('#jobSearch').val("");
+  Session.set(JOB_LIMIT, 5);
+  $('#limitJobs5').prop("checked", true);
+  Session.set(FOREMAN_ID, "");
+  $('#filterByForemanSelector').val("");
+};
+
 
 
 Template.appBody.helpers({
@@ -100,7 +113,7 @@ Template.appBody.helpers({
     return Template.appBody.buildMeu();
   },
   selectedForemen: function(){
-    return Template.appBody.selectedForemenIds();
+    return Template.appBody.selectedForemanId();
   },
   jobCheckInCount: function(jobCheckInCounts, jobId) {
     if (jobCheckInCounts && jobId) {
@@ -143,9 +156,21 @@ Template.appBody.events({
   'click .js-new-list': function() {
       Router.go('/jobNew/'+foremenFilterParam());
   },
-  'change #filterByForemanSelector': function(event) {
-    Session.set(FOREMAN_ID, event.target.selectedOptions[0].dataset.value);
+  'change #filterByForemanSelector': function() {
+    Session.set(FOREMAN_ID, String(Template.appBody.selectedForemanId()));
     Template.appBody.buildMeu();
+  },
+
+  'keypress #jobSearch': function() {
+    var jobSearchText = $('#jobSearch').val();
+    if (jobSearchText.length > 2)
+    {
+      Session.set(JOB_SEARCH_TEXT, $('#jobSearch').val());
+      Template.appBody.buildMeu();
+    }
+  },
+  'click #clearFilters': function() {
+    Template.appBody.clearFilters();
   },
 
   'click .js-admin': function() {

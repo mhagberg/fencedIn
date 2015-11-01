@@ -2,9 +2,18 @@
   <div id="container" class="{{menuOpen}} {{cordova}}">
 
     <section id="menu">
+        <div class="col-md-3">
+            <div class="col-md-3"><button type="button" class="btn btn-success" id="clearFilters"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span>Clear Filters</button></div>
+        </div>
 
-          {{> filterByForemanSelect}}
-    <div class="gutter-small">
+    {{> filterByForemanSelect}}
+
+    <div class="gutter">
+        <label for="jobSearch">Search By Job Name or #:</label>
+        <input type="text" class="form-control" id="jobSearch" maxlength="15">
+    </div>
+
+    <div class="gutter">
         <h4>Max # of Jobs to Load:</h4>
         <span class="radio-inline">
             <label>
@@ -26,7 +35,7 @@
         </span>
         <span class="radio-inline">
             <label>
-                <input type="radio" name="limitJobs" id="limitJobsAll" value="all">
+                <input type="radio" name="limitJobs" id="limitJobsAll" value="999999">
                 All
             </label>
         </span>
