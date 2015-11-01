@@ -1,4 +1,6 @@
 var MENU_KEY = 'menuOpen';
+var JOB_LIMIT = 'jobLimit';
+var FOREMAN_ID = 'foremanId';
 Session.setDefault(MENU_KEY, false);
 
 var USER_MENU_KEY = 'userMenuOpen';
@@ -59,12 +61,12 @@ Template.appBody.selectedForemenIds = function() {
 
 
 Template.appBody.buildMeu = function () {
-  var current = Router.current();
-  var foremenIds = current.params.foremenId;
-  if (foremenIds) {
-    var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':{$in:[foremenIds]}}]}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1},{limit:10});
+  var foremanId = Session.get(FOREMAN_ID) ? Session.get(FOREMAN_ID) : '';
+  var jobLimit = Session.get(JOB_LIMIT) ? Session.get(JOB_LIMIT) : 5;
+  if (foremanId) {
+    var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':foremanId}]}, {limit:jobLimit}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1});
   } else {
-    var jobs = Jobs.find({hidden : null}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1}, {limit:50});
+    var jobs = Jobs.find({hidden : null}, {limit:jobLimit}, {sort : {createDate : -1, name : 1}}, {createDate : 1, name : 1});
   }
   var jobCheckInCounts = {};
   jobs.forEach(function(job){
@@ -130,6 +132,10 @@ Template.appBody.events({
     Session.set(MENU_KEY, false);
     event.preventDefault();
   },
+  'click input[name=limitJobs]': function(event) {
+    Session.set(JOB_LIMIT,  Number(event.target.defaultValue));
+    Template.appBody.buildMeu();
+  },
 
   'click #menu a': function() {
     Session.set(MENU_KEY, false);
@@ -137,12 +143,13 @@ Template.appBody.events({
   'click .js-new-list': function() {
       Router.go('/jobNew/'+foremenFilterParam());
   },
-  'change #filterByForemanSelector': function() {
-    var current = Router.current();
-    Router.go('/jobHistory/'+ current.params.job_id +'/'+ Template.appBody.selectedForemenIds());
+  'change #filterByForemanSelector': function(event) {
+    Session.set(FOREMAN_ID, event.target.selectedOptions[0].dataset.value);
+    Template.appBody.buildMeu();
   },
 
   'click .js-admin': function() {
     Router.go('admin');
   }
 });
+

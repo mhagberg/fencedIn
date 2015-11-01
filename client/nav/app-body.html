@@ -4,6 +4,33 @@
     <section id="menu">
 
           {{> filterByForemanSelect}}
+    <div class="gutter-small">
+        <h4>Max # of Jobs to Load:</h4>
+        <span class="radio-inline">
+            <label>
+                <input type="radio" name="limitJobs" id="limitJobs5" value="5" checked>
+                5
+            </label>
+        </span>
+        <span class="radio-inline">
+            <label>
+                <input type="radio" name="limitJobs" id="limitJobs10" value="10">
+                10
+            </label>
+        </span>
+        <span class="radio-inline">
+            <label>
+                <input type="radio" name="limitJobs" id="limitJobs20" value="20">
+                20
+            </label>
+        </span>
+        <span class="radio-inline">
+            <label>
+                <input type="radio" name="limitJobs" id="limitJobsAll" value="all">
+                All
+            </label>
+        </span>
+    </div>
 
       <div class="list-jobs">
         <a class="js-new-list link-list-new"><span class="icon-plus"></span>New Job</a>
