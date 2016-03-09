@@ -5,12 +5,12 @@
             <input type="hidden" id="checkIn_id" value="{{_id}}"/>
             <div class="col-md-11">
                 <label for="checkInTime">Check In Time: </label>
-                <input id="checkInTime" class="form-control" type="datetime-local" value="{{formatDate checkInTime 'inputDateTime'}}"/>
+                <input id="checkInTime" class="form-control" type="text" value="{{formatDate checkInTime 'dateTimePicker'}}"/>
             </div>
             {{#if checkOutTime}}
             <div class="col-md-11">
                 <label for="checkOutTime">Check Out Time: </label>
-                <input id="checkOutTime" class="form-control" type="datetime-local" value="{{formatDate checkOutTime 'inputDateTime'}}"/>
+                <input id="checkOutTime" class="form-control" type="text" value="{{formatDate checkOutTime 'dateTimePicker'}}"/>
             </div>
             {{/if}}
         </div>

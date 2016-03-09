@@ -20,9 +20,8 @@ Template.checkInForm.events({
   }
 });
 
-Template.checkInForm.helpers({
-  preview : function() {
-    var image = Session.get('previewImage');
-    return data = {image:image};
-  }
+
+Template.checkInForm.onRendered(function() {
+  $('#checkInTime').datetimepicker();
+  $('#checkOutTime').datetimepicker();
 });
