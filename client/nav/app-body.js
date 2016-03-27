@@ -68,8 +68,13 @@ Template.appBody.buildMeu = function () {
   var regex = new RegExp(".*" + jobSearchText + ".*", "i");
   if (foremanId) {
     var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':foremanId}, {$or:[{name:regex}, {number:regex}]}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1, name : 1});
-  } else {
-    var jobs = Jobs.find({$and:[{hidden : null}, {$or:[{name:regex}, {number:regex}]}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1, name : 1});
+  }
+  else if (jobSearchText)
+  {
+    var jobs = Jobs.find({$or:[{name:regex}, {number:regex}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1, name : 1});
+  }
+  else {
+    var jobs = Jobs.find({hidden : null},  {limit:jobLimit}, {createDate : 1, name : 1});
   }
   var jobCheckInCounts = {};
   jobs.forEach(function(job){
