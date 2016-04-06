@@ -23,6 +23,5 @@ Template.jobPictureView.events({
     e.preventDefault();
     var jobId = Session.get('jobId');
     Router.go('/jobHistory/' + jobId + '/' + foremenFilterParam());
-    Router.go('/jobHistory/'+jobId+'/'+ foremenFilterParam());
   }
 });
