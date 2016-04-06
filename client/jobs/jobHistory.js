@@ -35,7 +35,6 @@ Template.jobHistory.events({
   },
   'click .img-responsive' : function(e) {
     e.preventDefault();
-    var pswpElement = document.querySelectorAll('.pswp')[0];
 
     var firstPic = Pictures.findOne({_id : this._id});
     var items = [
@@ -56,22 +55,11 @@ Template.jobHistory.events({
             }
         );
       }
-    })
-    ;
+    });
 
-    // define options (if needed)
-    var options = {
-      // history & focus options are disabled on CodePen
-      history : false,
-      focus : false,
-
-      showAnimationDuration : 0,
-      hideAnimationDuration : 0
-
-    };
-
-    var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
-    gallery.init();
+    Session.set('jobPictures', items);
+    Session.set('jobId', this.job_id);
+    Router.go('/jobPictureView/');
   }
 });
 

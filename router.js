@@ -73,6 +73,7 @@ if (Meteor.isClient) {
         }
       }});
     this.route('/jobNew');
+    this.route('/jobPictureView');
     this.route('/jobNew/:foremenId', function(){
       var data = {foremen: this.params.foremenId};
       this.render('jobNew', {data: function (){
