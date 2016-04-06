@@ -11,12 +11,9 @@ Template.jobHistory.events({
   },
   'click #hideBtn' : function(e) {
     e.preventDefault();
-    var x;
-    if (confirm("Click OK if you really want to hide this job? You will have to go to the admin page to un-hide it.") == true) {
       Jobs.update({_id : this._id}, {
         $set : {hidden : true}
-      });
-    }
+    });
   },
   'click .jobLink' : function(e) {
     e.preventDefault();

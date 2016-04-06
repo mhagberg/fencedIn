@@ -166,14 +166,19 @@ Template.appBody.events({
     Template.appBody.buildMeu();
   },
 
-  'keypress #jobSearch': function() {
+  'keyup #jobSearch': function() {
     var jobSearchText = $('#jobSearch').val();
-    if (jobSearchText.length > 2)
+    if (jobSearchText.length > 3)
     {
       Session.set(JOB_SEARCH_TEXT, $('#jobSearch').val());
       Template.appBody.buildMeu();
     }
   },
+  'click #search-btn': function() {
+      Session.set(JOB_SEARCH_TEXT, $('#jobSearch').val());
+      Template.appBody.buildMeu();
+  },
+
   'click #clearFilters': function() {
     Template.appBody.clearFilters();
   },
