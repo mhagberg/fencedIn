@@ -7,8 +7,17 @@
             <form>
                 <input id="jobId" type="hidden" value="{{job._id}}"/>
                 <div class="form-group">
-                    <div><label for="name">Job Name: </label><input class="form-control" id="name" type="text" value="{{job.name}}"/></div>
-                    <div><label for="number">Job Number: </label><input id="number" class="form-control" type="text" value="{{job.number}}"/></div>
+                    <div id="nameDiv" class="form-group has-feedback">
+                        <label class="control-label" for="name">Job Name: </label>
+                        <input class="form-control" id="name" type="text" value="{{job.name}}" aria-describedby="nameStatus"/>
+                        <span id="nameStatus" class="sr-only">(error)</span>
+                    </div>
+                    <div id="numberDiv" class="form-group has-feedback">
+                        <label class="control-label" for="number">Job Number: </label>
+                        <input class="form-control" id="number" type="text" value="{{job.number}}" aria-describedby="nameStatus"/>
+                        <span id="numberStatus" class="sr-only">(error)</span>
+                    </div>
+                    <!--<div><label for="number">Job Number: </label><input id="number" class="form-control" type="text" value="{{job.number}}"/></div>-->
                     {{#if job.billingContact}}
                         {{> contactTemplate context="Billing" contact=job.billingContact}}
                     {{/if}}
@@ -42,6 +51,16 @@
                     {{/unless}}
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="container-fluid gutter">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="errorsDiv" class="form-group has-feedback error">
+                    <label id="validationErrors" class="text-danger" aria-describedby="textStatus"></label>
+                    <span id="textStatus" class="sr-only">(error)</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>

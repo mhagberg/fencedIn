@@ -74,7 +74,8 @@ Template.appBody.buildMeu = function () {
     var jobs = Jobs.find({$or:[{name:regex}, {number:regex}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1, name : 1});
   }
   else {
-    var jobs = Jobs.find({hidden : null},  {limit:jobLimit}, {createDate : 1, name : 1});
+    //var jobs = Jobs.find({hidden : null},  {limit:jobLimit}, {createDate : 1, name : 1});
+    var jobs = Jobs.find({$and:[{hidden : null}, {'finishDate': null}]},  {limit:jobLimit}, {createDate : 1, name : 1});
   }
   var jobCheckInCounts = {};
   jobs.forEach(function(job){
