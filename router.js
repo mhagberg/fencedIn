@@ -55,6 +55,9 @@ if (Meteor.isClient) {
           return Router.jobHistory(this, this.params.job_id, this.params.foremenId);
         }
     );
+    this.route('/jobDetails/:job_id', function() {
+      return Router.jobDetails(this, this.params.job_id, "")
+    });
     this.route('/jobCheckIn/:job_id', function() {
       return Router.jobCheckIn(this, this.params.job_id, "")
     });
@@ -191,3 +194,15 @@ if (Meteor.isClient) {
     });
   };
 
+Router.jobDetails = function(rout, job_id, foremenId) {
+  delete Session.keys['previewImage'];
+  var job = Jobs.findOne({_id : job_id});
+  var checkIns = JobCheckIns.find({job_id : job_id}, {sort : {checkInTime : -1}});
+  var pictures = Pictures.find({job_id : job_id});
+  var jobHistory = {job : job, checkIns : checkIns, pictures : pictures, foremen : foremenId};
+  rout.render('jobDetails', {
+    data : function() {
+      return jobHistory;
+    }
+  });
+};

@@ -1,95 +1,23 @@
 <template name="jobHistory">
-    <div class="container-fluid gutter-small jobLink">
-        <div class="row">
-        <div class="col-md4"><h2 class="text-center">Job History</h2></div>
-        </div>
-        <div class="row show-grid gutter-small">
-            {{#with job}}
-            <div class="col-md-3">
-                <h5>Job Details:</h5>
-                <address class="bg-primary img-rounded job-info">
-                    <abbr title="Name">Job Name:</abbr> {{name}}<br/><br/>
-                    <abbr title="Job Number">Job #:</abbr> {{number}}<br><br>
-                    <abbr title="Job Create Date">Created:</abbr> {{formatDate createDate "long"}}<br><br>
-                    <abbr title="Job Type">Job Type:</abbr> {{type}}
-                </address>
-            </div>
-            <p></p>
-
-            <div class="col-md-3">
-                <h5>Billing Contact:</h5>
-                <address class="bg-primary img-rounded job-info">
-                    {{#with billingContact}}
-                        {{name}}, <br/><br/>
-                        {{phone}},<br/><br/>
-                        {{#with address}}
-                            {{address1}}, {{address2}}<br><br>
-                            {{city}}, {{state}}, {{zip}}<br><br>
-                        {{/with}}
-                    {{/with}}
-                </address>
-            </div>
-            <div class="col-md-3">
-                <h5>Location Contact:</h5>
-                <address class="bg-primary img-rounded job-info">
-                    {{#with locationContact}}
-                        {{name}}, <br/><br/>
-                        {{phone}},<br/><br/>
-                        {{#with address}}
-                            {{address1}}, {{address2}}<br><br>
-                            {{city}}, {{state}}, {{zip}}<br><br>
-                        {{/with}}
-                    {{/with}}
-                </address>
-            </div>
-            <div class="col-md-3">
-                <h5>Job Progress:</h5>
-                <address class="bg-primary img-rounded job-info">
-                    <abbr title="Job Est Start Date">Est Start:</abbr> {{formatDate estStartDate "long"}}<br/><br/>
-                    <abbr title="Job Start Date">Start:</abbr> {{formatDate startDate "long"}}<br/><br/>
-                    <abbr title="Job Est Finish Date">Est Finish:</abbr> {{formatDate estFinishDate "long"}}<br/><br/>
-                    <abbr title="Job Est Finish Date">Finished:</abbr> {{formatDate finishDate "long"}}
-                </address>
-            </div>
-            {{/with}}
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-                <h5>Salesmen:</h5>
-                <address class="bg-primary img-rounded gutter-small">
-                    <abbr title="Salesmen">Salesmen:</abbr>
-                    {{#each job.salesmen}}
-                        <br/>{{name}}
-                    {{/each}}
-                </address>
-            </div>
-            <div class="col-md-2">
-                <h5>Foremen:</h5>
-                <address class="bg-primary img-rounded gutter-small">
-                    <abbr title="Foreman">Foremen:</abbr>
-                    {{#each job.foremen}}
-                        <br/>{{name}}
-                    {{/each}}
-                </address>
-            </div>
-            {{#with job}}
-            <div class="col-md-8">
-                <h5>Job Notes:</h5>
-                <address class="bg-primary img-rounded gutter-small">
-                    <abbr title="Notes">Notes:</abbr> {{notes}}
-                </address>
-            </div>
-            {{/with}}
-        </div>
-
-    </div>
     <div class="container-fluid gutter-small">
         <div class="row">
+            {{#with job}}}
+            <div class="col-md-12 text-center">
+                <h2><abbr title="Name">Job Name:</abbr> {{name}}</h2><br/><br/>
+            </div>
+            <div class="col-md-12 text-center">
+                <h2><abbr title="Job Number">Job #:</abbr> {{number}}</h2> <br><br>
+            </div>
+            {{/with}}
+        </div>
+        <div class="row">
             {{#with job}}
+            <div class="col-md-3"><button type="button" class="btn-primary btn-xs" id="jobDetailsBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-edit" aria-hidden="true">Job Details</span></button></div>
             <div class="col-md-3"><button type="button" class="btn-primary btn-xs" id="checkInBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true">Check-In</span></button></div>
             {{#if showCheckOutOnLastCheckIn _id}}
             <div class="col-md-3"><button type="button" class="btn-success btn-xs" id="checkOutBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true">Check-Out</span></button></div>
             {{/if}}
+            <div class="col-md-3"><button type="button" class="btn-primary btn-xs" id="takePicture" data-job-id="{{_id}}"><span class="glyphicon glyphicon-picture" aria-hidden="true">Take Photo</span></button></div>
             {{#unless finishDate}}
             <div class="col-md-3"><button type="button" class="btn btn-info" id="finishBtn" data-job-id="{{_id}}"><span class="glyphicon glyphicon-saved" aria-hidden="true">Finish</span></button></div>
             {{/unless}}

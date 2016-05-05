@@ -1,7 +1,21 @@
+//this code is intended to stay with the take picture button.
+var onSuccess = function (imageData, jobId, checkin_id) {
+  Pictures.insert({
+    image: imageData,
+    job_id: jobId,
+    checkin_id: checkin_id,
+    createDate: new Date().getTime()
+  });
+};
+
 Template.jobHistory.events({
   'click #checkInBtn' : function(e) {
     e.preventDefault();
     Router.go('/jobCheckIn/' + this._id + '/' + foremenFilterParam());
+  },
+  'click #jobDetailsBtn' : function(e) {
+    e.preventDefault();
+    Router.go('/jobDetails/' + this._id + '/' + foremenFilterParam());
   },
   'click #finishBtn' : function(e) {
     e.preventDefault();
@@ -22,6 +36,15 @@ Template.jobHistory.events({
   'click .checkInLink' : function(e) {
     e.preventDefault();
     Router.go('/checkInEdit/' + this._id + '/' + foremenFilterParam());
+  },
+  "click #takePicture": function () {
+    var checkIn = JobCheckIns.findOne({job_id : this._id}, {sort : {checkOutTime : 1}}, {limit : 1});
+    MeteorCamera.getPicture(function (error, data) {
+      // we have a picture
+      if (! error) {
+        onSuccess(data, this.job_id.value, checkIn._id.value);
+      }
+    });
   },
   'click #checkOutBtn' : function(e) {
     e.preventDefault();
