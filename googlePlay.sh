@@ -6,8 +6,7 @@ update the version number in mobile-config.js   version: '0.0.3'
 meteor build /Users/mhagberg/meteor/projects/fencedIn/productionBuild --server=fencedIn.secomafence.com
 
 
-cd productionBuild
-cd android
+cd productionBuild/android/project/build/outputs/apk
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 release-unsigned.apk fencedIn
 cp release-unsigned.apk ~/java/tools/android-sdk-macosx/build-tools/22.0.1
 cd ~/java/tools/android-sdk-macosx/build-tools/22.0.1

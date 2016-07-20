@@ -1,1 +1,1 @@
-mongodump -h ds023478.mlab.com:23478 -d fencedin -u mhagberg -p j6yb1rd -o /Users/mhagberg/meteor/projects/fencedIn/dump/fencedin_meteor_com
+mongodump -h ds023478.mlab.com:23478 -d fencedin -u USERNAME -p PASSWORD -o /Users/mhagberg/meteor/projects/fencedIn/dump/fencedin_meteor_com

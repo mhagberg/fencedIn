@@ -13,7 +13,6 @@ nemo64:bootstrap
 accounts-password
 mdg:geolocation
 mdg:camera
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -29,3 +28,5 @@ spacebars
 check
 tsega:bootstrap3-datetimepicker
 spectrum:photoswipe
+standard-minifier-css
+standard-minifier-js

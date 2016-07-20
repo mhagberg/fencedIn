@@ -4,7 +4,7 @@ App.info({
   author: 'Mike Hagberg',
   email: 'mike@secomafence.com',
   website: 'http://secomafence.com',
-  version: '0.0.4'
+  version: '0.0.5'
 });
 
 App.icons({
