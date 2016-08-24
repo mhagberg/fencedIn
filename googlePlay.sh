@@ -8,11 +8,13 @@ meteor build /Users/mhagberg/meteor/projects/fencedIn/productionBuild --server=f
 
 cd productionBuild
 cd android
+
+cp release-unsigned.apk ~/java/tools/android-sdk-macosx/build-tools/24.0.1
+cd ~/java/tools/android-sdk-macosx/build-tools/24.0.1
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 release-unsigned.apk fencedIn
-cp release-unsigned.apk ~/java/tools/android-sdk-macosx/build-tools/22.0.1
-cd ~/java/tools/android-sdk-macosx/build-tools/22.0.1
 ./zipalign -f 4 release-unsigned.apk release-new.apk
-cp release-new.apk /Users/mhagberg/meteor/projects/fencedIn/productionBuild
+rm -rf  release-unsigned.apk
+mv release-new.apk /Users/mhagberg/meteor/projects/fencedIn/productionBuild
 cd /Users/mhagberg/meteor/projects/fencedIn/productionBuild
 
 
