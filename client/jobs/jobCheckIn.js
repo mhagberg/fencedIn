@@ -11,7 +11,7 @@ Template.jobCheckIn.events({
       fencers[i] = $(selected).data().value;
     });
     var jobId = $('#job_id').val();
-   var checkin_id = JobCheckIns.insert(
+    JobCheckIns.insert(
         {
           job_id : jobId,
           foremen : foremen,
@@ -34,13 +34,6 @@ Template.jobCheckIn.events({
           $set : {startDate : new Date().getTime()}
         });
     }
-    var pictureId = Session.get('pictureId');
-    Pictures.update({_id: pictureId},
-        {
-        $set: {
-          checkin_id : checkin_id
-        }
-    });
     Router.go('/jobHistory/'+jobId + '/' + foremenFilterParam());
   }
 });

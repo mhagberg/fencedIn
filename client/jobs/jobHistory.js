@@ -38,11 +38,11 @@ Template.jobHistory.events({
     Router.go('/checkInEdit/' + this._id + '/' + foremenFilterParam());
   },
   "click #takePicture": function () {
-    var checkIn = JobCheckIns.findOne({job_id : this._id}, {sort : {checkOutTime : 1}}, {limit : 1});
+    var jobId = this._id;
     MeteorCamera.getPicture(function (error, data) {
       // we have a picture
       if (! error) {
-        onSuccess(data, this.job_id.value, checkIn._id.value);
+        onSuccess(data, jobId, null);
       }
     });
   },
@@ -60,12 +60,14 @@ Template.jobHistory.events({
     e.preventDefault();
 
     var firstPic = Pictures.findOne({_id : this._id});
+    if (firstPic) {
     var items = [
       {
         src : firstPic.image,
         w : e.target.naturalWidth,
         h : e.target.naturalHeight
       }];
+    }
     Pictures.find({job_id : this.job_id}).forEach(function(picture) {
       var w = $("#" + picture._id)[0].naturalWidth;
       var h = $("#" + picture._id)[0].naturalHeight;
@@ -90,6 +92,9 @@ Template.jobHistory.helpers({
   loadTimePlusTravelTime : function(checkInId) {
     var checkIn = JobCheckIns.findOne({_id : checkInId});
     return Number(checkIn.loadTime) + Number(checkIn.travelTime);
+  },
+  cordova: function() {
+    return Meteor.isCordova && 'cordova';
   }
 });
 

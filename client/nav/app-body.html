@@ -1,7 +1,7 @@
 <template name="appBody">
   <div id="container" class="{{menuOpen}} {{cordova}}">
-
     <section id="menu">
+        {{#unless cordova}}
         <div class="col-md-3">
             <div class="col-md-3"><button type="button" class="btn btn-success" id="clearFilters"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span>Clear Filters</button></div>
         </div>
@@ -21,7 +21,7 @@
         <h4>Max # of Jobs to Load:</h4>
         <span class="radio-inline">
             <label>
-                <input type="radio" name="limitJobs" id="limitJobs5" value="5" checked>
+                <input type="radio" name="limitJobs" id="limitJobs5" value="5" >
                 5
             </label>
         </span>
@@ -33,7 +33,7 @@
         </span>
         <span class="radio-inline">
             <label>
-                <input type="radio" name="limitJobs" id="limitJobs20" value="20">
+                <input type="radio" name="limitJobs" id="limitJobs20" value="20" checked>
                 20
             </label>
         </span>
@@ -44,17 +44,19 @@
             </label>
         </span>
     </div>
-
+     {{/unless}}
       <div class="list-jobs">
+        {{#unless cordova}}
         <a class="js-new-list link-list-new"><span class="icon-plus"></span>New Job</a>
         <a class="js-admin link-list-new"><span class="icon-cog"></span>Admin</a>
+        {{/unless}}
         {{#each jobsList.jobs}}
           <a href="/jobHistory/{{_id}}/{{selectedForemen}}" class="list-job {{activeListClass}} {{#if finishDate}}finished{{/if}}" title="{{name}}">
             {{#if userId}}
               <span class="icon-lock"></span>
             {{/if}}
               <span class="count-list">{{jobCheckInCount jobsList.jobCheckInCounts _id}}</span>
-            {{name}}
+            {{name}}: {{number}}
           </a>
         {{/each}}
 

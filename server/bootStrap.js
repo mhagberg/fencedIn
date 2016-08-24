@@ -185,3 +185,15 @@
 //
 //});
 //
+
+
+    var jobs = Jobs.find();
+    jobs.forEach(function(job) {
+      if (job.number < 16500) {
+        Jobs.update(
+            {_id : job._id},
+            {
+              $set : {finishDate : new Date().getTime()}
+            });
+      }
+    });

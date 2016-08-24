@@ -63,19 +63,20 @@ Template.appBody.selectedForemanId = function() {
 
 Template.appBody.buildMeu = function () {
   var foremanId = Session.get(FOREMAN_ID) ? Session.get(FOREMAN_ID) : '';
-  var jobLimit = Session.get(JOB_LIMIT) ? Session.get(JOB_LIMIT) : 5;
+  var jobLimit = Session.get(JOB_LIMIT) ? Session.get(JOB_LIMIT) : 20;
   var jobSearchText = Session.get(JOB_SEARCH_TEXT) ? Session.get(JOB_SEARCH_TEXT) : "";
   var regex = new RegExp(".*" + jobSearchText + ".*", "i");
   if (foremanId) {
-    var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':foremanId}, {$or:[{name:regex}, {number:regex}]}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1, name : 1});
+    var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':foremanId}, {$or:[{name:regex}, {number:regex}]}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1});
   }
   else if (jobSearchText)
   {
-    var jobs = Jobs.find({$or:[{name:regex}, {number:regex}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1, name : 1});
+    var jobs = Jobs.find({$or:[{name:regex}, {number:regex}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1});
   }
   else {
     //var jobs = Jobs.find({hidden : null},  {limit:jobLimit}, {createDate : 1, name : 1});
-    var jobs = Jobs.find({$and:[{hidden : null}, {'finishDate': null}]},  {limit:jobLimit}, {createDate : 1, name : 1});
+    //var jobs = Jobs.find({sort : {number : -1}, limit:jobLimit});
+    var jobs = Jobs.find({$and:[{hidden : null}, {$or:[{'finishDate': null}, {'finishDate': ""}]}]}, {limit:jobLimit}, {createDate : 1, name : 1, number: 1}, {sort : {createDate : -1}});
   }
   var jobCheckInCounts = {};
   jobs.forEach(function(job){
@@ -87,8 +88,8 @@ Template.appBody.buildMeu = function () {
 Template.appBody.clearFilters = function() {
   Session.set(JOB_SEARCH_TEXT, "");
   $('#jobSearch').val("");
-  Session.set(JOB_LIMIT, 5);
-  $('#limitJobs5').prop("checked", true);
+  Session.set(JOB_LIMIT, 20);
+  $('#limitJobs20').prop("checked", true);
   Session.set(FOREMAN_ID, "");
   $('#filterByForemanSelector').val("");
 };
