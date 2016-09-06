@@ -1,18 +1,19 @@
 <template name="appBody">
   <div id="container" class="{{menuOpen}} {{cordova}}">
     <section id="menu">
-        {{#unless cordova}}
+    {{#unless cordova}}
         <div class="col-md-3">
             <div class="col-md-3"><button type="button" class="btn btn-success" id="clearFilters"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span>Clear Filters</button></div>
         </div>
 
     {{> filterByForemanSelect}}
-
+    {{/unless}}
     <div class="gutter">
         <label for="jobSearch">Search By Job Name or #:</label>
         <input type="text" class="form-control" id="jobSearch" maxlength="15">
     </div>
 
+    {{#unless cordova}}
     <div class="col-md-3">
         <div class="col-md-3"><button type="button" class="btn btn-success" id="search-btn"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Search</button></div>
     </div>
@@ -44,7 +45,7 @@
             </label>
         </span>
     </div>
-     {{/unless}}
+    {{/unless}}
       <div class="list-jobs">
         {{#unless cordova}}
         <a class="js-new-list link-list-new"><span class="icon-plus"></span>New Job</a>
