@@ -1,0 +1,49 @@
+<template name="jobReports">
+    <h1>
+        Job Summery Reports
+    </h1>
+    <table class="table table-striped table-bordered gutter">
+        <thead>
+        <tr>
+            <td class="table-text-small">
+                Job Name
+            </td>
+            <td class="table-text-small">
+                Job Number
+            </td>
+            <td class="table-text-small">
+                Created Date
+            </td>
+            <td class="table-text-small">
+                Finished Date
+            </td>
+            <td class="table-text-small">
+                Action
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each jobs}}
+            <tr class="checkInLink">
+                <td class="table-text-small">
+                    {{name}}
+                </td>
+                <td class="table-text-small">
+                    {{number}}
+                </td>
+                <td class="table-text-small">
+                    {{formatDate createDate "numbers"}}
+                </td>
+                <td class="table-text-small">
+                    {{formatDate finishDate "numbers"}}
+                </td>
+                <td class="table-text-small">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-group" id="jobReport" data-job-id="{{_id}}"><span class="glyphicon glyphicon-open-file" aria-hidden="true">View Report</span></button>
+                    </div>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</template>

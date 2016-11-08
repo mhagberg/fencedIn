@@ -19,8 +19,17 @@ Template.checkInEdit.events({
     var contactCustomer = $('#contactCustomer').is(":checked");
     var dailyPicture = $('#dailyPicture').is(":checked");
     var toolsMaterials = $('#toolsMaterials').is(":checked");
-    var checkInTime = $('#checkInTime').val();
-    var checkOutTime = $('#checkOutTime').val();
+    var checkInTime = convertToUnix($('#finish').data("checkInTime").date());
+    var checkOutTime = convertToUnix($('#checkOutTime').data("checkInTime").date());
+
+    function convertToUnix(adate){
+      if (adate)
+      {
+        console.log(adate);
+        return adate =adate.unix();
+      }
+    };
+
     Meteor.call('updateCheckIn', checkInId,foremen,fencers,loadTime,travelTime,
         notes,additionalMaterials,contactCustomer,dailyPicture,toolsMaterials,checkInTime,checkOutTime,"location", function(error, id){
       if (error) {

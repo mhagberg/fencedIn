@@ -8,3 +8,9 @@ Template.jobFormFields.helpers({
       return "";
   }
 });
+Template.jobFormFields.onRendered(function() {
+  $('#finish').datetimepicker();
+  $('#start').datetimepicker();
+  $('#estFinish').datetimepicker();
+  $('#estStart').datetimepicker();
+});

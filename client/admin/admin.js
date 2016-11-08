@@ -14,5 +14,9 @@ Template.admin.events({
   'click .configure-hiddenJobs' : function(e) {
     e.preventDefault();
     Router.go('hiddenJobs');
+  },
+  'click .configure-jobReports' : function(e) {
+    e.preventDefault();
+    Router.go('jobReports');
   }
 });

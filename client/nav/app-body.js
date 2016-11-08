@@ -67,16 +67,14 @@ Template.appBody.buildMeu = function () {
   var jobSearchText = Session.get(JOB_SEARCH_TEXT) ? Session.get(JOB_SEARCH_TEXT) : "";
   var regex = new RegExp(".*" + jobSearchText + ".*", "i");
   if (foremanId) {
-    var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':foremanId}, {$or:[{name:regex}, {number:regex}]}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1});
+    var jobs = Jobs.find({$and:[{hidden : null}, {'foremen._id':foremanId}, {$or:[{name:regex}, {number:regex}]}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1}).fetch();
   }
   else if (jobSearchText)
   {
-    var jobs = Jobs.find({$or:[{name:regex}, {number:regex}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1});
+    var jobs = Jobs.find({$or:[{name:regex}, {number:regex}]}, {sort : {createDate : -1, name : 1}, limit:jobLimit}, {createDate : 1}).fetch();
   }
   else {
-    //var jobs = Jobs.find({hidden : null},  {limit:jobLimit}, {createDate : 1, name : 1});
-    //var jobs = Jobs.find({sort : {number : -1}, limit:jobLimit});
-    var jobs = Jobs.find({$and:[{hidden : null}, {$or:[{'finishDate': null}, {'finishDate': ""}]}]}, {limit:jobLimit}, {createDate : 1, name : 1, number: 1}, {sort : {createDate : -1}});
+    var jobs = Jobs.find({$and:[{hidden : null}, {$or:[{'finishDate': null}, {'finishDate': ""}]}]}, {sort : {createDate : -1}, limit:jobLimit}, {createDate : 1, name : 1, number: 1}).fetch();
   }
   var jobCheckInCounts = {};
   jobs.forEach(function(job){

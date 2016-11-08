@@ -11,6 +11,9 @@ Template.jobNew.events({
         salesmen[i] = $(selected).data().value;
       });
 
+      var estStart = convertToUnix($('#estStart').data("DateTimePicker").date());
+      var estFinishDate = convertToUnix($('#estFinish').data("DateTimePicker").date());
+
       var jobId = Jobs.insert(
           {
             billingContact : {
@@ -41,8 +44,8 @@ Template.jobNew.events({
             name : $('#name').val(),
             number : $('#number').val(),
             createDate : new Date().getTime(),
-            estStartDate : $('#estStart').val(),
-            estFinishDate : $('#estFinish').val(),
+            estStartDate : estStart,
+            estFinishDate : estFinishDate,
             notes : $('#notes').val(),
             type : $('#type').val()
           });

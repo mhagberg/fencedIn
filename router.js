@@ -135,6 +135,13 @@ if (Meteor.isClient) {
       } });
     });
 
+    this.route('/jobReports', function() {
+      var jobs = Jobs.find({finishDate : {$exists:true, $not:""}}, {sort:{finishDate:-1}}, { name: 1, number: 1, createDate: 1, finishDate: 1}).fetch();
+      var data = {jobs: jobs};
+      this.render('jobReports', {data: function (){
+        return data;
+      } });
+    });
 
     this.route('/fencerForm');
 

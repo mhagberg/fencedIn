@@ -2,7 +2,8 @@ var DateFormats = {
   inputDateTime: "YYYY-MM-DDTHH:mm:ss",
   inputDate: "YYYY-MM-DD",
   dateTimePicker: "MM-DD-YYYY-HH:mm:ss",
-  long: "ddd - MM/DD/YY"
+  long: "ddd - MM/DD/YY",
+  numbers:  "MM/DD/YY"
 };
 
 // Use UI.registerHelper..

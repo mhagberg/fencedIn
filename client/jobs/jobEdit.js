@@ -11,6 +11,20 @@ Template.jobEdit.events({
     });
 
     var jobId = $('#jobId').val();
+    var estStart = convertToUnix($('#estStart').data("DateTimePicker").date());
+    var startDate = convertToUnix($('#start').data("DateTimePicker").date());
+    var estFinishDate = convertToUnix($('#estFinish').data("DateTimePicker").date());
+    var finishDate = convertToUnix($('#finish').data("DateTimePicker").date());
+
+    function convertToUnix(adate){
+      if (adate)
+      {
+        console.log(adate);
+        return adate =adate.unix();
+      }
+    };
+
+
     Jobs.update({_id: jobId},
         {
           $set :{
@@ -40,10 +54,10 @@ Template.jobEdit.events({
             salesmen: salesmen,
             name : $('#name').val(),
             number: $('#number').val(),
-            estStartDate : $('#estStart').val(),
-            startDate : $('#start').val(),
-            estFinishDate : $('#estFinish').val(),
-            finishDate : $('#finish').val(),
+            estStartDate : estStart,
+            startDate : startDate,
+            estFinishDate : estFinishDate,
+            finishDate : finishDate,
             notes : $('#notes').val(),
             type : $('#type').val()
           }
