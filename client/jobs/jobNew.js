@@ -14,6 +14,15 @@ Template.jobNew.events({
       var estStart = convertToUnix($('#estStart').data("DateTimePicker").date());
       var estFinishDate = convertToUnix($('#estFinish').data("DateTimePicker").date());
 
+
+    function convertToUnix(adate){
+        if (adate)
+        {
+            console.log(adate);
+            return adate =adate.unix();
+        }
+    };
+
       var jobId = Jobs.insert(
           {
             billingContact : {
@@ -67,3 +76,4 @@ Template.jobNew.events({
     $('#zipLocation').val($('#zipBilling').val());
   }
 });
+
