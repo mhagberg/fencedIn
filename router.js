@@ -35,9 +35,20 @@ if (Meteor.isClient) {
       } });
   };
 
+  Router.jobReport = function(rout, job_id) {
+    var job = Jobs.findOne({_id: job_id});
+    var jobReport = {job : job};
+    rout.render('jobReport', {data: function (){
+        return jobReport;
+    } });
+};
+
   Router.map(function() {
     this.route('/jobEdit/:job_id', function() {
       return Router.jobEdit(this, this.params.job_id, "");
+    });
+    this.route('/admin/jobReport/:job_id', function() {
+        return Router.jobReport(this, this.params.job_id, "");
     });
     this.route('/jobEdit/:job_id/:foremenId', function() {
       return Router.jobEdit(this, this.params.job_id, this.params.foremenId);
