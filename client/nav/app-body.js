@@ -63,7 +63,7 @@ Template.appBody.selectedForemanId = function() {
 
 Template.appBody.buildMeu = function () {
   var foremanId = Session.get(FOREMAN_ID) ? Session.get(FOREMAN_ID) : '';
-  var jobLimit = Session.get(JOB_LIMIT) ? Session.get(JOB_LIMIT) : 20;
+  var jobLimit = Session.get(JOB_LIMIT) ? Session.get(JOB_LIMIT) : 5;
   var jobSearchText = Session.get(JOB_SEARCH_TEXT) ? Session.get(JOB_SEARCH_TEXT) : "";
   var regex = new RegExp(".*" + jobSearchText + ".*", "i");
   if (foremanId) {
