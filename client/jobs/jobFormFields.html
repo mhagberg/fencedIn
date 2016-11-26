@@ -33,9 +33,9 @@
                         {{> contactTemplate context="Location"}}
                     {{/unless}}
                     <div class="container">
-                        <div class="col-md-8"><label for="estStart">Est Start: </label><input id="estStart" class="form-control " type="text" value="{{formatDate job.estStartDate 'inputDate'}}"/></div>
+                        <div class="col-md-8"><label for="estStart">Est Start: </label><input id="estStart" class="form-control " type="text" value="{{formatDate job.estStartDate 'dateTimePicker'}}"/></div>
                         <div class="col-md-8"><label for="start">Start: </label><input id="start" class="form-control" type="text" value="{{formatDate job.startDate 'dateTimePicker'}}"/></div>
-                        <div class="col-md-8"><label for="estFinish">Est Finish: </label><input id="estFinish" class="form-control" type="text" value="{{formatDate job.estFinishDate 'inputDate'}}"/></div>
+                        <div class="col-md-8"><label for="estFinish">Est Finish: </label><input id="estFinish" class="form-control" type="text" value="{{formatDate job.estFinishDate 'dateTimePicker'}}"/></div>
                         <div class="col-md-8"><label for="finish">Finish: </label><input id="finish" class="form-control" type="text" value="{{formatDate job.finishDate 'dateTimePicker'}}"/></div>
                      </div>
                     <div><label for="notes">Notes: </label><textarea class="form-control" id="notes">{{job.notes}}</textarea></div>

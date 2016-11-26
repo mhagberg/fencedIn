@@ -19,8 +19,7 @@ Template.jobEdit.events({
     function convertToUnix(adate){
       if (adate)
       {
-        console.log(adate);
-        return adate =adate.unix();
+        return adate.valueOf();
       }
     };
 

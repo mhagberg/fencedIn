@@ -1,5 +1,4 @@
 var DateFormats = {
-  inputDateTime: "YYYY-MM-DDTHH:mm:ss",
   inputDate: "YYYY-MM-DD",
   dateTimePicker: "MM-DD-YYYY-HH:mm:ss",
   long: "ddd - MM/DD/YY",
@@ -18,3 +17,6 @@ UI.registerHelper("formatDate", function(datetime, format) {
     return datetime;
   }
 });
+
+1480143600
+1480192734
