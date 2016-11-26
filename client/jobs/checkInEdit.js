@@ -19,8 +19,8 @@ Template.checkInEdit.events({
     var contactCustomer = $('#contactCustomer').is(":checked");
     var dailyPicture = $('#dailyPicture').is(":checked");
     var toolsMaterials = $('#toolsMaterials').is(":checked");
-    var checkInTime = convertToUnix($('#finish').data("checkInTime").date());
-    var checkOutTime = convertToUnix($('#checkOutTime').data("checkInTime").date());
+    var checkInTime = convertToUnix($('#checkInTime').data("DateTimePicker").date());
+    var checkOutTime = convertToUnix($('#checkOutTime').data("DateTimePicker").date());
 
     function convertToUnix(adate){
       if (adate)
