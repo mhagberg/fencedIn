@@ -3,6 +3,7 @@
         <h1 class="text-center">Job Report</h1>
         <h2 class="text-center">Name: {{job.name}}</h2>
         <h2 class="text-center">Number: {{job.number}}</h2>
+        <h2 class="text-center">Finished Date: {{formatDate job.finishDate 'dateTimePicker'}}</h2>
         <h2 class="text-center">Salesman:
             {{#each job.salesmen}}
              {{name}},&nbsp;
@@ -30,10 +31,8 @@
                     <td>
                         {{totalHoursLogged job._id}}
                     </td>
-                </tr>
-                <tr>
                     <td>
-                        {{totalHoursLogged job._id}}
+                        {{totalManHours job._id}}
                     </td>
                 </tr>
             </tbody>

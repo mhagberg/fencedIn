@@ -17,6 +17,28 @@ Template.jobReport.helpers({
             totalHours = hours + totalHours;
         });
         return totalHours;
+    },
+
+    totalManHours : function (jobId) {
+        var totalManHours =0;
+        var numberOfWorkers =1;
+        var checkIns = JobCheckIns.find({job_id: jobId});
+        checkIns.forEach(function(checkin) {
+            var startTime = moment(checkin.checkInTime);
+            var endTime = moment(checkin.checkOutTime);
+            var duration = moment.duration(endTime.diff(startTime));
+            var hours = duration.asHours();
+            if (checkin.foremen) {
+                numberOfWorkers = checkin.foremen.length;
+            }
+            if (checkin.fencers)
+            {
+                numberOfWorkers = checkin.fencers.length + numberOfWorkers;
+            }
+
+            totalManHours = (hours * numberOfWorkers) + totalManHours;
+        });
+        return totalManHours;
     }
 });
 

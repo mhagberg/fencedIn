@@ -17,6 +17,3 @@ UI.registerHelper("formatDate", function(datetime, format) {
     return datetime;
   }
 });
-
-1480143600
-1480192734
