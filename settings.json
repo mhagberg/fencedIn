@@ -1,1 +1,0 @@
-{ "galaxy.meteor.com": { "env": { "ROOT_URL": "http://fencedin.secomafence.com", "MONGO_URL": "mongodb://mhagberg:j6yb1rd@ds023478.mlab.com:23478/fencedin","TZ": "localTime" }}}
