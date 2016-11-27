@@ -23,9 +23,7 @@ Template.jobHistory.events({
       $set : {finishDate : new Date().getTime()}
     });
       Meteor.call('sendEmail',{
-          to: 'mike.hagberg@gmail.com',
           to: 'nathan@secomafence.com',
-          to: 'sales@secomafence.com',
           from: 'mike@secomafence.com',
           subject: 'Finished Job # ' + this.number ,
           text: 'Finished Job # ' + this.number + '. Click this link to see the details. http://fencedin.secomafence.com/admin/jobReport/' + this._id,
