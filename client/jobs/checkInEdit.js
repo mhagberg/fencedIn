@@ -20,8 +20,10 @@ Template.checkInEdit.events({
     var dailyPicture = $('#dailyPicture').is(":checked");
     var toolsMaterials = $('#toolsMaterials').is(":checked");
     var checkInTime = convertToUnix($('#checkInTime').data("DateTimePicker").date());
-    var checkOutTime = convertToUnix($('#checkOutTime').data("DateTimePicker").date());
-
+    var checkOutTime = null;
+    if ($('#checkOutTime').data("DateTimePicker")){
+      checkOutTime = convertToUnix($('#checkOutTime').data("DateTimePicker").date());
+    }
     function convertToUnix(adate){
       if (adate)
       {

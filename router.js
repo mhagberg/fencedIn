@@ -37,7 +37,8 @@ if (Meteor.isClient) {
 
   Router.jobReport = function(rout, job_id) {
     var job = Jobs.findOne({_id: job_id});
-    var jobReport = {job : job};
+    var pictures = Pictures.find({job_id : job_id});
+    var jobReport = {job : job, pictures: pictures};
     rout.render('jobReport', {data: function (){
         return jobReport;
     } });

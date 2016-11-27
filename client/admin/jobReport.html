@@ -37,6 +37,14 @@
                 </tr>
             </tbody>
         </table>
+        <h3>CheckIn Pictures</h3>
+        <div class="row gutter-small">
+            {{#each pictures}}
+            <div class="col-lg-1 col-md-2 col-xs-3 gutter-small">
+                <img class="img-responsive" id="{{_id}}" width='100' src="{{image}}">
+            </div>
+            {{/each}}
+        </div>
 
     </div>
 </template>

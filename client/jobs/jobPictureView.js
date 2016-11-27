@@ -22,6 +22,11 @@ Template.jobPictureView.events({
   'click .pswp__button.pswp__button--close' : function(e) {
     e.preventDefault();
     var jobId = Session.get('jobId');
-    Router.go('/jobHistory/' + jobId + '/' + foremenFilterParam());
+    var previous = Session.get('previous');
+    if (previous){
+      Router.go(previous);
+    }else {
+        Router.go('/jobHistory/' + jobId + '/' + foremenFilterParam());
+    }
   }
 });

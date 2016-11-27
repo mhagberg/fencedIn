@@ -30,3 +30,5 @@ tsega:bootstrap3-datetimepicker
 spectrum:photoswipe
 standard-minifier-css
 standard-minifier-js
+email
+cunneen:mailgun
