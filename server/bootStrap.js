@@ -197,3 +197,19 @@
 //    //        });
 //    //  }
 //    //});
+
+
+// deleteing old checkins and jobs.
+// var checkins = JobCheckIns.find();
+// checkins.forEach(function(checkin) {
+//     if (checkin.checkInTime < 1462097840000) {
+//         JobCheckIns.remove({_id: checkin._id});
+//     }
+// });
+//
+// var jobs = Jobs.find();
+// jobs.forEach(function(job) {
+//     if (job.createDate < 1462097840000) {
+//         Jobs.remove({_id: job._id});
+//     }
+// });

@@ -76,11 +76,7 @@ Template.appBody.buildMeu = function () {
   else {
     var jobs = Jobs.find({$and:[{hidden : null}, {$or:[{'finishDate': null}, {'finishDate': ""}]}]}, {sort : {createDate : -1}, limit:jobLimit}, {createDate : 1, name : 1, number: 1}).fetch();
   }
-  var jobCheckInCounts = {};
-  jobs.forEach(function(job){
-    jobCheckInCounts[job._id] = JobCheckIns.find({job_id : job._id}).count();
-  });
-  return {jobs: jobs, jobCheckInCounts: jobCheckInCounts};
+  return {jobs: jobs};
 };
 
 Template.appBody.clearFilters = function() {
@@ -119,12 +115,6 @@ Template.appBody.helpers({
   },
   selectedForemen: function(){
     return Template.appBody.selectedForemanId();
-  },
-  jobCheckInCount: function(jobCheckInCounts, jobId) {
-    if (jobCheckInCounts && jobId) {
-      return jobCheckInCounts[jobId];
-    }
-    return false;
   },
   activeListClass: function() {
     var current = Router.current();
