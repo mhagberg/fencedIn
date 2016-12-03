@@ -22,13 +22,13 @@ Template.jobHistory.events({
     Jobs.update({_id : this._id}, {
       $set : {finishDate : new Date().getTime()}
     });
-      Meteor.call('sendEmail',{
-          to: 'nathan@secomafence.com',
-          from: 'mike@secomafence.com',
-          subject: 'Finished Job # ' + this.number ,
-          text: 'Finished Job # ' + this.number + '. Click this link to see the details. http://fencedin.secomafence.com/admin/jobReport/' + this._id,
-          html: ''
-      });
+    Meteor.call('sendEmail',{
+        to: 'nathan.secoma@hotmail.com',
+        from: 'mike.hagberg@gmail.com',
+        subject: 'Finished Job # ' + this.number ,
+        text: 'Finished Job # ' + this.number + '. Click this link to see the details. http://fencedin.secomafence.com/admin/jobReport/' + this._id,
+        html: ''
+    });
   },
   'click #hideBtn' : function(e) {
     e.preventDefault();
