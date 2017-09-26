@@ -75,22 +75,24 @@ Template.jobHistory.events({
         h : e.target.naturalHeight
       }];
     }
-    Pictures.find({job_id : this.job_id}).forEach(function(picture) {
-      var w = $("#" + picture._id)[0].naturalWidth;
-      var h = $("#" + picture._id)[0].naturalHeight;
-      if (picture._id != firstPic._id) {
-        items.push(
+    Pictures.find({job_id : this.job_id}).forEach(function(picture, index) {
+          var w = $("#" + picture._id)[0].naturalWidth;
+          var h = $("#" + picture._id)[0].naturalHeight;
+          if (picture._id == firstPic._id) {
+              Session.set('picIndex', index+1)
+          }
+          items.push(
             {
-              src : picture.image,
-              w : w,
-              h : h
+                src : picture.image,
+                w : w,
+                h : h
             }
-        );
-      }
-    });
+          );
+      });
 
     Session.set('jobPictures', items);
     Session.set('jobId', this.job_id);
+    Session.set('returnUrl', '/jobHistory/' + this.job_id + '/' + foremenFilterParam());
     Router.go('/jobPictureView/');
   }
 });

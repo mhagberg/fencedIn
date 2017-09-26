@@ -1,22 +1,26 @@
 Template.admin.events({
-  'click .configure-salesman' : function(e) {
+  'click .salesmanDiv' : function(e) {
     e.preventDefault();
     Router.go('salesmenList');
   },
-  'click .configure-foreman' : function(e) {
+  'click .foremanDiv' : function(e) {
     e.preventDefault();
     Router.go('foremenList');
   },
-  'click .configure-fencer' : function(e) {
+  'click .fencerDiv' : function(e) {
     e.preventDefault();
     Router.go('fencersList');
   },
-  'click .configure-hiddenJobs' : function(e) {
+  'click .hiddenJobsDiv' : function(e) {
     e.preventDefault();
     Router.go('hiddenJobs');
   },
-  'click .configure-jobReports' : function(e) {
+  'click .jobReportsDiv' : function(e) {
     e.preventDefault();
     Router.go('jobReports');
-  }
+  },
+    'click .ImagesGalleryDiv' : function(e) {
+        e.preventDefault();
+        Router.go('/admin/imagesGallery/');
+    }
 });

@@ -67,6 +67,9 @@ if (Meteor.isClient) {
           return Router.jobHistory(this, this.params.job_id, this.params.foremenId);
         }
     );
+    this.route('/admin/imagesGallery/', function() {
+        return Router.imagesGallery(this)}
+    );
     this.route('/jobDetails/:job_id', function() {
       return Router.jobDetails(this, this.params.job_id, "")
     });
@@ -187,8 +190,15 @@ if (Meteor.isClient) {
     } });
   };
 
-
-
+  Router.imagesGallery = function(rout) {
+      var pictures = Pictures.find({},{limit:500});
+      var returnPictures = {pictures : pictures};
+      rout.render('imagesGallery', {
+          data : function() {
+              return returnPictures;
+          }
+      });
+  };
 
   Router.jobHistory = function(rout, job_id,foremenId) {
     var job = Jobs.findOne({_id : job_id});

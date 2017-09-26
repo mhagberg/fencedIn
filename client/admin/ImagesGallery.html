@@ -1,0 +1,16 @@
+<template name="imagesGallery">
+    <h3>Last 500 Pictures</h3>
+    <div class="row gutter-small">
+        {{#each pictures}}
+            <div class="col-lg-1 col-md-2 col-xs-3 gutter-small">
+                <img class="img-responsive" id="{{_id}}" width='400' src="{{image}}">
+            </div>
+            <!--<div class="btn-group" data-toggle="buttons">-->
+                <!--<label class="btn btn-success active">-->
+                    <!--<input type="checkbox" autocomplete="off" checked>-->
+                    <!--<span class="glyphicon glyphicon-ok"></span>-->
+                <!--</label>-->
+            <!--</div>-->
+        {{/each}}
+    </div>
+</template>
