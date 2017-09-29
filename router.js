@@ -191,7 +191,7 @@ if (Meteor.isClient) {
   };
 
   Router.imagesGallery = function(rout) {
-      var pictures = Pictures.find({},{limit:500});
+      var pictures = Pictures.find({},{sort:{"createDate": -1}});
       var returnPictures = {pictures : pictures};
       rout.render('imagesGallery', {
           data : function() {

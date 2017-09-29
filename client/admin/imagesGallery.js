@@ -1,3 +1,10 @@
+// Template.imagesGallery.onRendered(function(){
+//         var newPictures = this.data.pictures.fetchAllFields;
+//         newPictures.sort(function (a,b){
+//         return new Date(a.createDate - new Date(b.createDate))
+//     })
+// });
+
 Template.imagesGallery.events({
 'click .img-responsive' : function(e) {
     e.preventDefault();
@@ -11,7 +18,7 @@ Template.imagesGallery.events({
                 h : e.target.naturalHeight
             }];
     }
-    Pictures.find({},{limit:500}).forEach(function(picture, index) {
+        Pictures.find({},{sort:{"createDate": -1}}).forEach(function(picture, index) {
         var w = $("#" + picture._id)[0].naturalWidth;
         var h = $("#" + picture._id)[0].naturalHeight;
         if (picture._id == firstPic._id) {
