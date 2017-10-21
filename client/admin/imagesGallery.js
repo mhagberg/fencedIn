@@ -1,10 +1,3 @@
-// Template.imagesGallery.onRendered(function(){
-//         var newPictures = this.data.pictures.fetchAllFields;
-//         newPictures.sort(function (a,b){
-//         return new Date(a.createDate - new Date(b.createDate))
-//     })
-// });
-
 Template.imagesGallery.events({
 'click .img-responsive' : function(e) {
     e.preventDefault();

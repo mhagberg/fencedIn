@@ -1,4 +1,9 @@
-
+import '../imports/api/jobs.js';
+import '../imports/api/pictures.js';
+import '../imports/api/fencer.js';
+import '../imports/api/salesman.js';
+import '../imports/api/jobCheckIns.js';
+import '../imports/api/foreman.js';
 
 Meteor.startup(function() {
 

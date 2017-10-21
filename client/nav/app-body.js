@@ -60,7 +60,6 @@ Template.appBody.selectedForemanId = function() {
   return "";
 };
 
-
 Template.appBody.buildMeu = function () {
   var foremanId = Session.get(FOREMAN_ID) ? Session.get(FOREMAN_ID) : '';
   var jobLimit = Session.get(JOB_LIMIT) ? Session.get(JOB_LIMIT) : 5;

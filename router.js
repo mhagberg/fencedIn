@@ -25,9 +25,14 @@ if (Meteor.isClient) {
   if (!LaunchScreen.hidden) {
     dataReadyHold = LaunchScreen.hold();
   }
+    Meteor.subscribe('jobs');
+    Meteor.subscribe('salesmen');
+    Meteor.subscribe('foremen');
+    Meteor.subscribe('fencers');
 }
 
   Router.jobEdit = function(rout, job_id, foremenId) {
+
       var job = Jobs.findOne({_id: job_id});
       var jobEdit = {job : job, foremen: foremenId};
       rout.render('jobEdit', {data: function (){
@@ -36,6 +41,7 @@ if (Meteor.isClient) {
   };
 
   Router.jobReport = function(rout, job_id) {
+    Meteor.subscribe('jobPictures',job_id);
     var job = Jobs.findOne({_id: job_id});
     var pictures = Pictures.find({job_id : job_id});
     var jobReport = {job : job, pictures: pictures};
@@ -181,6 +187,7 @@ if (Meteor.isClient) {
   });
 
   Router.checkIn = function(rout, checkIn_id,foremenId){
+    Meteor.subscribe('jobCheckInId',checkIn_id);
     var checkIn = JobCheckIns.findOne({_id: checkIn_id});
     var job = Jobs.findOne({_id: checkIn.job_id});
     var pictures = Pictures.find({checkin_id: checkIn_id});
@@ -191,6 +198,7 @@ if (Meteor.isClient) {
   };
 
   Router.imagesGallery = function(rout) {
+      Meteor.subscribe('imagesGallery');
       var pictures = Pictures.find({},{sort:{"createDate": -1}});
       var returnPictures = {pictures : pictures};
       rout.render('imagesGallery', {
@@ -201,6 +209,8 @@ if (Meteor.isClient) {
   };
 
   Router.jobHistory = function(rout, job_id,foremenId) {
+    Meteor.subscribe('jobPictures',job_id);
+    Meteor.subscribe('jobCheckIns',job_id);
     var job = Jobs.findOne({_id : job_id});
     var checkIns = JobCheckIns.find({job_id : job_id}, {sort : {checkInTime : -1}});
     var pictures = Pictures.find({job_id : job_id});
@@ -214,6 +224,8 @@ if (Meteor.isClient) {
 
 
   Router.jobCheckIn = function(rout, job_id, foremenId) {
+    Meteor.subscribe('jobPictures',job_id);
+    Meteor.subscribe('jobCheckIns',job_id);
     delete Session.keys['previewImage'];
     var checkIn = {job_id : job_id, foremen : foremenId}
     rout.render('jobCheckIn', {
@@ -224,6 +236,8 @@ if (Meteor.isClient) {
   };
 
 Router.jobDetails = function(rout, job_id, foremenId) {
+  Meteor.subscribe('jobPictures',job_id);
+  Meteor.subscribe('jobCheckIns',job_id);
   delete Session.keys['previewImage'];
   var job = Jobs.findOne({_id : job_id});
   var checkIns = JobCheckIns.find({job_id : job_id}, {sort : {checkInTime : -1}});
