@@ -27,7 +27,6 @@ Template.jobCheckIn.events({
           checkOutTime : null,
           systemCheckInTime: new Date().getTime(),
           systemCheckOutTime: null,
-          checkInLocation : Geolocation.currentLocation()
         });
     if (!Jobs.findOne({_id : jobId}).startDate) {
         Jobs.update({_id : jobId}, {

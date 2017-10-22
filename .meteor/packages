@@ -10,7 +10,6 @@ momentjs:moment
 less@2.7.9
 nemo64:bootstrap
 accounts-password@1.4.0
-mdg:geolocation
 mdg:camera
 meteor-base@1.1.0
 mobile-experience@1.0.5
