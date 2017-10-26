@@ -8,13 +8,6 @@ Router.configure({
   // show the appLoading template whilst the subscriptions below load their data
   loadingTemplate: 'appLoading',
 
-  // wait on the following subscriptions before rendering the page to ensure
-  // the data it's expecting is present
-  //waitOn: function() {
-  //  return [
-  //    Meteor.subscribe('jobs')
-  //  ];
-  //}
 });
 
 dataReadyHold = null;
@@ -149,7 +142,8 @@ if (Meteor.isClient) {
     });
 
     this.route('/hiddenJobs', function() {
-      var jobs = Jobs.find({hidden : true}, { name: 1, number: 1, createDate: 1, finishDate: 1}, {sort:{createDate:-1}});
+      Meteor.subscribe('hiddenJobs');
+      var jobs = Jobs.find({'hidden' : true}, {sort:{createDate:-1}}, { name: 1, number: 1, createDate: 1, finishDate: 1});
       var data = {jobs: jobs};
       this.render('hiddenJobs', {data: function (){
         return data;
@@ -157,7 +151,8 @@ if (Meteor.isClient) {
     });
 
     this.route('/jobReports', function() {
-      var jobs = Jobs.find({finishDate : {$exists:true, $not:""}}, {sort:{finishDate:-1}}, { name: 1, number: 1, createDate: 1, finishDate: 1}).fetch();
+      Meteor.subscribe('job_Reports');
+      var jobs = Jobs.find({'finishDate' : {$exists:true, $ne:""}}, {sort:{'finishDate':-1}}, { name: 1, number: 1, createDate: 1, finishDate: 1});
       var data = {jobs: jobs};
       this.render('jobReports', {data: function (){
         return data;

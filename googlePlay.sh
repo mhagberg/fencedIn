@@ -2,20 +2,20 @@
 DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy fencedin.secomafence.com --settings /Users/mhagberg/meteor/projects/fencedIn/settings.json
 
 update the version number in mobile-config.js   version: '0.0.3'
-
-meteor build /Users/mhagberg/meteor/projects/fencedIn/productionBuild --server=fencedIn.secomafence.com
+meteor build /Users/doug/productionBuild --server=fencedIn.secomafence.com
 
 
 cd productionBuild
 cd android
 
-cp release-unsigned.apk ~/java/tools/android-sdk-macosx/build-tools/24.0.1
-cd ~/java/tools/android-sdk-macosx/build-tools/24.0.1
+cp release-unsigned.apk ~/Library/Android/sdk/build-tools/26.0.2
+cd ~/Library/Android/sdk/build-tools/26.0.2
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 release-unsigned.apk fencedIn
+#password j6yb1rds for the keystore and j6yb1rd for the fencedIn allis
 ./zipalign -f 4 release-unsigned.apk release-new.apk
 rm -rf  release-unsigned.apk
-mv release-new.apk /Users/mhagberg/meteor/projects/fencedIn/productionBuild
-cd /Users/mhagberg/meteor/projects/fencedIn/productionBuild
+mv release-new.apk ~/productionBuild
+cd ~/productionBuild
 
 
 
