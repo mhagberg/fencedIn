@@ -9,7 +9,21 @@ var onSuccess = function (imageData, jobId, checkin_id) {
 };
 
 Template.jobHistory.events({
-  'click #checkInBtn' : function(e) {
+  // 'change input' : function(event,template){
+  //     console.debug('testing');
+  //     var file = event.target.files[0]; //assuming 1 file only
+  //     if (!file) return;
+  //
+  //     var reader = new FileReader(); //create a reader according to HTML5 File API
+  //
+  //     reader.onload = function(event){
+  //         var buffer = new Uint8Array(reader.result) // convert to binary
+  //         Meteor.call('saveFile', buffer);
+  //     }
+  //
+  //     reader.readAsArrayBuffer(file); //read the file as arraybuffer
+  // },
+    'click #checkInBtn' : function(e) {
     e.preventDefault();
     Router.go('/jobCheckIn/' + this._id + '/' + foremenFilterParam());
   },
