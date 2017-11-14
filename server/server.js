@@ -11,7 +11,19 @@ Meteor.startup(function() {
 
 
 Meteor.methods({
-  updateCheckIn: function (checkInId,foremen,fencers,loadTime,travelTime,notes,additionalMaterials
+
+});
+
+Meteor.methods({
+    saveFile: function(dataUrl, jobId){
+        Pictures.insert({
+            image: dataUrl,
+            job_id: jobId,
+            checkin_id: null,
+            createDate: new Date().getTime()
+        });
+    },
+    updateCheckIn: function (checkInId,foremen,fencers,loadTime,travelTime,notes,additionalMaterials
       ,contactCustomer,dailyPicture,toolsMaterials,checkInTime, checkOutTime,checkInLocation
   ){
     JobCheckIns.update({_id : checkInId},
