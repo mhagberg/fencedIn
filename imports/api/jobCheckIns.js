@@ -7,7 +7,6 @@ if (Meteor.isServer) {
     });
     Meteor.publish('allCheckIns', function allCheckInPublication() {
         debugger;
-        console.log('hey, in the server for jobCheckins');
         let allCheckIns = JobCheckIns.find({});
         return allCheckIns;
     });
