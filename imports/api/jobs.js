@@ -27,4 +27,9 @@ if (Meteor.isServer) {
         let jobs = Jobs.find({'finishDate' : {$exists:true, $ne:""}}, {sort:{'finishDate':-1},  limit:2000}, { name: 1, number: 1, createDate: 1, finishDate: 1});
         return jobs;
     });
+    Meteor.publish('allJobs', function allJobsPublication() {
+        debugger;
+        let jobs = Jobs.find({});
+        return jobs;
+    });
 }

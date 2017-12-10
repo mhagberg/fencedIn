@@ -6,12 +6,20 @@ if (Meteor.isServer) {
         return jobCheckins;
     });
     Meteor.publish('allCheckIns', function allCheckInPublication() {
+        debugger;
+        console.log('hey, in the server for jobCheckins');
         let allCheckIns = JobCheckIns.find({});
         return allCheckIns;
     });
     Meteor.publish('jobCheckInId', function jobCheckInIdPublication(checkin_id) {
-        let allCheckIns = JobCheckIns.find({'_id': checkin_id});
-        return allCheckIns;
+        let checkinsFound = JobCheckIns.find({'_id': checkin_id});
+        return checkinsFound;
     });
 
-}
+
+//     Meteor.publish('jobCheckByForeman', function jobCheckInByForeman(foremanName) {
+//         debugger;
+//         let checkinsFound = JobCheckIns.find({'foremen': {$eleMatch: {'name': foremanName}}});
+//         return checkinsFound;
+//     });
+ }

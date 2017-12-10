@@ -23,4 +23,9 @@ Template.admin.events({
         e.preventDefault();
         Router.go('/admin/imagesGallery/');
     }
+    ,
+    'click .reportsDiv' : function(e) {
+        e.preventDefault();
+        Router.go('/admin/checkInPerJobByForeman/');
+    }
 });
