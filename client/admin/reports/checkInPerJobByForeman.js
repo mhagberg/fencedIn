@@ -42,7 +42,7 @@ Template.checkInPerJobByForeman.onRendered(function () {
           foremanCheckInAvg.push(jobCount ? Math.round(checkInCount / jobCount) : 0);
       }
     );
-    var avgCheckInsdata = {
+    let avgCheckInsdata = {
         labels: foremenNames,
         datasets: [{
             label: "Checkins Per Job By Foremen",
@@ -164,7 +164,7 @@ Template.checkInPerJobByForeman.onRendered(function () {
     dateFrom.subtract(1, 'y');
     let lastYearThisWeek = Jobs.find({$and: [{'createDate': {$gte: dateFrom.unix() * 1000}}, {'createDate': {$lt: dateTo.unix() * 1000}}]}).count();
     let newJobsData = {
-        labels: ['Last 360-330','Last 330-300','Last 300-270','Last 270-240','Last 240-210','Last 210-180','Last 180-150','Last 150-120','Last 120-90','Last 90-60', 'Last 60-30', 'Last 30', 'Last 7', 'Last Year This Week'],
+        labels: ['Last 360-330', 'Last 330-300', 'Last 300-270', 'Last 270-240', 'Last 240-210', 'Last 210-180', 'Last 180-150', 'Last 150-120', 'Last 120-90', 'Last 90-60', 'Last 60-30', 'Last 30', 'Last 7', 'Last Year This Week'],
         datasets: [{
             label: "Checkins Per Job By Foremen",
             fillColor: "rgba(10,90,10,0.2)",
@@ -173,9 +173,66 @@ Template.checkInPerJobByForeman.onRendered(function () {
             pointStrokeColor: "#ff5d24",
             pointHighlightFill: "#1e20ff",
             pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [numNewLast360To330Days,numNewLast330To300Days,numNewLast300To270Days,numNewLast270To240Days,numNewLast240To210Days,numNewLast210To180Days, numNewLast180To150Days,numNewLast150To120Days,numNewLast120To90Days,numNewLast90To60Days, numNewLast60To30Days, numNewLast30Days, numNewLast7Days, lastYearThisWeek]
+            data: [numNewLast360To330Days, numNewLast330To300Days, numNewLast300To270Days, numNewLast270To240Days, numNewLast240To210Days, numNewLast210To180Days, numNewLast180To150Days, numNewLast150To120Days, numNewLast120To90Days, numNewLast90To60Days, numNewLast60To30Days, numNewLast30Days, numNewLast7Days, lastYearThisWeek]
         }]
     };
+
+
+    let foremenCheckinChart = document.getElementById("foremanCheckIns").getContext('2d');
+
+    foremanJobcount = [];
+    let foremenCheckIns = [];
+    dateTo = moment();
+    dateFrom = moment().subtract(7, 'd');
+    jobCheckIns = JobCheckIns.find({$and: [{'checkInTime': {$gte: dateFrom.unix() * 1000}}, {'checkInTime': {$lt: dateTo.unix() * 1000}}]});
+    foremenNames.forEach(function (foremanName) {
+          let jobsCheckIns = {};
+          // let checkIns = [];
+          if (foremanName) {
+              // I intend to get the count of jobs by saying checkInbyForemanAndJobID.count() and I plan to get the avg num of checkins by avging the values for every job.
+              checkInCount = 0;
+              jobCheckIns.forEach(function (checkIn2) {
+                  if (checkIn2.foremen[0] && checkIn2.foremen[0].name) {
+                      if (checkIn2.foremen[0].name === foremanName) {
+                          checkInCount++;
+                          let jobCheckInCount = checkIn2.job_id && jobsCheckIns[checkIn2.job_id] ? jobsCheckIns[checkIn2.job_id].jobCheckInCount + 1 : 1;
+                          // checkIns = checkIn2.job_id && jobsCheckIns[checkIn2.job_id] && jobsCheckIns[checkIn2.job_id].checkIns ? jobsCheckIns[checkIn2.job_id].checkIns.push(checkIn2) : [null];
+                          jobsCheckIns[checkIn2.job_id] = {jobCheckInCount: jobCheckInCount, checkIns: null}
+                      }
+                  }
+              });
+          }
+          let jobCount = Object.keys(jobsCheckIns).length;
+          foremanJobcount.push(jobCount);
+          foremenCheckIns.push(checkInCount);
+      }
+    );
+
+
+    let foremenCheckInData = {
+        labels: foremenNames,
+        datasets: [{
+            label: "Checkins Per Job By Foremen",
+            fillColor: "rgba(10,90,70,0.2)",
+            strokeColor: "rgba(20,20,80,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: foremanJobcount
+        }, {
+            label: "My Second dataset",
+            fillColor: "rgba(220,20,20,0.2)",
+            strokeColor: "rgba(320,90,220,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: foremenCheckIns
+        }]
+    };
+
+    let foremanCheckIns = new Chart(foremenCheckinChart).Bar(foremenCheckInData, options);
     let newJobs = new Chart(newJobsChart).Bar(newJobsData, options);
     let avgCheckIns = new Chart(ctx).Bar(avgCheckInsdata, options);
 })
