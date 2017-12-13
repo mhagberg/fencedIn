@@ -178,7 +178,7 @@ Template.checkInPerJobByForeman.onRendered(function () {
     };
 
 
-    let foremenCheckinChart = document.getElementById("foremanCheckIns").getContext('2d');
+    let foremenCheckInChart = document.getElementById("foremanCheckIns").getContext('2d');
 
     foremanJobcount = [];
     let foremenCheckIns = [];
@@ -232,7 +232,7 @@ Template.checkInPerJobByForeman.onRendered(function () {
         }]
     };
 
-    let foremanCheckIns = new Chart(foremenCheckinChart).Bar(foremenCheckInData, options);
+    let foremanCheckIns = new Chart(foremenCheckInChart).Bar(foremenCheckInData, options);
     let newJobs = new Chart(newJobsChart).Bar(newJobsData, options);
     let avgCheckIns = new Chart(ctx).Bar(avgCheckInsdata, options);
 })
