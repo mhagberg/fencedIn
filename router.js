@@ -276,9 +276,10 @@ Router.checkInPerJobByForeman = function (rout) {
     var foremen = Foreman.find({disableDate: null});
     Meteor.subscribe('allCheckIns');
     Meteor.subscribe('allJobs');
-    let allCheckIns = JobCheckIns.find({});
+    let allCheckIns = JobCheckIns.find({}).count();
+    let allCheckInsCount = JobCheckIns.find({}).count();
     let allJobCount = Jobs.find({}).count();
-    if (foremen.count() && allCheckIns.count() > 1000 && allJobCount > 500) {
+    if (foremen.count() && allCheckIns.count() >= allCheckInsCount && allJobCount > 500) {
         let reportData = {allCheckIns, foremen}
         rout.render('checkInPerJobByForeman', {
             data: function () {

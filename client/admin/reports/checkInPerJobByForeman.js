@@ -212,7 +212,7 @@ Template.checkInPerJobByForeman.onRendered(function () {
     let foremenCheckInData = {
         labels: foremenNames,
         datasets: [{
-            label: "Checkins Per Job By Foremen",
+            label: "Jobs By foremen",
             fillColor: "rgba(10,90,70,0.2)",
             strokeColor: "rgba(20,20,80,1)",
             pointColor: "rgba(220,220,220,1)",
@@ -221,7 +221,7 @@ Template.checkInPerJobByForeman.onRendered(function () {
             pointHighlightStroke: "rgba(220,220,220,1)",
             data: foremanJobcount
         }, {
-            label: "My Second dataset",
+            label: "CheckIn's By Foremen",
             fillColor: "rgba(220,20,20,0.2)",
             strokeColor: "rgba(320,90,220,1)",
             pointColor: "rgba(151,187,205,1)",
