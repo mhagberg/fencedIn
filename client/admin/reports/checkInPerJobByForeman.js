@@ -5,7 +5,9 @@ Template.checkInPerJobByForeman.onRendered(function () {
     // get foreman names
     var foremen = Foreman.find({disableDate: null});
     let foremanJobCount = [];
-    let foremanCheckInAvg = []
+    let foremanCheckInAvg = [];
+    let pictureCount = 0;
+    let pictureArray = [];
     let foremenNames = [];
     foremen.forEach(function (foreman) {
         foremenNames.push(foreman.name)
@@ -21,11 +23,13 @@ Template.checkInPerJobByForeman.onRendered(function () {
           if (foremanName) {
               // I intend to get the count of jobs by saying checkInbyForemanAndJobID.count() and I plan to get the avg num of checkins by avging the values for every job.
               checkInCount = 0;
+              pictureCount = 0;
               checkIns = [];
               jobCheckInsCollection.forEach(function (checkIn2) {
                   if (checkIn2.foremen[0] && checkIn2.foremen[0].name) {
                       if (checkIn2.foremen[0].name === foremanName) {
                           checkInCount++;
+                          pictureCount += checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? 0 :  Pictures.find({"job_id": checkIn2.job_id}).count();
                           let jobCheckInCount = checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? jobCheckInsMap[checkIn2.job_id].jobCheckInCount + 1 : 1;
                           checkIns.push(checkIn2);
                           jobCheckInsMap[checkIn2.job_id] = {jobCheckInCount: jobCheckInCount, checkIns: checkIns}
@@ -41,9 +45,10 @@ Template.checkInPerJobByForeman.onRendered(function () {
           };
           foremanJobCount.push(jobCount);
           foremanCheckInAvg.push(jobCount ? Math.round(checkInCount / jobCount) : 0);
+          pictureArray.push(jobCount ? Math.round(pictureCount / jobCount) : 0);
       }
     );
-    let avgCheckInsdata = {
+    let avgCheckInsData = {
         labels: foremenNames,
         datasets: [{
             label: "Checkins Per Job By Foremen",
@@ -63,11 +68,17 @@ Template.checkInPerJobByForeman.onRendered(function () {
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(151,187,205,1)",
             data: foremanCheckInAvg
+        }, {
+            label: "Pictures's By Foremen",
+            fillColor: "rgba(72,96,255,0.2)",
+            strokeColor: "rgba(66,80,220,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#000000",
+            pointHighlightFill: "#000000",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: pictureArray
         }]
     };
-
-// how to get all the jobs by foremen name
-// db.getCollection('jobCheckInsCollection').find({'foremen': {$elemMatch: {'name':'Jay'}}}).count()
 
 // Set the options
     var options = {
@@ -183,15 +194,13 @@ Template.checkInPerJobByForeman.onRendered(function () {
 
     foremanJobCount = [];
     let foremenCheckIns = [];
-    let pictureArray = [];
-    let pictureCount = 0;
     let checkIns = [];
+    pictureArray = [];
     dateTo = moment();
     dateFrom = moment().subtract(30, 'd');
     jobCheckInsCollection = JobCheckIns.find({$and: [{'checkInTime': {$gte: dateFrom.unix() * 1000}}, {'checkInTime': {$lt: dateTo.unix() * 1000}}]});
     foremenNames.forEach(function (foremanName) {
           let jobCheckInsMap = {};
-          // let checkIns = [];
           if (foremanName) {
               // I intend to get the count of jobs by saying checkInbyForemanAndJobID.count() and I plan to get the avg num of checkins by avging the values for every job.
               checkInCount = 0;
@@ -201,7 +210,7 @@ Template.checkInPerJobByForeman.onRendered(function () {
                   if (checkIn2.foremen[0] && checkIn2.foremen[0].name) {
                       if (checkIn2.foremen[0].name === foremanName) {
                           checkInCount++;
-                          pictureCount +=  Pictures.find({"job_id": checkIn2.job_id}).count();
+                          pictureCount += checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? 0 :  Pictures.find({"job_id": checkIn2.job_id}).count();
                           let jobCheckInCount = checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? jobCheckInsMap[checkIn2.job_id].jobCheckInCount + 1 : 1;
                           checkIns.push(checkIn2);
                           jobCheckInsMap[checkIn2.job_id] = {
@@ -256,7 +265,7 @@ Template.checkInPerJobByForeman.onRendered(function () {
 
     let foremanCheckIns = new Chart(foremenCheckInChart).Bar(foremenCheckInData, options);
     let newJobs = new Chart(newJobsChart).Line(newJobsData, options);
-    let avgCheckIns = new Chart(ctx).Bar(avgCheckInsdata, options);
+    let avgCheckIns = new Chart(ctx).Bar(avgCheckInsData, options);
 })
 ;
 

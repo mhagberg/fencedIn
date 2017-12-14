@@ -28,7 +28,6 @@ if (Meteor.isServer) {
         return jobs;
     });
     Meteor.publish('allJobs', function allJobsPublication() {
-        debugger;
         let jobs = Jobs.find({});
         return jobs;
     });

@@ -1,11 +1,9 @@
 <template name="checkInPerJobByForeman">
-    <h1 class="text-center"># Foremen Jobs & CheckIns Last 30 Days</h1>
+    <h1 class="text-center">(Green: # Jobs) (Red: # CheckIns) (Blue: # Picture) In The Last 30 Days</h1>
     <canvas id="foremanCheckIns" width="600" height="600"></canvas>
-    <h1 class="text-center">New Jobs</h1>
+    <h1 class="text-center">New Jobs (30 day chunks) over the last year.</h1>
     <canvas id="newJobs" width="600" height="600"></canvas>
 
-    <h1 class="text-center">Number of Jobs</h1>
-    <h1 class="text-center"> &</h1>
-    <h1 class="text-center">Avg Number of CheckIns Per Job</h1>
+    <h1 class="text-center">(Green: # Jobs) (Red: Avg # CheckIns per Job) (Blue: Avg # Pictures) All time</h1>
     <canvas id="avgCheckIn" width="600" height="600"></canvas>
 </template>

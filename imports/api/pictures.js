@@ -9,7 +9,7 @@ if (Meteor.isServer) {
         return pictures;
     });
     Meteor.publish('pictureCount', function picturePublication() {
-        let pictures = Pictures.find({});
+        let pictures = Pictures.find({},{job_id: 1});
         return pictures;
     });
     Meteor.publish('jobPictures', function picturePublication(job_id) {

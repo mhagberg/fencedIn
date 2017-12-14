@@ -101,6 +101,7 @@ Router.map(function () {
         }
     });
     this.route('/jobNew');
+    this.route('/admin/reports/loading');
     this.route('/jobPictureView');
     this.route('/jobNew/:foremenId', function () {
         var data = {foremen: this.params.foremenId};
@@ -281,16 +282,17 @@ Router.checkInPerJobByForeman = function (rout) {
     let allCheckInsCount = JobCheckIns.find({}).count();
     let allPictues = Pictures.find({}).count();
     let allJobCount = Jobs.find({}).count();
-    if (foremen.count() && allCheckIns.count() >= 1300 && allJobCount > 500) {
+    if (foremen.count() && allCheckIns.count() >= 1300 && allPictues > 1880 && allJobCount > 500) {
         let reportData = {allCheckIns, foremen}
         rout.render('checkInPerJobByForeman', {
             data: function () {
                 return reportData
             }
         });
+    } else {
+        rout.render('loading');
     }
 };
-
 
 Router.jobDetails = function (rout, job_id, foremenId) {
     Meteor.subscribe('jobPictures', job_id);
