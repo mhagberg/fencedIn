@@ -19,6 +19,7 @@ if (Meteor.isClient) {
         dataReadyHold = LaunchScreen.hold();
     }
     Meteor.subscribe('jobs');
+    Meteor.subscribe('jobs');
     Meteor.subscribe('salesmen');
     Meteor.subscribe('foremen');
     Meteor.subscribe('fencers');

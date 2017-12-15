@@ -75,7 +75,12 @@ Template.appBody.buildMeu = function () {
   else {
     var jobs = Jobs.find({$and:[{hidden : null}, {$or:[{'finishDate': null}, {'finishDate': ""}]}]}, {sort : {createDate : -1}, limit:jobLimit}, {createDate : 1, name : 1, number: 1}).fetch();
   }
-  return {jobs: jobs};
+    var jobCheckInCounts = {};
+    jobs.forEach(function(job){
+        Meteor.subscribe('jobCheckIns', job._id);
+        jobCheckInCounts[job._id] = JobCheckIns.find({job_id : job._id}).count();
+    });
+    return {jobs: jobs, jobCheckInCounts: jobCheckInCounts};
 };
 
 Template.appBody.clearFilters = function() {
@@ -111,6 +116,12 @@ Template.appBody.helpers({
   },
   jobsList: function() {
     return Template.appBody.buildMeu();
+  },
+  jobCheckInCount: function(jobCheckInCounts, jobId) {
+      if (jobCheckInCounts && jobId) {
+          return jobCheckInCounts[jobId];
+      }
+      return false;
   },
   selectedForemen: function(){
     return Template.appBody.selectedForemanId();
