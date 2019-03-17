@@ -1,87 +1,9 @@
 import '../../../imports/api/jobCheckIns.js';
 
 Template.checkInPerJobByForeman.onRendered(function () {
-    var ctx = document.getElementById("avgCheckIn").getContext('2d');
-    // get foreman names
-    var foremen = Foreman.find({disableDate: null});
-    let foremanJobCount = [];
-    let foremanCheckInAvg = [];
-    let pictureCount = 0;
-    let pictureArray = [];
-    let foremenNames = [];
-    foremen.forEach(function (foreman) {
-        foremenNames.push(foreman.name)
-    });
 
-    // get checkIns per foreman
-    let foremanJobsAndCheckIns = {};
-    let checkInCount = 0;
-    let jobCheckInsCollection = JobCheckIns.find({});
-    foremenNames.forEach(function (foremanName) {
-          let jobCheckInsMap = {};
-          // let checkIns = [];
-          if (foremanName) {
-              // I intend to get the count of jobs by saying checkInbyForemanAndJobID.count() and I plan to get the avg num of checkins by avging the values for every job.
-              checkInCount = 0;
-              pictureCount = 0;
-              checkIns = [];
-              jobCheckInsCollection.forEach(function (checkIn2) {
-                  if (checkIn2.foremen[0] && checkIn2.foremen[0].name) {
-                      if (checkIn2.foremen[0].name === foremanName) {
-                          checkInCount++;
-                          pictureCount += checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? 0 :  Pictures.find({"job_id": checkIn2.job_id}).count();
-                          let jobCheckInCount = checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? jobCheckInsMap[checkIn2.job_id].jobCheckInCount + 1 : 1;
-                          checkIns.push(checkIn2);
-                          jobCheckInsMap[checkIn2.job_id] = {jobCheckInCount: jobCheckInCount, checkIns: checkIns}
-                      }
-                  }
-              });
-          }
-          let jobCount = Object.keys(jobCheckInsMap).length;
-          foremanJobsAndCheckIns[foremanName] = {
-              jobCount: jobCount,
-              checkInCount: checkInCount,
-              foremanCheckIns: jobCheckInsMap
-          };
-          foremanJobCount.push(jobCount);
-          foremanCheckInAvg.push(jobCount ? Math.round(checkInCount / jobCount) : 0);
-          pictureArray.push(jobCount ? Math.round(pictureCount / jobCount) : 0);
-      }
-    );
-    let avgCheckInsData = {
-        labels: foremenNames,
-        datasets: [{
-            label: "Checkins Per Job By Foremen",
-            fillColor: "rgba(10,90,70,0.2)",
-            strokeColor: "rgba(20,20,80,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: foremanJobCount
-        }, {
-            label: "My Second dataset",
-            fillColor: "rgba(220,20,20,0.2)",
-            strokeColor: "rgba(320,90,220,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: foremanCheckInAvg
-        }, {
-            label: "Pictures's By Foremen",
-            fillColor: "rgba(72,96,255,0.2)",
-            strokeColor: "rgba(66,80,220,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#000000",
-            pointHighlightFill: "#000000",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: pictureArray
-        }]
-    };
-
-// Set the options
-    var options = {
+    // Set the options
+    let options = {
 
         ///Boolean - Whether grid lines are shown across the chart
         scaleShowGridLines: true,
@@ -130,8 +52,6 @@ Template.checkInPerJobByForeman.onRendered(function () {
 
     };
 
-
-    let newJobsChart = document.getElementById("newJobs").getContext('2d');
 
     let dateTo = moment();
     let dateFrom = moment().subtract(7, 'd');
@@ -189,157 +109,52 @@ Template.checkInPerJobByForeman.onRendered(function () {
         }]
     };
 
+    let foremanIdResults = Foreman.find({disableDate: null}, {fields: {_id: 1}}).fetch();
+    let foremanIds = [];
+    foremanIdResults.forEach(function(result) {
+        foremanIds.push(result._id);
+    });
 
-    let foremenCheckInChart = document.getElementById("foremanCheckIns").getContext('2d');
+    const BarChart = new Mongo.Collection('barChart');
 
-    foremanJobCount = [];
-    let foremenCheckIns = [];
-    let checkIns = [];
-    pictureArray = [];
-    dateTo = moment();
-    dateFrom = moment().subtract(30, 'd');
-    jobCheckInsCollection = JobCheckIns.find({$and: [{'checkInTime': {$gte: dateFrom.unix() * 1000}}, {'checkInTime': {$lt: dateTo.unix() * 1000}}]});
-    foremenNames.forEach(function (foremanName) {
-          let jobCheckInsMap = {};
-          if (foremanName) {
-              // I intend to get the count of jobs by saying checkInbyForemanAndJobID.count() and I plan to get the avg num of checkins by avging the values for every job.
-              checkInCount = 0;
-              pictureCount = 0;
-              checkIns = [];
-              jobCheckInsCollection.forEach(function (checkIn2) {
-                  if (checkIn2.foremen[0] && checkIn2.foremen[0].name) {
-                      if (checkIn2.foremen[0].name === foremanName) {
-                          checkInCount++;
-                          pictureCount += checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? 0 :  Pictures.find({"job_id": checkIn2.job_id}).count();
-                          let jobCheckInCount = checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? jobCheckInsMap[checkIn2.job_id].jobCheckInCount + 1 : 1;
-                          checkIns.push(checkIn2);
-                          jobCheckInsMap[checkIn2.job_id] = {
-                              jobCheckInCount: jobCheckInCount,
-                              checkIns: checkIns,
-                              pictureCount: pictureCount
-                          }
-                      }
-                  }
-              });
-          }
-          let jobCount = Object.keys(jobCheckInsMap).length;
-          foremanJobCount.push(jobCount);
-          foremenCheckIns.push(checkInCount);
-          pictureArray.push(pictureCount);
-      }
-    );
+    // Build bar chart for all time.
+    dateTo = moment().unix();
+    dateFrom = moment().subtract(100, 'y').unix();
+    let foremanCheckInAllTimeData;
+    Tracker.autorun(() => {
+        Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, new function() {
+            foremanCheckInAllTimeData = BarChart.findOne(dateFrom + '|' + dateTo);
+            let data = BarChart.find().fetch();
+            console.log(data);
+        });
+    });
 
+    // Build bar chart for last 30 days.
+    dateTo = moment().unix();
+    dateFrom = moment().subtract(30, 'd').unix();
+    Tracker.autorun(() => {
+        Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
+    });
+    let foremanCheckInLast30DaysData = BarChart.findOne(dateFrom + '|' + dateTo);
 
-    let foremenCheckInData = {
+    // Build bar chart for yesterday.
+    dateTo = moment().unix();
+    dateFrom = moment().subtract(1, 'd').unix();
+    Tracker.autorun(() => {
+        Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
+    });
+    let foremanCheckInYesterdayData = BarChart.findOne(dateFrom + '|' + dateTo);
 
-        labels: foremenNames,
-        datasets: [{
-            label: "Jobs By foremen",
-            fillColor: "rgba(10,90,70,0.2)",
-            strokeColor: "rgba(20,20,80,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#000000",
-            pointHighlightFill: "#000000",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: foremanJobCount
-        }, {
-            label: "CheckIn's By Foremen",
-            fillColor: "rgba(220,20,20,0.2)",
-            strokeColor: "rgba(320,90,220,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#000000",
-            pointHighlightFill: "#000000",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: foremenCheckIns
-        }, {
-            label: "Pictures's By Foremen",
-            fillColor: "rgba(72,96,255,0.2)",
-            strokeColor: "rgba(66,80,220,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#000000",
-            pointHighlightFill: "#000000",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: pictureArray
-        }]
-    };
 
     let foremenCheckInYesterdayChart = document.getElementById("foremanCheckInsYesterday").getContext('2d');
+    let foremenCheckInChart = document.getElementById("foremanCheckIns").getContext('2d');
+    let newJobsChart = document.getElementById("newJobs").getContext('2d');
+    let ctx = document.getElementById("avgCheckIn").getContext('2d');
 
-    foremanJobCount = [];
-    foremenCheckIns = [];
-    checkIns = [];
-    pictureArray = [];
-    dateTo = moment();
-    dateFrom = moment().subtract(1, 'd');
-    jobCheckInsCollection = JobCheckIns.find({$and: [{'checkInTime': {$gte: dateFrom.unix() * 1000}}, {'checkInTime': {$lt: dateTo.unix() * 1000}}]});
-    foremenNames.forEach(function (foremanName) {
-          let jobCheckInsMap = {};
-          if (foremanName) {
-              // I intend to get the count of jobs by saying checkInbyForemanAndJobID.count() and I plan to get the avg num of checkins by avging the values for every job.
-              checkInCount = 0;
-              pictureCount = 0;
-              checkIns = [];
-              jobCheckInsCollection.forEach(function (checkIn2) {
-                  if (checkIn2.foremen[0] && checkIn2.foremen[0].name) {
-                      if (checkIn2.foremen[0].name === foremanName) {
-                          checkInCount++;
-                          pictureCount += checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? 0 :  Pictures.find({"job_id": checkIn2.job_id}).count();
-                          let jobCheckInCount = checkIn2.job_id && jobCheckInsMap[checkIn2.job_id] ? jobCheckInsMap[checkIn2.job_id].jobCheckInCount + 1 : 1;
-                          checkIns.push(checkIn2);
-                          jobCheckInsMap[checkIn2.job_id] = {
-                              jobCheckInCount: jobCheckInCount,
-                              checkIns: checkIns,
-                              pictureCount: pictureCount
-                          }
-                      }
-                  }
-              });
-          }
-          let jobCount = Object.keys(jobCheckInsMap).length;
-          foremanJobCount.push(jobCount);
-          foremenCheckIns.push(checkInCount);
-          pictureArray.push(pictureCount);
-      }
-    );
-
-
-    let foremenCheckInYesterdayData = {
-
-        labels: foremenNames,
-        datasets: [{
-            label: "Jobs By foremen",
-            fillColor: "rgba(10,90,70,0.2)",
-            strokeColor: "rgba(20,20,80,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#000000",
-            pointHighlightFill: "#000000",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: foremanJobCount
-        }, {
-            label: "CheckIn's By Foremen",
-            fillColor: "rgba(220,20,20,0.2)",
-            strokeColor: "rgba(320,90,220,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#000000",
-            pointHighlightFill: "#000000",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: foremenCheckIns
-        }, {
-            label: "Pictures's By Foremen",
-            fillColor: "rgba(72,96,255,0.2)",
-            strokeColor: "rgba(66,80,220,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#000000",
-            pointHighlightFill: "#000000",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            data: pictureArray
-        }]
-    };
-
-    let foremanCheckInsYesterday = new Chart(foremenCheckInYesterdayChart).Bar(foremenCheckInYesterdayData, options);
-    let foremanCheckIns = new Chart(foremenCheckInChart).Bar(foremenCheckInData, options);
-    let newJobs = new Chart(newJobsChart).Line(newJobsData, options);
-    let avgCheckIns = new Chart(ctx).Bar(avgCheckInsData, options);
+    new Chart(foremenCheckInYesterdayChart).Bar(foremanCheckInYesterdayData, options);
+    new Chart(foremenCheckInChart).Bar(foremanCheckInLast30DaysData, options);
+    new Chart(newJobsChart).Line(newJobsData, options);
+    new Chart(ctx).Bar(foremanCheckInAllTimeData, options);
 })
 ;
 
