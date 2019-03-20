@@ -6,7 +6,7 @@ if (Meteor.isServer) {
         return jobCheckins;
     });
     Meteor.publish('allCheckIns', function allCheckInPublication() {
-        debugger;
+        // debugger;
         let allCheckIns = JobCheckIns.find({});
         return allCheckIns;
     });
@@ -15,7 +15,7 @@ if (Meteor.isServer) {
         return checkinsFound;
     });
     Meteor.publish('barChartData', function getBarChartData(foremanIds, dateFrom, dateTo) {
-        debugger;
+        // debugger;
         let totalJobsPerForemanPipeline = [
             {
                 "$match": {
@@ -166,65 +166,65 @@ if (Meteor.isServer) {
             }
         ];
 
-        var chartData = {
-            "foremanNames": [],
-            "totalJobsPerForeman": [],
-            "avgCheckinsPerJob": [],
-            "avgPicturesPerJob": []
-        };
+        let foremanNames = [];
+        let totalJobsPerForeman = [];
+        let avgCheckinsPerJob = [];
+        let avgPicturesPerJob = [];
 
         let collection = JobCheckIns.rawCollection();
         let aggregate = Meteor.wrapAsync(collection.aggregate, collection);
 
-        // let results = Promise.await(aggregate(totalJobsPerForemanPipeline).toArray());
         Promise.await(aggregate(totalJobsPerForemanPipeline).toArray()).forEach(function (result) {
-            chartData.foremanNames.push(result._id);
-            chartData.totalJobsPerForeman.push(result.totalJobsPerForeman);
+            foremanNames.push(result._id);
+            totalJobsPerForeman.push(result.totalJobsPerForeman);
         });
 
         Promise.await(aggregate(avgCheckInsPerJobPipeline).toArray()).forEach(function (result) {
-            chartData.avgCheckinsPerJob.push(result.avgCheckinsPerJob);
+            avgCheckinsPerJob.push(result.avgCheckinsPerJob);
         });
 
         Promise.await(aggregate(avgPicturesPerJobPipeline).toArray()).forEach(function (result) {
-            chartData.avgPicturesPerJob.push(result.avgPicturesPerJob);
+            avgPicturesPerJob.push(result.avgPicturesPerJob);
         })
 
         // console.log(chartData);
 
-        // Add the data needed for the response.
         console.log(dateFrom + '|' + dateTo);
-        this.added('barChart', dateFrom + '|' + dateTo, {
-            labels: chartData.foremanNames,
+
+        // Add the data needed for the response.
+        let jsonChartData = {
+            labels: foremanNames,
             datasets: [{
-                label: "Jobs By foremen",
-                fillColor: "rgba(10,90,70,0.2)",
-                strokeColor: "rgba(20,20,80,1)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#000000",
-                pointHighlightFill: "#000000",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: chartData.totalJobsPerForeman
+                label: 'Jobs By foremen',
+                fillColor: 'rgba(10,90,70,0.2)',
+                strokeColor: 'rgba(20,20,80,1)',
+                pointColor: 'rgba(220,220,220,1)',
+                pointStrokeColor: '#000000',
+                pointHighlightFill: '#000000',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data: totalJobsPerForeman
             }, {
-                label: "CheckIn's By Foremen",
-                fillColor: "rgba(220,20,20,0.2)",
-                strokeColor: "rgba(320,90,220,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#000000",
-                pointHighlightFill: "#000000",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: chartData.avgCheckinsPerJob
+                label: 'CheckIn\'s By Foremen',
+                fillColor: 'rgba(220,20,20,0.2)',
+                strokeColor: 'rgba(320,90,220,1)',
+                pointColor: 'rgba(151,187,205,1)',
+                pointStrokeColor: '#000000',
+                pointHighlightFill: '#000000',
+                pointHighlightStroke: 'rgba(151,187,205,1)',
+                data: avgCheckinsPerJob
             }, {
-                label: "Pictures's By Foremen",
-                fillColor: "rgba(72,96,255,0.2)",
-                strokeColor: "rgba(66,80,220,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#000000",
-                pointHighlightFill: "#000000",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: chartData.avgPicturesPerJob
+                label: 'Pictures\'s By Foremen',
+                fillColor: 'rgba(72,96,255,0.2)',
+                strokeColor: 'rgba(66,80,220,1)',
+                pointColor: 'rgba(151,187,205,1)',
+                pointStrokeColor: '#000000',
+                pointHighlightFill: '#000000',
+                pointHighlightStroke: 'rgba(151,187,205,1)',
+                data: avgPicturesPerJob
             }]
-        });
+        };
+
+        this.added('barChart', dateFrom + '|' + dateTo, jsonChartData);
 
         return this.ready();
     });
