@@ -109,42 +109,21 @@ Template.checkInPerJobByForeman.onRendered(function () {
         }]
     };
 
-    let foremanIdResults = Foreman.find({disableDate: null}, {fields: {_id: 1}}).fetch();
-    let foremanIds = [];
-    foremanIdResults.forEach(function(result) {
-        foremanIds.push(result._id);
-    });
-
     const BarChart = new Mongo.Collection('barChart');
 
     // Build bar chart for all time.
-    dateTo = moment().unix();
-    dateFrom = moment().subtract(100, 'y').unix();
-    let foremanCheckInAllTimeData;
-    Tracker.autorun(() => {
-        Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, new function() {
-            foremanCheckInAllTimeData = BarChart.findOne(dateFrom + '|' + dateTo);
-            let data = BarChart.find().fetch();
-            console.log(data);
-        });
-    });
+    let today = moment().startOf('day');
+    dateTo = moment().endOf('day').unix();
+    dateFrom = today.subtract(100, 'y').unix();
+    let foremanCheckInAllTimeData = BarChart.findOne(dateFrom + '|' + dateTo);
 
     // Build bar chart for last 30 days.
-    dateTo = moment().unix();
-    dateFrom = moment().subtract(30, 'd').unix();
-    Tracker.autorun(() => {
-        Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
-    });
+    dateFrom = today.subtract(30, 'd').unix();
     let foremanCheckInLast30DaysData = BarChart.findOne(dateFrom + '|' + dateTo);
 
     // Build bar chart for yesterday.
-    dateTo = moment().unix();
-    dateFrom = moment().subtract(1, 'd').unix();
-    Tracker.autorun(() => {
-        Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
-    });
+    dateFrom = today.subtract(1, 'd').unix();
     let foremanCheckInYesterdayData = BarChart.findOne(dateFrom + '|' + dateTo);
-
 
     let foremenCheckInYesterdayChart = document.getElementById("foremanCheckInsYesterday").getContext('2d');
     let foremenCheckInChart = document.getElementById("foremanCheckIns").getContext('2d');

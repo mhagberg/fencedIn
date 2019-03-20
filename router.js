@@ -275,6 +275,26 @@ Router.jobCheckIn = function (rout, job_id, foremenId) {
 
 
 Router.checkInPerJobByForeman = function (rout) {
+    // Prep the data needed for the
+    let foremanIdResults = Foreman.find({disableDate: null}, {fields: {_id: 1}}).fetch();
+    let foremanIds = [];
+    foremanIdResults.forEach(function(result) {
+        foremanIds.push(result._id);
+    });
+
+    // Prep bar chart data for all time.
+    let today = moment().startOf('day');
+    let dateTo = moment().endOf('day').unix();
+    let dateFrom = today.subtract(100, 'y').unix();
+    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
+    // Prep bar chart data for last 30 days.
+    dateFrom = today.subtract(30, 'd').unix();
+    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
+    // Prep bar chart data for yesterday.
+    dateFrom = today.subtract(1, 'd').unix();
+    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
+
+
     var foremen = Foreman.find({disableDate: null});
     Meteor.subscribe('allCheckIns');
     Meteor.subscribe('allJobs');
