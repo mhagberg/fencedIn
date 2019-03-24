@@ -109,8 +109,6 @@ Template.checkInPerJobByForeman.onRendered(function () {
         }]
     };
 
-    const BarChart = new Mongo.Collection('barChart');
-
     // Build bar chart for all time.
     dateTo = moment().endOf('day').unix();
     dateFrom = moment().startOf('day').subtract(100, 'years').unix();
