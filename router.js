@@ -285,13 +285,13 @@ Router.checkInPerJobByForeman = function (rout) {
     // Prep bar chart data for all time.
     let dateTo = moment().endOf('day').unix();
     let dateFrom = moment().startOf('day').subtract(100, 'years').unix();
-    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
+    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$avg");
     // Prep bar chart data for last 30 days.
     dateFrom = moment().startOf('day').subtract(30, 'days').unix();
-    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
+    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
     // Prep bar chart data for yesterday.
     dateFrom = moment().startOf('day').subtract(1, 'days').unix();
-    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo);
+    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
 
 
     var foremen = Foreman.find({disableDate: null});

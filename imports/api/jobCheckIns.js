@@ -14,7 +14,7 @@ if (Meteor.isServer) {
         let checkinsFound = JobCheckIns.find({'_id': checkin_id});
         return checkinsFound;
     });
-    Meteor.publish('barChartData', function getBarChartData(foremanIds, dateFrom, dateTo) {
+    Meteor.publish('barChartData', function getBarChartData(foremanIds, dateFrom, dateTo, groupByOperator) {
         // debugger;
         let totalJobsPerForemanPipeline = [
             {
@@ -60,7 +60,7 @@ if (Meteor.isServer) {
             }
         ];
 
-        let avgCheckInsPerJobPipeline = [
+        let checkInsPerJobPipeline = [
             {
                 "$match": {
                     "$and": [
@@ -95,8 +95,8 @@ if (Meteor.isServer) {
             {
                 "$group": {
                     "_id": "$_id.foremanName",
-                    "avgCheckinsPerJob": {
-                        "$avg": "$checkinsPerJobPerUser"
+                    "checkinsPerJob": {
+                        [groupByOperator]: "$checkinsPerJobPerUser"
                     }
                 }
             },
@@ -107,7 +107,7 @@ if (Meteor.isServer) {
             }
         ];
 
-        let avgPicturesPerJobPipeline = [
+        let picturesPerJobPipeline = [
             {
                 "$match": {
                     "$and": [
@@ -154,8 +154,8 @@ if (Meteor.isServer) {
             {
                 "$group": {
                     "_id": "$_id.foremanName",
-                    "avgPicturesPerJob": {
-                        "$avg": "$pictureCount"
+                    "picturesPerJob": {
+                        [groupByOperator]: "$pictureCount"
                     }
                 }
             },
@@ -168,8 +168,8 @@ if (Meteor.isServer) {
 
         let foremanNames = [];
         let totalJobsPerForeman = [];
-        let avgCheckinsPerJob = [];
-        let avgPicturesPerJob = [];
+        let checkinsPerJob = [];
+        let picturesPerJob = [];
 
         let collection = JobCheckIns.rawCollection();
         Promise.await(collection.aggregate(totalJobsPerForemanPipeline).toArray()).forEach(function (result) {
@@ -177,12 +177,12 @@ if (Meteor.isServer) {
             totalJobsPerForeman.push(result.totalJobsPerForeman);
         });
 
-        Promise.await(collection.aggregate(avgCheckInsPerJobPipeline).toArray()).forEach(function (result) {
-            avgCheckinsPerJob.push(result.avgCheckinsPerJob);
+        Promise.await(collection.aggregate(checkInsPerJobPipeline).toArray()).forEach(function (result) {
+            checkinsPerJob.push(result.checkinsPerJob);
         });
 
-        Promise.await(collection.aggregate(avgPicturesPerJobPipeline).toArray()).forEach(function (result) {
-            avgPicturesPerJob.push(result.avgPicturesPerJob);
+        Promise.await(collection.aggregate(picturesPerJobPipeline).toArray()).forEach(function (result) {
+            picturesPerJob.push(result.picturesPerJob);
         });
 
         console.log(dateFrom + '|' + dateTo);
@@ -207,7 +207,7 @@ if (Meteor.isServer) {
                 pointStrokeColor: '#000000',
                 pointHighlightFill: '#000000',
                 pointHighlightStroke: 'rgba(151,187,205,1)',
-                data: avgCheckinsPerJob
+                data: checkinsPerJob
             }, {
                 label: 'Pictures\'s By Foremen',
                 fillColor: 'rgba(72,96,255,0.2)',
@@ -216,7 +216,7 @@ if (Meteor.isServer) {
                 pointStrokeColor: '#000000',
                 pointHighlightFill: '#000000',
                 pointHighlightStroke: 'rgba(151,187,205,1)',
-                data: avgPicturesPerJob
+                data: picturesPerJob
             }]
         };
 
