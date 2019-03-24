@@ -172,27 +172,23 @@ if (Meteor.isServer) {
         let avgPicturesPerJob = [];
 
         let collection = JobCheckIns.rawCollection();
-        let aggregate = Meteor.wrapAsync(collection.aggregate, collection);
-
-        Promise.await(aggregate(totalJobsPerForemanPipeline).toArray()).forEach(function (result) {
+        Promise.await(collection.aggregate(totalJobsPerForemanPipeline).toArray()).forEach(function (result) {
             foremanNames.push(result._id);
             totalJobsPerForeman.push(result.totalJobsPerForeman);
         });
 
-        Promise.await(aggregate(avgCheckInsPerJobPipeline).toArray()).forEach(function (result) {
+        Promise.await(collection.aggregate(avgCheckInsPerJobPipeline).toArray()).forEach(function (result) {
             avgCheckinsPerJob.push(result.avgCheckinsPerJob);
         });
 
-        Promise.await(aggregate(avgPicturesPerJobPipeline).toArray()).forEach(function (result) {
+        Promise.await(collection.aggregate(avgPicturesPerJobPipeline).toArray()).forEach(function (result) {
             avgPicturesPerJob.push(result.avgPicturesPerJob);
-        })
-
-        // console.log(chartData);
+        });
 
         console.log(dateFrom + '|' + dateTo);
 
         // Add the data needed for the response.
-        let jsonChartData = {
+        let chartData = {
             labels: foremanNames,
             datasets: [{
                 label: 'Jobs By foremen',
@@ -224,7 +220,15 @@ if (Meteor.isServer) {
             }]
         };
 
-        this.added('barChart', dateFrom + '|' + dateTo, jsonChartData);
+        // console.log(foremanNames);
+        // console.log(totalJobsPerForeman);
+        // console.log(avgCheckinsPerJob);
+        // console.log(avgPicturesPerJob);
+        // console.log('-------------------------------');
+
+        // console.log(chartData);
+
+        this.added('barChart', dateFrom + '|' + dateTo, chartData);
 
         return this.ready();
     });

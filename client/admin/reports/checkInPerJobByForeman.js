@@ -112,17 +112,16 @@ Template.checkInPerJobByForeman.onRendered(function () {
     const BarChart = new Mongo.Collection('barChart');
 
     // Build bar chart for all time.
-    let today = moment().startOf('day');
     dateTo = moment().endOf('day').unix();
-    dateFrom = today.subtract(100, 'y').unix();
+    dateFrom = moment().startOf('day').subtract(100, 'years').unix();
     let foremanCheckInAllTimeData = BarChart.findOne(dateFrom + '|' + dateTo);
 
     // Build bar chart for last 30 days.
-    dateFrom = today.subtract(30, 'd').unix();
+    dateFrom = moment().startOf('day').subtract(30, 'days').unix();
     let foremanCheckInLast30DaysData = BarChart.findOne(dateFrom + '|' + dateTo);
 
     // Build bar chart for yesterday.
-    dateFrom = today.subtract(1, 'd').unix();
+    dateFrom = moment().startOf('day').subtract(1, 'days').unix();
     let foremanCheckInYesterdayData = BarChart.findOne(dateFrom + '|' + dateTo);
 
     let foremenCheckInYesterdayChart = document.getElementById("foremanCheckInsYesterday").getContext('2d');
