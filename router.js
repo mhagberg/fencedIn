@@ -275,6 +275,25 @@ Router.jobCheckIn = function (rout, job_id, foremenId) {
 
 
 Router.checkInPerJobByForeman = function (rout) {
+    // Prep the data needed for the
+    let foremanIdResults = Foreman.find({disableDate: null}, {fields: {_id: 1}}).fetch();
+    let foremanIds = [];
+    foremanIdResults.forEach(function(result) {
+        foremanIds.push(result._id);
+    });
+
+    // Prep bar chart data for all time.
+    let dateTo = moment().endOf('day').unix();
+    let dateFrom = moment().startOf('day').subtract(100, 'years').unix();
+    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$avg");
+    // Prep bar chart data for last 30 days.
+    dateFrom = moment().startOf('day').subtract(30, 'days').unix();
+    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
+    // Prep bar chart data for yesterday.
+    dateFrom = moment().startOf('day').subtract(1, 'days').unix();
+    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
+
+
     var foremen = Foreman.find({disableDate: null});
     Meteor.subscribe('allCheckIns');
     Meteor.subscribe('allJobs');
@@ -283,15 +302,20 @@ Router.checkInPerJobByForeman = function (rout) {
     let allCheckInsCount = JobCheckIns.find({}).count();
     let allPictues = Pictures.find({}).count();
     let allJobCount = Jobs.find({}).count();
-    if (foremen.count() && allCheckIns.count() >= 1300 && allPictues > 1880 && allJobCount > 500) {
-        let reportData = {allCheckIns, foremen}
-        rout.render('checkInPerJobByForeman', {
-            data: function () {
-                return reportData
-            }
-        });
-    } else {
-        rout.render('loading');
+
+    setTimeout(waitToLoad, 5000);
+
+    function waitToLoad() {
+        if (foremen.count() && allCheckIns.count() >= 1300 && allPictues > 1880 && allJobCount > 500) {
+            let reportData = {allCheckIns, foremen}
+            rout.render('checkInPerJobByForeman', {
+                data: function () {
+                    return reportData
+                }
+            });
+        } else {
+            rout.render('loading');
+        }
     }
 };
 
