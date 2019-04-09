@@ -29,5 +29,32 @@ Template.imagesGallery.events({
     Session.set('jobPictures', items);
     Session.set('returnUrl', '/admin/imagesGallery/');
     Router.go('/jobPictureView/');
-}
+},
+'change :checkbox': function (e) {
+    e.preventDefault();
+    const target = event.target;
+    const tagText = target.value;
+    let tagArray = this.tags;
+    if (!tagArray) {
+        tagArray = [];
+    }
+    if (target.checked) {
+        if (tagArray.indexOf(tagText) === -1) {
+            tagArray.push(tagText);
+        }
+    } if (!target.checked)
+        {
+            if (tagArray.indexOf(tagText) !== -1) {
+                tagArray.splice(tagArray.indexOf(tagText), 1);
+            }
+        }
+    Pictures.update({_id: this._id},
+      {
+          $set: {
+              tags:tagArray
+          }
+      });
+},
 });
+
+

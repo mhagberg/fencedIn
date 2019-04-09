@@ -1,0 +1,18 @@
+<template name="imagesGallery">
+    <h3>All Pictures in descending order.</h3>
+    <div class="row gutter-small">
+        {{#each pictures}}
+            {{#if modlo4 @index}}
+                <div class="row gutter-small"><div class="row gutter"></div></div>
+            {{/if}}
+            <div class="col-lg-3 gutter-medium">
+                <img class="img-responsive" id="{{_id}}" width='150' src="{{image}}">
+                <input type="checkbox" value="Chain Link" {{tagIsChecked tags "Chain Link"}}>Chain Link<br>
+                <input type="checkbox" value="Wood" {{tagIsChecked tags "Wood"}}>Wood<br>
+                <input type="checkbox" value="Vinyl" {{tagIsChecked tags "Vinyl"}}>Vinyl<br>
+                <input type="checkbox" value="Ornamental Iron" {{tagIsChecked tags "Ornamental Iron"}}>Ornamental Iron<br>
+                <input type="checkbox" value="Other" {{tagIsChecked tags "Other"}}>Other<br>
+            </div>
+        {{/each}}
+    </div>
+</template>

@@ -76,6 +76,10 @@ Router.map(function () {
           return Router.imagesGallery(this)
       }
     );
+    this.route('/admin/imageByTag/', function () {
+          return Router.imageByTag(this)
+      }
+    );
     this.route('/jobDetails/:job_id', function () {
         return Router.jobDetails(this, this.params.job_id, "")
     });
@@ -242,6 +246,25 @@ Router.imagesGallery = function (rout) {
     rout.render('imagesGallery', {
         data: function () {
             return returnPictures;
+        }
+    });
+};
+
+
+Router.imageByTag = function (rout) {
+    Meteor.subscribe('chainLinkPics');
+    var chainLinkPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Chain Link" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    Meteor.subscribe('wooodPics');
+    var wooodPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Wood" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    Meteor.subscribe('vinylPics');
+    var vinylPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Vinyl" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    Meteor.subscribe('ornamntalIronPics');
+    var ornamntalIronPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Ornamental Iron" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    Meteor.subscribe('otherPics');
+    var otherPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Other" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    rout.render('imageByTag', {
+        data: function () {
+            return {chainLinkPics: chainLinkPics, woodPics: wooodPics, vinylPics: vinylPics, ornamentalIronPics: ornamntalIronPics, otherPics:otherPics};;
         }
     });
 };
