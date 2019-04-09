@@ -19,7 +19,6 @@ if (Meteor.isClient) {
         dataReadyHold = LaunchScreen.hold();
     }
     Meteor.subscribe('jobs');
-    Meteor.subscribe('jobs');
     Meteor.subscribe('salesmen');
     Meteor.subscribe('foremen');
     Meteor.subscribe('fencers');
@@ -253,18 +252,13 @@ Router.imagesGallery = function (rout) {
 
 Router.imageByTag = function (rout) {
     Meteor.subscribe('chainLinkPics');
-    var chainLinkPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Chain Link" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     Meteor.subscribe('wooodPics');
-    var wooodPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Wood" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     Meteor.subscribe('vinylPics');
-    var vinylPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Vinyl" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     Meteor.subscribe('ornamntalIronPics');
-    var ornamntalIronPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Ornamental Iron" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     Meteor.subscribe('otherPics');
-    var otherPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Other" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     rout.render('imageByTag', {
         data: function () {
-            return {chainLinkPics: chainLinkPics, woodPics: wooodPics, vinylPics: vinylPics, ornamentalIronPics: ornamntalIronPics, otherPics:otherPics};;
+            return;
         }
     });
 };
@@ -301,7 +295,7 @@ Router.checkInPerJobByForeman = function (rout) {
     // Prep the data needed for the
     let foremanIdResults = Foreman.find({disableDate: null}, {fields: {_id: 1}}).fetch();
     let foremanIds = [];
-    foremanIdResults.forEach(function(result) {
+    foremanIdResults.forEach(function (result) {
         foremanIds.push(result._id);
     });
 
@@ -316,31 +310,14 @@ Router.checkInPerJobByForeman = function (rout) {
     dateFrom = moment().startOf('day').subtract(1, 'days').unix();
     Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
 
-
-    var foremen = Foreman.find({disableDate: null});
-    Meteor.subscribe('allCheckIns');
-    Meteor.subscribe('allJobs');
-    Meteor.subscribe('pictureCount');
-    let allCheckIns = JobCheckIns.find({});
-    let allCheckInsCount = JobCheckIns.find({}).count();
-    let allPictues = Pictures.find({}).count();
-    let allJobCount = Jobs.find({}).count();
-
-    setTimeout(waitToLoad, 5000);
-
-    function waitToLoad() {
-        if (foremen.count() && allCheckIns.count() >= 1300 && allPictues > 1880 && allJobCount > 500) {
-            let reportData = {allCheckIns, foremen}
-            rout.render('checkInPerJobByForeman', {
-                data: function () {
-                    return reportData
-                }
-            });
-        } else {
-            rout.render('loading');
+    rout.render('checkInPerJobByForeman', {
+        data: function () {
+            return;
         }
-    }
-};
+    });
+}
+
+
 
 Router.jobDetails = function (rout, job_id, foremenId) {
     Meteor.subscribe('jobPictures', job_id);
