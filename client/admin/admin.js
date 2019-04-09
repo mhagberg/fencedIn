@@ -22,6 +22,10 @@ Template.admin.events({
     'click .ImagesGalleryDiv' : function(e) {
         e.preventDefault();
         Router.go('/admin/imagesGallery/');
+    },
+    'click .ImagesPreviewDiv' : function(e) {
+        e.preventDefault();
+        window.location.href = 'http://www.secomafence.com/recent-work-new/';
     }
     ,
     'click .reportsDiv' : function(e) {
