@@ -249,16 +249,20 @@ Router.imagesGallery = function (rout) {
     });
 };
 
-
 Router.imageByTag = function (rout) {
     Meteor.subscribe('chainLinkPics');
+    var chainLinkPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Chain Link" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     Meteor.subscribe('wooodPics');
+    var wooodPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Wood" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     Meteor.subscribe('vinylPics');
+    var vinylPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Vinyl" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     Meteor.subscribe('ornamntalIronPics');
+    var ornamntalIronPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Ornamental Iron" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     Meteor.subscribe('otherPics');
+    var otherPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Other" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
     rout.render('imageByTag', {
         data: function () {
-            return;
+            return {chainLinkPics: chainLinkPics, woodPics: wooodPics, vinylPics: vinylPics, ornamentalIronPics: ornamntalIronPics, otherPics:otherPics};;
         }
     });
 };
@@ -310,16 +314,6 @@ Router.checkInPerJobByForeman = function (rout) {
     dateFrom = moment().startOf('day').subtract(1, 'days').unix();
     let yesterdaySubscription = Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
 
-    // var foremen = Foreman.find({disableDate: null});
-    // Meteor.subscribe('allCheckIns');
-    // Meteor.subscribe('allJobs');
-    // Meteor.subscribe('pictureCount');
-    // let allCheckIns = JobCheckIns.find({});
-    // let allPictues = Pictures.find({}).count();
-    // let allJobCount = Jobs.find({}).count();
-
-    // if (foremen.count() && allCheckIns.count() >= 1300 && allPictues > 1880 && allJobCount > 500) {
-    //     let reportData = {allCheckIns, foremen};
     if (allTimeSubscription.ready() && last30DaysSubscription.ready() && yesterdaySubscription.ready()) {
         rout.render('checkInPerJobByForeman', {
             data: function () {
