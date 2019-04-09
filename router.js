@@ -302,22 +302,34 @@ Router.checkInPerJobByForeman = function (rout) {
     // Prep bar chart data for all time.
     let dateTo = moment().endOf('day').unix();
     let dateFrom = moment().startOf('day').subtract(100, 'years').unix();
-    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$avg");
+    let allTimeSubscription = Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$avg");
     // Prep bar chart data for last 30 days.
     dateFrom = moment().startOf('day').subtract(30, 'days').unix();
-    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
+    let last30DaysSubscription = Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
     // Prep bar chart data for yesterday.
     dateFrom = moment().startOf('day').subtract(1, 'days').unix();
-    Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
+    let yesterdaySubscription = Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
 
-    rout.render('checkInPerJobByForeman', {
-        data: function () {
-            return;
-        }
-    });
-}
+    // var foremen = Foreman.find({disableDate: null});
+    // Meteor.subscribe('allCheckIns');
+    // Meteor.subscribe('allJobs');
+    // Meteor.subscribe('pictureCount');
+    // let allCheckIns = JobCheckIns.find({});
+    // let allPictues = Pictures.find({}).count();
+    // let allJobCount = Jobs.find({}).count();
 
-
+    // if (foremen.count() && allCheckIns.count() >= 1300 && allPictues > 1880 && allJobCount > 500) {
+    //     let reportData = {allCheckIns, foremen};
+    if (allTimeSubscription.ready() && last30DaysSubscription.ready() && yesterdaySubscription.ready()) {
+        rout.render('checkInPerJobByForeman', {
+            data: function () {
+                return {};
+            }
+        });
+    } else {
+        rout.render('loading');
+    }
+};
 
 Router.jobDetails = function (rout, job_id, foremenId) {
     Meteor.subscribe('jobPictures', job_id);
