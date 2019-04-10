@@ -241,8 +241,8 @@ Router.checkIn = function (rout, checkIn_id, foremenId) {
 };
 
 Router.imagesGallery = function (rout) {
-    Meteor.subscribe('imagesGallery');
-    var pictures = Pictures.find({}, {sort: {"createDate": -1}});
+    Meteor.subscribe('recentImagesPipeLine');
+    var pictures = RecentImages.find({}, {sort: {"createDate": -1}});
     var returnPictures = {pictures: pictures};
     rout.render('imagesGallery', {
         data: function () {

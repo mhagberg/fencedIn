@@ -5,3 +5,4 @@ Salesman = new Mongo.Collection('salesman');
 JobCheckIns = new Mongo.Collection('jobCheckIns');
 Pictures = new Mongo.Collection('picture');
 BarChart = new Mongo.Collection('barChart');
+RecentImages = new Mongo.Collection('recentImages');
