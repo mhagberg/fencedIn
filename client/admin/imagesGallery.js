@@ -9,8 +9,11 @@ Template.imagesGallery.events({
             let dataUrl = event.target.result;
             Meteor.call('saveFile', dataUrl, jobId);
         };
-        fileReader.readAsDataURL(file);
-        location.reload();
+        setTimeout(reload, 1500);
+        Promise.await(fileReader.readAsDataURL(file));
+        function reload() {
+            location.reload();
+        }
     },
     'click .img-responsive': function (e) {
         e.preventDefault();
