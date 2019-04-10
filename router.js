@@ -37,6 +37,8 @@ Router.jobEdit = function (rout, job_id, foremenId) {
 
 Router.jobReport = function (rout, job_id) {
     Meteor.subscribe('jobPictures', job_id);
+    Meteor.subscribe('oneJob', job_id);
+    Meteor.subscribe('jobCheckInsByJobId', job_id);
     var job = Jobs.findOne({_id: job_id});
     var pictures = Pictures.find({job_id: job_id});
     var jobReport = {job: job, pictures: pictures};

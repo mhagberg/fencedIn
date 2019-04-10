@@ -31,4 +31,12 @@ if (Meteor.isServer) {
         let jobs = Jobs.find({});
         return jobs;
     });
+    Meteor.publish('oneJob', function oneJobPublication(jobId) {
+        let jobs = Jobs.find({_id:jobId});
+        return jobs;
+    });
+    Meteor.publish('jobCheckInsByJobId', function jobCheckIns(jobId) {
+        let jobCheckIns = JobCheckIns.find({job_id: jobId});
+        return jobCheckIns;
+    });
 }
