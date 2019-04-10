@@ -15,6 +15,14 @@ Meteor.methods({
 });
 
 Meteor.methods({
+    tagPicture: function(pictureId, tagArray){
+        Pictures.update({_id:pictureId},
+          {
+              $set: {
+                  tags: tagArray
+              }
+          });
+    },
     saveFile: function(dataUrl, jobId){
         Pictures.insert({
             image: dataUrl,

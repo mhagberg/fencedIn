@@ -1,4 +1,17 @@
 Template.imagesGallery.events({
+    'change #uploadFile': function (e) {
+        e.preventDefault();
+        let jobId = event.target.job_id;
+        let fileReader = new FileReader();
+        let file = event.target.files[0];
+        if (!file) return;
+        fileReader.onload = function (event) {
+            let dataUrl = event.target.result;
+            Meteor.call('saveFile', dataUrl, jobId);
+        };
+        fileReader.readAsDataURL(file);
+        location.reload();
+    },
     'click .img-responsive': function (e) {
         e.preventDefault();
 
@@ -48,12 +61,8 @@ Template.imagesGallery.events({
                 tagArray.splice(tagArray.indexOf(tagText), 1);
             }
         }
-        Pictures.update({_id: this._id},
-          {
-              $set: {
-                  tags: tagArray
-              }
-          });
+        Meteor.call('tagPicture', this._id, tagArray);
+        this.tags = tagArray;
     },
 });
 

@@ -34,13 +34,13 @@ Template.jobHistory.events({
         Jobs.update({_id: this._id}, {
             $set: {finishDate: new Date().getTime()}
         });
-        Meteor.call('sendEmail', {
-            to: 'nathan.secoma@hotmail.com',
-            from: 'mike.hagberg@gmail.com',
-            subject: 'Finished Job # ' + this.number,
-            text: 'Finished Job # ' + this.number + '. Click this link to see the details. http://fencedin.secomafence.com/admin/jobReport/' + this._id,
-            html: ''
-        });
+        // Meteor.call('sendEmail', {
+        //     to: 'nathan.secoma@hotmail.com',
+        //     from: 'mike.hagberg@gmail.com',
+        //     subject: 'Finished Job # ' + this.number,
+        //     text: 'Finished Job # ' + this.number + '. Click this link to see the details. http://fencedin.secomafence.com/admin/jobReport/' + this._id,
+        //     html: ''
+        // });
     },
     'click #hideBtn': function (e) {
         e.preventDefault();
@@ -110,16 +110,6 @@ Template.jobHistory.events({
         Session.set('jobId', this.job_id);
         Session.set('returnUrl', '/jobHistory/' + this.job_id + '/' + foremenFilterParam());
         Router.go('/jobPictureView/');
-    }
-});
-
-Template.jobHistory.helpers({
-    loadTimePlusTravelTime: function (checkInId) {
-        var checkIn = JobCheckIns.findOne({_id: checkInId});
-        return Number(checkIn.loadTime) + Number(checkIn.travelTime);
-    },
-    cordova: function () {
-        return Meteor.isCordova && 'cordova';
     }
 });
 
