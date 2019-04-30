@@ -22,6 +22,38 @@
 
             </div>
         {{/with}}
+        <div class="row gutter-medium">
+            <div class="col-lg-16">
+                <table class="table table-striped table-bordered gutter">
+                    <thead>
+                    <tr>
+                        <td class="table-text-small gutter-medium">
+                            Number of CheckIns
+                        </td>
+                        <td class="table-text-small gutter-medium">
+                            Number of Hours Crew was on the Job
+                        </td>
+                        <td class="table-text-small gutter-medium">
+                            Number of Man hours on the Job.
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="table-text-small gutter-medium">
+                            {{totalCheckIns job._id}}
+                        </td>
+                        <td class="table-text-small gutter-medium">
+                            {{totalHoursLogged job._id}}
+                        </td>
+                        <td class="table-text-small gutter-medium">
+                            {{totalManHours job._id}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="row">
             {{#with job}}
                 <div class="col-md-3">
