@@ -1,87 +1,112 @@
 <template name="appBody">
-  <div id="container" class="{{menuOpen}} {{cordova}}">
-    <section id="menu">
-    {{#unless cordova}}
-        <div class="col-md-3">
-            <div class="col-md-3"><button type="button" class="btn btn-success" id="clearFilters"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span>Clear Filters</button></div>
-        </div>
 
-    {{> filterByForemanSelect}}
-    {{/unless}}
-    <div class="gutter">
-        <label for="jobSearch">Search By Job Name or #:</label>
-        <input type="text" class="form-control" id="jobSearch" maxlength="15">
-    </div>
 
-    {{#unless cordova}}
-    <div class="col-md-3">
-        <div class="col-md-3"><button type="button" class="btn btn-success" id="search-btn"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Search</button></div>
-    </div>
+    <div id="container" class="{{menuOpen}} {{cordova}}">
+        <section id="menu">
+            <div class="row gutter-medium">
+                <div class="col-md-3">
+                   <h3> {{> loginButtons}}</h3>
+                </div>
+            </div>
+            {{#if isValidUser}}
+            {{#unless cordova}}
+                <div class="col-md-3">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-success" id="clearFilters"><span
+                                class="glyphicon glyphicon-erase" aria-hidden="true"></span>Clear Filters
+                        </button>
+                    </div>
+                </div>
 
-    <div class="gutter">
-        <h4>Max # of Jobs to Load:</h4>
-        <span class="radio-inline">
+                {{> filterByForemanSelect}}
+            {{/unless}}
+            <div class="gutter">
+                <label for="jobSearch">Search By Job Name or #:</label>
+                <input type="text" class="form-control" id="jobSearch" maxlength="15">
+            </div>
+
+            {{#unless cordova}}
+                <div class="col-md-3">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-success" id="search-btn"><span
+                                class="glyphicon glyphicon-search" aria-hidden="true"></span>Search
+                        </button>
+                    </div>
+                </div>
+
+                <div class="gutter">
+                    <h4>Max # of Jobs to Load:</h4>
+                    <span class="radio-inline">
             <label>
                 <input type="radio" name="limitJobs" id="limitJobs5" value="5" checked>
                 5
             </label>
         </span>
-        <span class="radio-inline">
+                    <span class="radio-inline">
             <label>
-                <input type="radio" name="limitJobs" id="limitJobs10" value="10" >
+                <input type="radio" name="limitJobs" id="limitJobs10" value="10">
                 10
             </label>
         </span>
-        <span class="radio-inline">
+                    <span class="radio-inline">
             <label>
                 <input type="radio" name="limitJobs" id="limitJobs20" value="20">
                 20
             </label>
         </span>
-        <span class="radio-inline">
+                    <span class="radio-inline">
             <label>
                 <input type="radio" name="limitJobs" id="limitJobsAll" value="30">
                 30
             </label>
         </span>
-    </div>
-    {{/unless}}
-      <div class="list-jobs">
-        {{#unless cordova}}
-        <a class="js-new-list link-list-new"><span class="icon-plus"></span>New Job</a>
-        <a class="js-admin link-list-new"><span class="icon-cog"></span>Admin</a>
-        {{/unless}}
-        {{#each jobsList.jobs}}
-          <a href="/jobHistory/{{_id}}/{{selectedForemen}}" class="list-job {{activeListClass}} {{#if finishDate}}finished{{/if}}" title="{{name}}">
-            {{#if userId}}
-              <span class="icon-lock"></span>
+                </div>
+            {{/unless}}
+            <div class="list-jobs">
+                {{#unless cordova}}
+                    <a class="js-new-list link-list-new"><span class="icon-plus"></span>New Job</a>
+                    <a class="js-admin link-list-new"><span class="icon-cog"></span>Admin</a>
+                {{/unless}}
+                {{#each jobsList.jobs}}
+                    <a href="/jobHistory/{{_id}}/{{selectedForemen}}"
+                       class="list-job {{activeListClass}} {{#if finishDate}}finished{{/if}}" title="{{name}}">
+                        {{#if userId}}
+                            <span class="icon-lock"></span>
+                        {{/if}}
+                        <span class="count-list">{{jobCheckInCount jobsList.jobCheckInCounts _id}}</span>
+                        {{name}}: {{number}}
+                    </a>
+                {{/each}}
+
+            </div>
+            {{else}}
+               <h1>Please sign in!!!</h1>
             {{/if}}
-              <span class="count-list">{{jobCheckInCount jobsList.jobCheckInCounts _id}}</span>
-            {{name}}: {{number}}
-          </a>
-        {{/each}}
+        </section>
 
-      </div>
-    </section>
+        {{#unless connected}}
+            <div class="notifications">
+                <div class="notification">
+                    <span class="icon-sync"></span>
+                    <div class="meta">
+                        <div class="title-notification">Trying to connect</div>
+                        <div class="description">There seems to be a connection issue</div>
+                    </div>
+                </div>
+            </div>
+        {{/unless}}
 
-    {{#unless connected}}
-      <div class="notifications">
-        <div class="notification">
-          <span class="icon-sync"></span>
-          <div class="meta">
-            <div class="title-notification">Trying to connect</div>
-            <div class="description">There seems to be a connection issue</div>
-          </div>
+        <div class="content-overlay"></div>
+
+        <div id="content-container">
+            {{#if isValidUser}}
+                {{#each thisArray}}
+                    {{> yield}}
+                {{/each}}
+            {{else}}
+                <h1 class="text-center">Please sign in!!!</h1>
+            {{/if}}
         </div>
-      </div>
-    {{/unless}}
-
-    <div class="content-overlay"></div>
-
-    <div id="content-container">
-      {{#each thisArray}}
-        {{> yield}}
-      {{/each}}
     </div>
-  </div>
+
 </template>
