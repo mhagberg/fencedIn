@@ -1,7 +1,7 @@
 Template.jobEdit.events({
   'click #updateJob' : function(e) {
     e.preventDefault();
-    var foremen = [];
+    let foremen = [];
     $('#foremanSelector').find(':selected').each(function(i, selected){
       foremen[i] = $(selected).data().value;
     });

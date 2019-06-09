@@ -11,10 +11,6 @@ Template.admin.events({
     e.preventDefault();
     Router.go('fencersList');
   },
-  'click .hiddenJobsDiv' : function(e) {
-    e.preventDefault();
-    Router.go('hiddenJobs');
-  },
   'click .jobReportsDiv' : function(e) {
     e.preventDefault();
     Router.go('jobReports');
@@ -26,10 +22,13 @@ Template.admin.events({
     'click .ImagesPreviewDiv' : function(e) {
         e.preventDefault();
         window.location.href = 'http://www.secomafence.com/recent-work-new/';
-    }
-    ,
-    'click .reportsDiv' : function(e) {
-        e.preventDefault();
-        Router.go('/admin/checkInPerJobByForeman/');
-    }
+    },
+  'click .reportsDiv' : function(e) {
+    e.preventDefault();
+    Router.go('/admin/checkInPerJobByForeman/');
+  },
+  'click .jobStatusDiv' : function(e) {
+  e.preventDefault();
+  Router.go('/admin/jobsAssigned/');
+}
 });

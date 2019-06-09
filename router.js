@@ -18,7 +18,6 @@ if (Meteor.isClient) {
     if (!LaunchScreen.hidden) {
         dataReadyHold = LaunchScreen.hold();
     }
-    Meteor.subscribe('jobs');
     Meteor.subscribe('salesmen');
     Meteor.subscribe('foremen');
     Meteor.subscribe('fencers');
@@ -98,12 +97,7 @@ Router.map(function () {
     this.route('home', {
         path: '/',
         action: function () {
-            var job = Jobs.findOne({hidden: null}, {sort: {createDate: -1}});
-            if (job) {
-                Router.go('/jobHistory/' + job._id);
-            } else {
-                Router.go('/jobNew/' + foremenFilterParam());
-            }
+            Router.go('/jobNew/' + foremenFilterParam());
         }
     });
     this.route('/jobNew');
@@ -171,22 +165,6 @@ Router.map(function () {
         });
     });
 
-    this.route('/hiddenJobs', function () {
-        Meteor.subscribe('hiddenJobs');
-        var jobs = Jobs.find({'hidden': true}, {sort: {createDate: -1}}, {
-            name: 1,
-            number: 1,
-            createDate: 1,
-            finishDate: 1
-        });
-        var data = {jobs: jobs};
-        this.render('hiddenJobs', {
-            data: function () {
-                return data;
-            }
-        });
-    });
-
     this.route('/jobReports', function () {
         Meteor.subscribe('job_Reports');
         var jobs = Jobs.find({'finishDate': {$exists: true, $ne: ""}}, {sort: {'finishDate': -1}}, {
@@ -201,6 +179,82 @@ Router.map(function () {
                 return data;
             }
         });
+    });
+
+    let loadingNoData = function () {
+        this.render('jobStatus', {
+            data: function () {
+                return {};
+            }
+        });
+    };
+
+    let loadJobsStatusWithData = function (status) {
+        let jobsByStatus = Jobs.find({"status": {"$eq": status}}, {sort: {"number": -1}});
+        const allForemen = Foreman.find({});
+        let data = {jobsByStatus: jobsByStatus, statusTitle: status, foreman: allForemen};
+        this.render('jobStatus', {
+            data: function () {
+                return data;
+            }
+        });
+    };
+
+    this.route('/admin/jobsAssigned', function () {
+        let jobsAssigned = Meteor.subscribe('jobsAssigned');
+        if (jobsAssigned.ready()) {
+            loadJobsStatusWithData.call(this,"Assigned");
+        } else {
+            loadingNoData.call(this);
+        }
+    });
+
+    this.route('/admin/jobsToDo/', function () {
+        let jobsToDo = Meteor.subscribe('jobsToDo');
+        if (jobsToDo.ready()) {
+            loadJobsStatusWithData.call(this, "To Do");
+        } else {
+            loadingNoData.call(this);
+        }
+    });
+
+
+
+    this.route('/admin/jobsFinished/', function () {
+        let jobsFinished = Meteor.subscribe('jobsFinished');
+        if (jobsFinished.ready()) {
+            loadJobsStatusWithData.call(this, "Finished");
+        } else {
+            loadingNoData.call(this);
+        }
+    });
+
+
+    this.route('/admin/jobsCanceled/', function () {
+        let jobsCanceled = Meteor.subscribe('jobsCanceled');
+        if (jobsCanceled.ready()) {
+            loadJobsStatusWithData.call(this, "Canceled");
+        } else {
+            loadingNoData.call(this);
+        }
+    });
+
+    this.route('/admin/jobsOnHold/', function () {
+        let jobsOnHold = Meteor.subscribe('jobsOnHold');
+        if (jobsOnHold.ready()) {
+            loadJobsStatusWithData.call(this, "On Hold");
+        } else {
+            loadingNoData.call(this);
+        }
+    });
+
+    this.route('/admin/jobsPaymentRequired/', function () {
+        let jobsPaymentRequired = Meteor.subscribe('jobsPaymentRequired');
+        if (jobsPaymentRequired.ready()) {
+            loadJobsStatusWithData.call(this, "Payment Required");
+        } else {
+            loadingNoData.call(this);
+        }
     });
 
     this.route('/fencerForm');
@@ -253,18 +307,55 @@ Router.imagesGallery = function (rout) {
 
 Router.imageByTag = function (rout) {
     Meteor.subscribe('chainLinkPics');
-    var chainLinkPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Chain Link" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    var chainLinkPics = Pictures.find({"tags": {$elemMatch: {$eq: "Chain Link"}}}, {
+        "_id": 1,
+        "createDate": 1,
+        "image": 1,
+        "job_id": 1,
+        "tags": 1
+    }, {sort: {"createDate": -1}});
     Meteor.subscribe('wooodPics');
-    var wooodPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Wood" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    var wooodPics = Pictures.find({"tags": {$elemMatch: {$eq: "Wood"}}}, {
+        "_id": 1,
+        "createDate": 1,
+        "image": 1,
+        "job_id": 1,
+        "tags": 1
+    }, {sort: {"createDate": -1}});
     Meteor.subscribe('vinylPics');
-    var vinylPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Vinyl" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    var vinylPics = Pictures.find({"tags": {$elemMatch: {$eq: "Vinyl"}}}, {
+        "_id": 1,
+        "createDate": 1,
+        "image": 1,
+        "job_id": 1,
+        "tags": 1
+    }, {sort: {"createDate": -1}});
     Meteor.subscribe('ornamntalIronPics');
-    var ornamntalIronPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Ornamental Iron" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    var ornamntalIronPics = Pictures.find({"tags": {$elemMatch: {$eq: "Ornamental Iron"}}}, {
+        "_id": 1,
+        "createDate": 1,
+        "image": 1,
+        "job_id": 1,
+        "tags": 1
+    }, {sort: {"createDate": -1}});
     Meteor.subscribe('otherPics');
-    var otherPics = Pictures.find({ "tags": { $elemMatch: {$eq: "Other" } } }, { "_id": 1, "createDate": 1, "image": 1, "job_id": 1, "tags": 1},{sort:{"createDate": -1}});
+    var otherPics = Pictures.find({"tags": {$elemMatch: {$eq: "Other"}}}, {
+        "_id": 1,
+        "createDate": 1,
+        "image": 1,
+        "job_id": 1,
+        "tags": 1
+    }, {sort: {"createDate": -1}});
     rout.render('imageByTag', {
         data: function () {
-            return {chainLinkPics: chainLinkPics, woodPics: wooodPics, vinylPics: vinylPics, ornamentalIronPics: ornamntalIronPics, otherPics:otherPics};;
+            return {
+                chainLinkPics: chainLinkPics,
+                woodPics: wooodPics,
+                vinylPics: vinylPics,
+                ornamentalIronPics: ornamntalIronPics,
+                otherPics: otherPics
+            };
+            ;
         }
     });
 };

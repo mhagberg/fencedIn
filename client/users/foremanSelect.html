@@ -1,7 +1,7 @@
 <template name="foremanSelect">
     <label for="foremanSelector">Select the Foreman assign to the job today:</label>
     <div>
-        <select multiple class="form-control" id="foremanSelector">
+        <select multiple class="form-control foremanSelector{{_id}}" id="foremanSelector">
             {{#each foreman}}
             <option label="{{name}}" data-value="{{stringify this}}" {{isSelectedMulti _id ../foremen}}></option>
             {{/each}}
