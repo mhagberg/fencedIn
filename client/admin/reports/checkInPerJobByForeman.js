@@ -52,7 +52,6 @@ Template.checkInPerJobByForeman.onRendered(function () {
 
     };
 
-
     let dateTo = moment();
     let dateFrom = moment().subtract(7, 'd');
     let numNewLast7Days = Jobs.find({$and: [{'createDate': {$gte: dateFrom.unix() * 1000}}, {'createDate': {$lt: dateTo.unix() * 1000}}]}).count();

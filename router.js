@@ -406,8 +406,9 @@ Router.checkInPerJobByForeman = function (rout) {
     // Prep bar chart data for yesterday.
     dateFrom = moment().startOf('day').subtract(1, 'days').unix();
     let yesterdaySubscription = Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
+    let allJobs = Meteor.subscribe('allJobs');
 
-    if (allTimeSubscription.ready() && last30DaysSubscription.ready() && yesterdaySubscription.ready()) {
+    if (allTimeSubscription.ready() && last30DaysSubscription.ready() && yesterdaySubscription.ready() && allJobs.ready()) {
         rout.render('checkInPerJobByForeman', {
             data: function () {
                 return {};
