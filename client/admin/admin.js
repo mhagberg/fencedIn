@@ -32,3 +32,10 @@ Template.admin.events({
   Router.go('/admin/jobsAssigned/');
 }
 });
+
+Template.admin.onRendered(function () {
+  $('#content-container').css({
+    'left': '0px',
+    'position': '0px'
+  });
+});

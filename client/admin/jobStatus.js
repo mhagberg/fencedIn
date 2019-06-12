@@ -67,3 +67,10 @@ Template.jobStatus.events({
           });
     }
 });
+
+Template.jobStatus  .onRendered(function () {
+    $('#content-container').css({
+        'left': '0px',
+        'position': '0px'
+    });
+});

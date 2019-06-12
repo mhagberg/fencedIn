@@ -3,7 +3,7 @@ import '../../../imports/api/jobCheckIns.js';
 Template.checkInPerJobByForeman.onRendered(function () {
 
     // Set the options
-    let options = {
+    let     options = {
 
         ///Boolean - Whether grid lines are shown across the chart
         scaleShowGridLines: true,
@@ -132,4 +132,11 @@ Template.checkInPerJobByForeman.onRendered(function () {
     new Chart(ctx).Bar(foremanCheckInAllTimeData, options);
 })
 ;
+
+Template.checkInPerJobByForeman.onRendered(function () {
+    $('#content-container').css({
+        'left': '0px',
+        'position': '0px'
+    });
+});
 
