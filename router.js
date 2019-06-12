@@ -189,8 +189,9 @@ Router.map(function () {
         });
     };
 
-    let loadJobsStatusWithData = function (status) {
-        let jobsByStatus = Jobs.find({"status": {"$eq": status}}, {sort: {"number": -1}});
+    let loadJobsStatusWithData = function (status, sortVal) {
+        if (!sortVal){sortVal = -1}
+        let jobsByStatus = Jobs.find({"status": {"$eq": status}}, {sort: {"number": sortVal}});
         const allForemen = Foreman.find({});
         let data = {jobsByStatus: jobsByStatus, statusTitle: status, foreman: allForemen};
         this.render('jobStatus', {
@@ -203,7 +204,7 @@ Router.map(function () {
     this.route('/admin/jobsAssigned', function () {
         let jobsAssigned = Meteor.subscribe('jobsAssigned');
         if (jobsAssigned.ready()) {
-            loadJobsStatusWithData.call(this,"Assigned");
+            loadJobsStatusWithData.call(this,"Assigned",1);
         } else {
             loadingNoData.call(this);
         }
