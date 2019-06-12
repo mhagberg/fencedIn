@@ -190,7 +190,9 @@ Router.map(function () {
     };
 
     let loadJobsStatusWithData = function (status, sortVal) {
-        if (!sortVal){sortVal = -1}
+        if (!sortVal) {
+            sortVal = -1
+        }
         let jobsByStatus = Jobs.find({"status": {"$eq": status}}, {sort: {"number": sortVal}});
         const allForemen = Foreman.find({});
         let data = {jobsByStatus: jobsByStatus, statusTitle: status, foreman: allForemen};
@@ -204,7 +206,7 @@ Router.map(function () {
     this.route('/admin/jobsAssigned', function () {
         let jobsAssigned = Meteor.subscribe('jobsAssigned');
         if (jobsAssigned.ready()) {
-            loadJobsStatusWithData.call(this,"Assigned",1);
+            loadJobsStatusWithData.call(this, "Assigned", 1);
         } else {
             loadingNoData.call(this);
         }
@@ -218,7 +220,6 @@ Router.map(function () {
             loadingNoData.call(this);
         }
     });
-
 
 
     this.route('/admin/jobsFinished/', function () {
@@ -362,17 +363,26 @@ Router.imageByTag = function (rout) {
 };
 
 Router.jobHistory = function (rout, job_id, foremenId) {
-    Meteor.subscribe('jobPictures', job_id);
-    Meteor.subscribe('jobCheckIns', job_id);
-    var job = Jobs.findOne({_id: job_id});
-    var checkIns = JobCheckIns.find({job_id: job_id}, {sort: {checkInTime: -1}});
-    var pictures = Pictures.find({job_id: job_id});
-    var jobHistory = {job: job, checkIns: checkIns, pictures: pictures, foremen: foremenId};
-    rout.render('jobHistory', {
-        data: function () {
-            return jobHistory
-        }
-    });
+    const oneJob = Meteor.subscribe('oneJob', job_id);
+    const jobPictures = Meteor.subscribe('jobPictures', job_id);
+    const jobCheckIns = Meteor.subscribe('jobCheckIns', job_id);
+    if (oneJob.ready() && jobPictures.ready() && jobCheckIns.ready()) {
+        var job = Jobs.findOne({_id: job_id});
+        var checkIns = JobCheckIns.find({job_id: job_id}, {sort: {checkInTime: -1}});
+        var pictures = Pictures.find({job_id: job_id});
+        var jobHistory = {job: job, checkIns: checkIns, pictures: pictures, foremen: foremenId};
+        rout.render('jobHistory', {
+            data: function () {
+                return jobHistory
+            }
+        });
+    } else {
+        rout.render('jobHistory', {
+            data: function () {
+                return {}
+            }
+        });
+    }
 };
 
 
