@@ -23,7 +23,6 @@ Template.jobStatus.events({
                   }
               });
         }
-        Router.go('/admin/jobsAssigned/');
     },
     'click #toDo': function (e) {
         e.preventDefault();
