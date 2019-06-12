@@ -25,6 +25,10 @@ Template.jobHistory.events({
         e.preventDefault();
         Router.go('/jobCheckIn/' + this._id + '/' + foremenFilterParam());
     },
+    'click .deleteCheckIn': function(e) {
+        e.preventDefault();
+        JobCheckIns.remove({"_id": this._id});
+    },
     'click #jobDetailsBtn': function (e) {
         e.preventDefault();
         Router.go('/jobDetails/' + this._id + '/' + foremenFilterParam());

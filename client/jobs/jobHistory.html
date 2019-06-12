@@ -127,6 +127,11 @@
                     Daily
                     Notes
                 </td>
+                {{#unless cordova}}
+                    <td class="table-text-small" colspan="3">
+                        <span class="icon-trash"></span>
+                    </td>
+                {{/unless}}
             </tr>
             </thead>
             <tbody>
@@ -183,6 +188,11 @@
                     <td class="table-text-small" colspan="3">
                         {{notes}}
                     </td>
+                    {{#unless cordova}}
+                        <td class="table-text-small" colspan="3">
+                            <span class="icon-trash deleteCheckIn deleteCheckIn_id{{_id}}"></span>
+                        </td>
+                    {{/unless}}
                 </tr>
             {{/each}}
             </tbody>
