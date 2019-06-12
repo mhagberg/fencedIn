@@ -30,7 +30,7 @@ Template.jobCheckIn.events({
         });
     if (!Jobs.findOne({_id : jobId}).startDate) {
         Jobs.update({_id : jobId}, {
-          $set : {startDate : new Date().getTime()}
+          $set : {startDate : new Date().getTime(), status: "Assigned"}
         });
     }
     Router.go('/jobHistory/'+jobId + '/' + foremenFilterParam());
