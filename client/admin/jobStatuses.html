@@ -15,7 +15,10 @@
                 <div href="" tabindex="{{@index}}" data-index="{{@index}}" data-name="jobCard" class="module active"
                      style="height: 360px;">
                     <h3><span class="icon-user-add jobCardLink">&nbsp;{{name}}</span></h3>
-                    <p class="jobCardLink"><b>Job Number: {{number}}</b></p>
+                    <p class="jobCardLink"><b>Job Number:</b> {{number}}</p>
+                    {{#each salesmen}}
+                        <p title="Salesman"><b>Salesman:</b> {{name}}</p>
+                    {{/each}}
                     <p class="jobCardLink"><b>Foreman:
                         {{#each foremen}}
                             {{name}},

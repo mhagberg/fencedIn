@@ -6,6 +6,10 @@
                     <div class="fi-pointer">
                         <h3><abbr title="Name">Job Name:</abbr> {{name}}</h3>
                         <h3><abbr title="Job Number">Job #:</abbr> {{number}}</h3>
+                        {{#each salesmen}}
+                            <h3><abbr title="Salesman">Salesman:</abbr> {{name}}</h3>
+                        {{/each}}
+                        <br/>
                         <h3>Location Contact:</h3>
                     </div>
                     <address class="bg-primary img-rounded job-info">
