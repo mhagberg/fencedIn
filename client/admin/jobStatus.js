@@ -24,29 +24,37 @@ Template.jobStatus.events({
               });
         }
     },
-    'click #toDo': function (e) {
+    'click .jobStatusBtn': function (e) {
         e.preventDefault();
-        Router.go('/admin/jobsToDo/');
+        $('#searchText').val("");
+        const val = $("#foremanFilter").val();
+        const jobStatus = e.target.value;
+        Session.set('jobStatus', jobStatus);
+        if (val != "All")
+        {
+            Router.go('/admin/jobStatus/' + jobStatus + '/' + val);
+        } else {
+            Router.go('/admin/jobStatus/' + jobStatus);
+        }
     },
-    'click #assigned': function (e) {
+    'change #foremanFilter': function (e) {
         e.preventDefault();
-        Router.go('/admin/jobsAssigned/');
+        $('#searchText').val("");
+        const val = $("#foremanFilter").val();
+        if (val != "All")
+        {
+            const jobStatus = Session.get('jobStatus');
+            Router.go('/admin/jobStatus/' + jobStatus + '/' + val);
+        } else {
+           return;
+        }
     },
-    'click #finished': function (e) {
+    'keyup #searchText': function (e) {
         e.preventDefault();
-        Router.go('/admin/jobsFinished/');
-    },
-    'click #canceled': function (e) {
-        e.preventDefault();
-        Router.go('/admin/jobsCanceled/');
-    },
-    'click #onHold': function (e) {
-        e.preventDefault();
-        Router.go('/admin/jobsOnHold/');
-    },
-    'click #paymentRequired': function (e) {
-        e.preventDefault();
-        Router.go('/admin/jobsPaymentRequired/');
+        let jobSearchText = e.target.value;
+        if (jobSearchText.length > 3) {
+            Router.go('/admin/jobStatusSearch/' + jobSearchText);
+        }
     },
     'click .jobCardLink': function (e) {
         e.preventDefault();
@@ -68,9 +76,12 @@ Template.jobStatus.events({
     }
 });
 
-Template.jobStatus  .onRendered(function () {
+Template.jobStatus.onRendered(function () {
     $('#content-container').css({
         'left': '0px',
         'position': '0px'
     });
+    if (! Session.get('jobStatus')) {
+        Session.set('jobStatus', 'Assigned');
+    }
 });

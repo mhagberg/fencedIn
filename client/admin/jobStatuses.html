@@ -2,18 +2,31 @@
     <div class="module-grid">
         <h2 title="Jobs in Status: {{statusTitle}}">Jobs in Status: {{statusTitle}}</h2>
         <div class="btn-group" role="status">
-            <button id="toDo" type="button" class="btn btn-primary">To Do</button>
-            <button id="assigned" type="button" class="btn btn-primary">Assigned</button>
-            <button id="finished" type="button" class="btn btn-primary">Finished</button>
-            <button id="canceled" type="button" class="btn btn-primary">Canceled</button>
-            <button id="onHold" type="button" class="btn btn-primary">On Hold</button>
-            <button id="paymentRequired" type="button" class="btn btn-primary">Payment Required</button>
+            <button id="toDo" value="ToDo" type="button" class="btn btn-primary jobStatusBtn">To Do</button>
+            <button id="assigned" value="Assigned" type="button" class="btn btn-primary jobStatusBtn">Assigned</button>
+            <button id="finished" value="Finished" type="button" class="btn btn-primary jobStatusBtn">Finished</button>
+            <button id="canceled" value="Canceled" type="button" class="btn btn-primary jobStatusBtn">Canceled</button>
+            <button id="onHold" value="OnHold" type="button" class="btn btn-primary jobStatusBtn">On Hold</button>
+            <button id="invoiced" value="Invoiced" type="button" class="btn btn-primary jobStatusBtn">Invoiced</button>
+        </div>
+        <div class="btn-group" role="status">
+            <label class="filterByForemanLabel"><h3>Filter By Foreman</h3></label>
+            <select id="foremanFilter" class="FilterByForeman">
+                <option value="All">All</option>
+                {{#each foreman}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="gutter">
+            <label for="searchText">Search By Job Name or #:</label>
+            <input type="text" class="form-control" id="searchText" maxlength="40">
         </div>
 
         <div class="jobsByStatus modules gutter">
             {{#each jobsByStatus}}
                 <div href="" tabindex="{{@index}}" data-index="{{@index}}" data-name="jobCard" class="module active"
-                     style="height: 360px;">
+                     style="height: 380px;">
                     <h3><span class="icon-user-add jobCardLink">&nbsp;{{name}}</span></h3>
                     <p class="jobCardLink"><b>Job Number:</b> {{number}}</p>
                     {{#each salesmen}}
@@ -36,8 +49,7 @@
                             <option {{isSelected "Canceled" status}} value="Canceled">Canceled</option>
                             <option {{isSelected "On Hold" status}} value="On Hold">On Hold</option>
                             <option {{isSelected "Re-Opened" status}} value="Re-Opened">Re-Opened</option>
-                            <option {{isSelected "Payment Required" status}} value="Payment Required">Payment Required
-                            </option>
+                            <option {{isSelected "Invoiced" status}} value="Invoiced">Invoiced</option>
                         </select>
                     </p>
                     <p>

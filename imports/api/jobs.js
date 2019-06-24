@@ -12,10 +12,12 @@ if (Meteor.isServer) {
         return jobs;
     });
     Meteor.publish('jobsSearch', function jobsSearchPublication(jobSearchText) {
-        var regex = new RegExp(".*" + jobSearchText + ".*", "i");
+        console.log("here in Job Search");
+        console.log("jobsearchText: " + jobSearchText);
+        let regex = new RegExp(".*" + jobSearchText + ".*", "i");
         let jobs = Jobs.find({$or: [{name: regex}, {number: regex}]}, {
             sort: {createDate: -1, name: 1},
-        }, {createDate: 1}).fetch();
+        }, {createDate: 1});
         return jobs;
     });
     Meteor.publish('jobs', function jobsPublication() {
@@ -63,7 +65,7 @@ if (Meteor.isServer) {
         return Jobs.find({'status': {"$eq": "On Hold"}});
     });
 
-    Meteor.publish('jobsPaymentRequired', function () {
-        return Jobs.find({'status': {"$eq": "Payment Required"}});
+    Meteor.publish('jobsInvoiced', function () {
+        return Jobs.find({'status': {"$eq": "Invoiced"}});
     });
 }

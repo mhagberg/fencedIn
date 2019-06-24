@@ -29,7 +29,7 @@ Template.admin.events({
   },
   'click .jobStatusDiv' : function(e) {
   e.preventDefault();
-  Router.go('/admin/jobsAssigned/');
+  Router.go('/admin/jobStatus/Assigned/');
 }
 });
 

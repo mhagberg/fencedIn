@@ -189,12 +189,24 @@ Router.map(function () {
         });
     };
 
-    let loadJobsStatusWithData = function (status, sortVal) {
+    let loadJobsStatusWithData = function (status, sortVal, foremanId, searchText) {
         if (!sortVal) {
             sortVal = -1
         }
-        let jobsByStatus = Jobs.find({"status": {"$eq": status}}, {sort: {"number": sortVal}});
-        const allForemen = Foreman.find({});
+        let jobsByStatus = null;
+        if (searchText){
+            const regex = new RegExp(".*" + searchText + ".*", "i");
+            jobsByStatus = Jobs.find({$or: [{name: regex}, {number: regex}]}, {sort: {"number": sortVal}});
+        } else
+            {
+
+                if (foremanId) {
+                    jobsByStatus = Jobs.find({$and: [{"status": {"$eq": status}}, {'foremen._id': foremanId}]}, {sort: {"number": sortVal}});
+                } else {
+                    jobsByStatus = Jobs.find({"status": {"$eq": status}}, {sort: {"number": sortVal}});
+                }
+            }
+        const allForemen = Foreman.find({'disableDate': null});
         let data = {jobsByStatus: jobsByStatus, statusTitle: status, foreman: allForemen};
         this.render('jobStatus', {
             data: function () {
@@ -203,61 +215,37 @@ Router.map(function () {
         });
     };
 
-    this.route('/admin/jobsAssigned', function () {
+    this.route('/admin/jobStatus/:status/', function () {
         let jobsAssigned = Meteor.subscribe('jobsAssigned');
+        let status = this.params.status;
         if (jobsAssigned.ready()) {
-            loadJobsStatusWithData.call(this, "Assigned", 1);
+            loadJobsStatusWithData.call(this, status, 1);
         } else {
             loadingNoData.call(this);
         }
     });
 
-    this.route('/admin/jobsToDo/', function () {
-        let jobsToDo = Meteor.subscribe('jobsToDo');
-        if (jobsToDo.ready()) {
-            loadJobsStatusWithData.call(this, "To Do");
+    this.route('/admin/jobStatus/:status/:foremanId/', function () {
+        let status = this.params.status;
+        let jobs = Meteor.subscribe('jobs'+status);
+        let foremanId = this.params.foremanId;
+        if (jobs.ready()) {
+            loadJobsStatusWithData.call(this, status, 1, foremanId);
         } else {
             loadingNoData.call(this);
         }
     });
 
-
-    this.route('/admin/jobsFinished/', function () {
-        let jobsFinished = Meteor.subscribe('jobsFinished');
-        if (jobsFinished.ready()) {
-            loadJobsStatusWithData.call(this, "Finished");
+    this.route('/admin/jobStatusSearch/:text/', function () {
+        let searchText = this.params.text;
+        let jobs = Meteor.subscribe('jobsSearch', searchText);
+        if (jobs.ready()) {
+            loadJobsStatusWithData.call(this, status, 1, null, searchText);
         } else {
             loadingNoData.call(this);
         }
     });
 
-
-    this.route('/admin/jobsCanceled/', function () {
-        let jobsCanceled = Meteor.subscribe('jobsCanceled');
-        if (jobsCanceled.ready()) {
-            loadJobsStatusWithData.call(this, "Canceled");
-        } else {
-            loadingNoData.call(this);
-        }
-    });
-
-    this.route('/admin/jobsOnHold/', function () {
-        let jobsOnHold = Meteor.subscribe('jobsOnHold');
-        if (jobsOnHold.ready()) {
-            loadJobsStatusWithData.call(this, "On Hold");
-        } else {
-            loadingNoData.call(this);
-        }
-    });
-
-    this.route('/admin/jobsPaymentRequired/', function () {
-        let jobsPaymentRequired = Meteor.subscribe('jobsPaymentRequired');
-        if (jobsPaymentRequired.ready()) {
-            loadJobsStatusWithData.call(this, "Payment Required");
-        } else {
-            loadingNoData.call(this);
-        }
-    });
 
     this.route('/fencerForm');
 
