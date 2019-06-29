@@ -1,4 +1,5 @@
 <template name="    jobReports">
+    {{> showHideNav}}
     <h1>
         Job Summery Reports
     </h1>
@@ -39,12 +40,14 @@
                 </td>
                 <td class="table-text-small">
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-info" id="jobReport" data-job-id="{{_id}}"><span class="glyphicon glyphicon-open-file" aria-hidden="true">View Report</span></button>
+                        <button type="button" class="btn btn-info" id="jobReport" data-job-id="{{_id}}"><span
+                                class="glyphicon glyphicon-open-file" aria-hidden="true">View Report</span></button>
                     </div>
                 </td>
                 <td class="table-text-small">
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-info" id="un-finish" data-job-id="{{_id}}"><span class="glyphicon glyphicon-unchecked" aria-hidden="true">Un-Finish</span></button>
+                        <button type="button" class="btn btn-info" id="un-finish" data-job-id="{{_id}}"><span
+                                class="glyphicon glyphicon-unchecked" aria-hidden="true">Un-Finish</span></button>
                     </div>
                 </td>
             </tr>

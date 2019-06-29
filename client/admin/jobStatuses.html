@@ -1,12 +1,13 @@
 <template name="jobStatus">
+    {{> showHideNav}}
     <div class="module-grid">
         <h2 title="Jobs in Status: {{statusTitle}}">Jobs in Status: {{statusTitle}}</h2>
         <div class="btn-group" role="status">
-            <button id="toDo" value="ToDo" type="button" class="btn btn-primary jobStatusBtn">To Do</button>
+            <button id="toDo" value="To Do" type="button" class="btn btn-primary jobStatusBtn">To Do</button>
             <button id="assigned" value="Assigned" type="button" class="btn btn-primary jobStatusBtn">Assigned</button>
             <button id="finished" value="Finished" type="button" class="btn btn-primary jobStatusBtn">Finished</button>
             <button id="canceled" value="Canceled" type="button" class="btn btn-primary jobStatusBtn">Canceled</button>
-            <button id="onHold" value="OnHold" type="button" class="btn btn-primary jobStatusBtn">On Hold</button>
+            <button id="onHold" value="On Hold" type="button" class="btn btn-primary jobStatusBtn">On Hold</button>
             <button id="invoiced" value="Invoiced" type="button" class="btn btn-primary jobStatusBtn">Invoiced</button>
         </div>
         <div class="btn-group" role="status">

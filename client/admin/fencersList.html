@@ -1,48 +1,54 @@
 <template name="fencersList">
-<h1 class="text-center">Fencers</h1>
-<div class="container-fluid gutter-small">
-    <div class="row">
-        <div class="col-md-3"><button type="button" class="btn-primary btn-xs" id="newFencer"><span class="icon-user-add" aria-hidden="true"></span>New</button></div>
+    {{> showHideNav}}
+    <h1 class="text-center">Fencers</h1>
+    <div class="container-fluid gutter-small">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn-primary btn-xs" id="newFencer"><span class="icon-user-add"
+                                                                                      aria-hidden="true"></span>New
+                </button>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <td class="table-text-small">
+                    Full Name
+                </td>
+                <td class="table-text-small">
+                    Email
+                </td>
+                <td class="table-text-small">
+                    Date Created
+                </td>
+                <td class="table-text-small">
+                    Delete
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each fencer}}
+                <tr class="editLink">
+                    <td class="table-text-small">
+                        {{name}}
+                    </td>
+                    <td class="table-text-small">
+                        {{email}}
+                    </td>
+                    <td class="table-text-small">
+                        {{#if createDate}}
+                            {{formatDate createDate "long"}}
+                        {{/if}}
+                    </td>
+                    <td class="table-text-small">
+                        {{#unless disableDate}}
+                            <a class="fencer-delete" data-fencer-id="{{_id}}" href="">Delete <span
+                                    class="icon-trash"></span></a>
+                        {{/unless}}
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
     </div>
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <td class="table-text-small">
-                Full Name
-            </td>
-            <td class="table-text-small">
-                Email
-            </td>
-            <td class="table-text-small">
-                Date Created
-            </td>
-            <td class="table-text-small">
-                Delete
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each fencer}}
-        <tr class="editLink">
-            <td class="table-text-small">
-                {{name}}
-            </td>
-            <td class="table-text-small">
-                {{email}}
-            </td>
-            <td class="table-text-small">
-                {{#if createDate}}
-                {{formatDate createDate "long"}}
-                {{/if}}
-            </td>
-            <td class="table-text-small">
-                {{#unless disableDate}}
-                    <a class="fencer-delete" data-fencer-id="{{_id}}" href="">Delete <span class="icon-trash"></span></a>
-                {{/unless}}
-            </td>
-        </tr>
-        {{/each}}
-        </tbody>
-    </table>
-</div>
 </template>

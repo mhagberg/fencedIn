@@ -117,5 +117,10 @@ Template.jobHistory.events({
     }
 });
 
-
+Template.jobHistory.onRendered(function () {
+    $('#content-container').css({
+        'left': '270px',
+        'position': 'absolute'
+    });
+});
 
