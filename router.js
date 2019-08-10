@@ -194,18 +194,22 @@ Router.map(function () {
             sortVal = -1
         }
         let jobsByStatus = null;
-        if (searchText){
+        if (searchText) {
             const regex = new RegExp(".*" + searchText + ".*", "i");
-            jobsByStatus = Jobs.find({$or: [{name: regex}, {number: regex}]}, {sort: {"number": sortVal}});
-        } else
-            {
-
-                if (foremanId) {
-                    jobsByStatus = Jobs.find({$and: [{"status": {"$eq": status}}, {'foremen._id': foremanId}]}, {sort: {"number": sortVal}});
-                } else {
-                    jobsByStatus = Jobs.find({"status": {"$eq": status}}, {sort: {"number": sortVal}});
-                }
+            let jobSearchText = Meteor.subscribe('jobsSearch', regex);
+            if (jobSearchText.ready()) {
+                jobsByStatus = Jobs.find({$or: [{name: regex}, {number: regex}]}, {sort: {"number": sortVal}});
+            } else {
+                loadingNoData.call(this);
             }
+        } else {
+
+            if (foremanId) {
+                jobsByStatus = Jobs.find({$and: [{"status": {"$eq": status}}, {'foremen._id': foremanId}]}, {sort: {"number": sortVal}});
+            } else {
+                jobsByStatus = Jobs.find({"status": {"$eq": status}}, {sort: {"number": sortVal}});
+            }
+        }
         const allForemen = Foreman.find({'disableDate': null});
         let data = {jobsByStatus: jobsByStatus, statusTitle: status, foreman: allForemen};
         this.render('jobStatus', {
@@ -227,7 +231,7 @@ Router.map(function () {
 
     this.route('/admin/jobStatus/:status/:foremanId/', function () {
         let status = this.params.status;
-        let jobs = Meteor.subscribe('jobs'+status);
+        let jobs = Meteor.subscribe('jobs' + status);
         let foremanId = this.params.foremanId;
         if (jobs.ready()) {
             loadJobsStatusWithData.call(this, status, 1, foremanId);

@@ -39,11 +39,11 @@ Template.appBody.onRendered(function () {
     this.find('#content-container')._uihooks = {
         insertElement: function (node, next) {
             $(node)
-              .hide()
-              .insertBefore(next)
-              .fadeIn(function () {
-                  LaunchScreen.hold().release();
-              });
+                .hide()
+                .insertBefore(next)
+                .fadeIn(function () {
+                    LaunchScreen.hold().release();
+                });
         },
         removeElement: function (node) {
             $(node).fadeOut(function () {
@@ -76,9 +76,15 @@ Template.appBody.buildMeu = function () {
             }, limit: jobLimit
         }, {createDate: 1}).fetch();
     } else if (jobSearchText) {
-        jobs = Jobs.find({$or: [{name: regex}, {number: regex}]}, {
-            sort: {status: 1, createDate: -1, name: 1},
-        }, {createDate: 1}).fetch();
+        let jobSearchTextFnc = Meteor.subscribe('jobsSearch', regex);
+        if (jobSearchTextFnc.ready()) {
+            jobs = Jobs.find({$or: [{name: regex}, {number: regex}]}, {
+                sort: {status: 1, createDate: -1, name: 1},
+                limit: 10
+            }, {createDate: 1}).fetch();
+        } else {
+            loadingNoData.call(this);
+        }
     } else {
         jobs = Jobs.find({'finishDate': null}, {
             sort: {status: 1, createDate: -1},
@@ -91,9 +97,15 @@ Template.appBody.buildMeu = function () {
         jobCheckInCounts[job._id] = JobCheckIns.find({job_id: job._id}).count();
     });
     return {jobs: jobs, jobCheckInCounts: jobCheckInCounts};
-}
-;
+};
 
+let loadingNoData = function () {
+    this.render('jobStatus', {
+        data: function () {
+            return {};
+        }
+    });
+};
 Template.appBody.clearFilters = function () {
     Session.set(JOB_SEARCH_TEXT, "");
     $('#jobSearch').val("");

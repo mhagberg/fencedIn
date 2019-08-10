@@ -11,12 +11,9 @@ if (Meteor.isServer) {
         }, {createDate: 1, name: 1, number: 1});
         return jobs;
     });
-    Meteor.publish('jobsSearch', function jobsSearchPublication(jobSearchText) {
-        console.log("here in Job Search");
-        console.log("jobsearchText: " + jobSearchText);
-        let regex = new RegExp(".*" + jobSearchText + ".*", "i");
+    Meteor.publish('jobsSearch', function jobsSearchPublication(regex) {
         let jobs = Jobs.find({$or: [{name: regex}, {number: regex}]}, {
-            sort: {createDate: -1, name: 1},
+            limit: 10
         }, {createDate: 1});
         return jobs;
     });
