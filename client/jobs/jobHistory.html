@@ -75,10 +75,12 @@
                             class="glyphicon glyphicon-picture" aria-hidden="true">Take Photo</span></button>
                 </div>
                 {{#unless finishDate}}
+                {{#unless cordova}}
                     <div class="col-md-3">
                         <button type="button" class="btn btn-info" id="finishBtn" data-job-id="{{_id}}"><span
                                 class="glyphicon glyphicon-saved" aria-hidden="true">Finish</span></button>
                     </div>
+                {{/unless}}
                 {{/unless}}
             {{/with}}
         </div>
