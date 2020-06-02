@@ -1,9 +1,10 @@
 Template.jobPictureView.onRendered(function () {
 
     // define options (if needed)
-    var picIndex = Session.get('picIndex');
-    var options = {
+    let picIndex = Session.get('picIndex');
+    let options = {
         history: false,
+        quality: 100,
         focus: false,
         escKey: true,
         index: picIndex,
