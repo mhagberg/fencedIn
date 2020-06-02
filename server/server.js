@@ -55,7 +55,6 @@ Meteor.methods({
         });
   },
     sendEmail: function (mailFields) {
-        console.log("about to send email...");
         check([mailFields.to, mailFields.from, mailFields.subject, mailFields.text, mailFields.html], [String]);
 
         // Let other method calls from the same client start running,
@@ -69,7 +68,6 @@ Meteor.methods({
             text: mailFields.text,
             html: mailFields.html
         });
-        console.log("email sent!");
     }
 });
 

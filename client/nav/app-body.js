@@ -83,7 +83,7 @@ Template.appBody.buildMeu = function () {
                 limit: 10
             }, {createDate: 1}).fetch();
         } else {
-            loadingNoData.call(this);
+            loadingNoData("jobStatus").call(this);
         }
     } else {
         jobs = Jobs.find({'finishDate': null}, {

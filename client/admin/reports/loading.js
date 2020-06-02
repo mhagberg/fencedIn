@@ -3,6 +3,5 @@ Template.loading.onRendered(function () {
 
     function render() {
         Router.go('/admin/checkInPerJobByForeman/');
-        console.log('going to try the page again.')
     }
 });

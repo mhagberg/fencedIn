@@ -30,7 +30,7 @@ Template.jobReport.events({
 
     Session.set('jobPictures', items);
     Session.set('jobId', this.job_id);
-    Session.set('previous', '/admin/jobReport/'+this.job_id);
+    Session.set('previous', '/admin/reports/jobReport/'+this.job_id);
     Router.go('/jobPictureView/');
 }
 });

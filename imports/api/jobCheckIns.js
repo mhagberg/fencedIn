@@ -1,8 +1,9 @@
-import { Mongo } from 'meteor/mongo';
+import {Mongo} from 'meteor/mongo';
+
 if (Meteor.isServer) {
     // This code only runs on the server
     Meteor.publish('jobCheckIns', function jobCheckInPublication(job_id) {
-        let jobCheckins = JobCheckIns.find({'job_id':job_id});
+        let jobCheckins = JobCheckIns.find({'job_id': job_id});
         return jobCheckins;
     });
     Meteor.publish('allCheckIns', function allCheckInPublication() {
@@ -10,12 +11,87 @@ if (Meteor.isServer) {
         let allCheckIns = JobCheckIns.find({});
         return allCheckIns;
     });
+
     Meteor.publish('jobCheckInId', function jobCheckInIdPublication(checkin_id) {
         let checkinsFound = JobCheckIns.find({'_id': checkin_id});
         return checkinsFound;
     });
+
+    Meteor.publish('checkIn_Report', function checkInReportPublication() {
+        let checkInsAndJob = [];
+        let dateFrom = moment().startOf('day').subtract(3, 'days').unix() * 1000;
+        let checkInsPerJobPipelineYesterday =
+            [
+                {
+                    "$project": {
+                         // "_id" : Mongo.ObjectID,
+                        "jc": "$$ROOT"
+                    }
+                },
+                {
+                    "$lookup": {
+                        "localField": "jc.job_id",
+                        "from": "jobs",
+                        "foreignField": "_id",
+                        "as": "j"
+                    }
+                },
+                {
+                    "$unwind": {
+                        "path": "$j",
+                        "preserveNullAndEmptyArrays": false
+                    }
+                },
+                {
+                    "$match": {
+                        "jc.checkInTime": {
+                            "$gt": dateFrom
+                        }
+                    }
+                },
+                {
+                    "$sort": {
+                        "jc.checkInTime": -1
+                    }
+                },
+                {
+                    "$project": {
+                        "jc.checkIn_id": "$jc._id",
+                        "jc.job_id": "$jc.job_id",
+                        "jc.checkInTime": "$jc.checkInTime",
+                        "jc.loadTime": "$jc.loadTime",
+                        "j.name": "$j.name",
+                        "j.job_id": "$j._id",
+                        "j.createDate": "$j.createDate",
+                        "j.finishDate": "$j.finishDate",
+                        "j.number": "$j.number",
+                    }
+                }
+            ];
+
+        let collection = JobCheckIns.rawCollection();
+        let result_id = "";
+        Promise.await(collection.aggregate(checkInsPerJobPipelineYesterday).toArray()).forEach(function (result) {
+            result_id = result._id;
+            console.log("FinishDate: " + result.j.finishDate);
+            checkInsAndJob.push({
+                job_id: result.j.job_id,
+                name: result.j.name,
+                number: result.j.number,
+                startDate: result.j.startDate,
+                finishDate: result.j.finishDate,
+                checkInTime: result.jc.checkInTime,
+                checkIn_id: result.jc.checkIn_id,
+                checkInLoadTime: result.jc.loadTime,
+                checkInJob_id: result.jc.job_id
+            });
+        });
+        this.added('checkInsAndJob', result_id, {checkInsAndJobs: checkInsAndJob});
+        return this.ready();
+    });
+
+
     Meteor.publish('barChartData', function getBarChartData(foremanIds, dateFrom, dateTo, groupByOperator) {
-        // debugger;
         let totalJobsPerForemanPipeline = [
             {
                 "$match": {
@@ -31,9 +107,9 @@ if (Meteor.isServer) {
                 }
             },
             {
-                "$match" : {
-                    "foremen._id" : {
-                        "$in" : foremanIds
+                "$match": {
+                    "foremen._id": {
+                        "$in": foremanIds
                     }
                 }
             },
@@ -76,8 +152,8 @@ if (Meteor.isServer) {
             },
             {
                 "$match": {
-                    "foremen._id" : {
-                        "$in" : foremanIds
+                    "foremen._id": {
+                        "$in": foremanIds
                     }
                 }
             },
@@ -123,8 +199,8 @@ if (Meteor.isServer) {
             },
             {
                 "$match": {
-                    "foremen._id" : {
-                        "$in" : foremanIds
+                    "foremen._id": {
+                        "$in": foremanIds
                     }
                 }
             },
@@ -239,4 +315,4 @@ if (Meteor.isServer) {
 //         let checkinsFound = JobCheckIns.find({'foremen': {$eleMatch: {'name': foremanName}}});
 //         return checkinsFound;
 //     });
- }
+}

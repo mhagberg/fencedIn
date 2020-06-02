@@ -15,6 +15,10 @@ Template.admin.events({
         e.preventDefault();
         Router.go('jobReports');
     },
+    'click .checkInReportDiv': function (e) {
+        e.preventDefault();
+        Router.go('checkInReport');
+    },
     'click .ImagesGalleryDiv': function (e) {
         e.preventDefault();
         Router.go('/admin/imagesGallery/');

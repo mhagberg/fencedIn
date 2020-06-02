@@ -6,3 +6,4 @@ JobCheckIns = new Mongo.Collection('jobCheckIns');
 Pictures = new Mongo.Collection('picture');
 BarChart = new Mongo.Collection('barChart');
 RecentImages = new Mongo.Collection('recentImages');
+CheckInsAndJob = new Mongo.Collection('checkInsAndJob');

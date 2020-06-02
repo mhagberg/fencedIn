@@ -52,7 +52,7 @@ Router.map(function () {
     this.route('/jobEdit/:job_id', function () {
         return Router.jobEdit(this, this.params.job_id, "");
     });
-    this.route('/admin/jobReport/:job_id', function () {
+    this.route('jobReport/:job_id', function () {
         return Router.jobReport(this, this.params.job_id, "");
     });
     this.route('/jobEdit/:job_id/:foremenId', function () {
@@ -173,7 +173,7 @@ Router.map(function () {
             createDate: 1,
             finishDate: 1
         });
-        var data = {jobs: jobs};
+        const data = {jobs: jobs};
         this.render('jobReports', {
             data: function () {
                 return data;
@@ -181,8 +181,23 @@ Router.map(function () {
         });
     });
 
-    let loadingNoData = function () {
-        this.render('jobStatus', {
+    this.route('/checkInReport', function () {
+        let checkInsAndJobSubscription = Meteor.subscribe('checkIn_Report');
+        if (checkInsAndJobSubscription.ready()) {
+            let checkInsAndJob = CheckInsAndJob.findOne({});
+            let data = {checkInsAndJob: checkInsAndJob};
+            this.render('checkInReport', {
+                data: function () {
+                    return data;
+                }
+            });
+        } else {
+            loadingNoData("checkInReport").call(this);
+        }
+    });
+
+    let loadingNoData = function (renderPage) {
+        this.render(renderPage, {/**/
             data: function () {
                 return {};
             }
@@ -200,7 +215,7 @@ Router.map(function () {
             if (jobSearchText.ready()) {
                 jobsByStatus = Jobs.find({$or: [{name: regex}, {number: regex}]}, {sort: {"number": sortVal}});
             } else {
-                loadingNoData.call(this);
+                loadingNoData("jobStatus").call(this);
             }
         } else {
 
@@ -225,7 +240,7 @@ Router.map(function () {
         if (jobsAssigned.ready()) {
             loadJobsStatusWithData.call(this, status, 1);
         } else {
-            loadingNoData.call(this);
+            loadingNoData("jobStatus").call(this);
         }
     });
 
@@ -236,7 +251,7 @@ Router.map(function () {
         if (jobs.ready()) {
             loadJobsStatusWithData.call(this, status, 1, foremanId);
         } else {
-            loadingNoData.call(this);
+            loadingNoData("jobStatus").call(this);
         }
     });
 
@@ -246,7 +261,7 @@ Router.map(function () {
         if (jobs.ready()) {
             loadJobsStatusWithData.call(this, status, 1, null, searchText);
         } else {
-            loadingNoData.call(this);
+            loadingNoData("jobStatus").call(this);
         }
     });
 
