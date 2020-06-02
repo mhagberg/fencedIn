@@ -61,8 +61,13 @@ Template.jobHistory.events({
         Router.go('/checkInEdit/' + this._id + '/' + foremenFilterParam());
     },
     "click #takePicture": function () {
-        var jobId = this._id;
-        MeteorCamera.getPicture(function (error, data) {
+        let jobId = this._id;
+        let options = {
+            height: 1920,
+            width: 1240,
+            quality: 100
+        };
+        MeteorCamera.getPicture( options, function (error, data) {
             // we have a picture
             if (!error) {
                 onSuccess(data, jobId, null);
