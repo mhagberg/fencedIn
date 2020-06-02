@@ -21,9 +21,6 @@
             <td class="table-text-small">
                 Finished Date
             </td>
-            <td class="table-text-small">
-                Action
-            </td>
         </tr>
         </thead>
         <tbody>
@@ -44,13 +41,6 @@
                 </td>
                 <td class="jobNumberLink table-text-small">
                     {{formatDate finishDate "numbers"}}
-                </td>
-
-                <td class="table-text-small">
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-info" id="jobReport" data-job-id="{{j._id}}"><span
-                                class="glyphicon glyphicon-open-file" aria-hidden="true">View Report</span></button>
-                    </div>
                 </td>
             </tr>
         {{/each}}
