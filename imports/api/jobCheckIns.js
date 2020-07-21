@@ -220,18 +220,18 @@ if (Meteor.isServer) {
                     "as": "picture"
                 }
             },
-            {
-                "$project": {
-                    "pictureCount": {
-                        "$size": "$picture"
-                    }
+            {$unwind: "$picture"},
+            { $group:{
+                    _id: "$name",
+                    size: {$first : "$size"},
+                    totalCount : {$sum: 1}
                 }
             },
             {
                 "$group": {
                     "_id": "$_id.foremanName",
                     "picturesPerJob": {
-                        [groupByOperator]: "$pictureCount"
+                        [groupByOperator]: "$totalCount"
                     }
                 }
             },
