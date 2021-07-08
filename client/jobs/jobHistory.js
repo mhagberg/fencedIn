@@ -60,19 +60,31 @@ Template.jobHistory.events({
         e.preventDefault();
         Router.go('/checkInEdit/' + this._id + '/' + foremenFilterParam());
     },
-    "click #takePicture": function () {
+    "click #takePicture": function (e) {
+        e.preventDefault();
         let jobId = this._id;
-        let options = {
-            height: 1920,
-            width: 1240,
-            quality: 100
-        };
-        MeteorCamera.getPicture( options, function (error, data) {
-            // we have a picture
-            if (!error) {
-                onSuccess(data, jobId, null);
-            }
-        });
+        MeteorCamera.showPreview(document.body);
+        let imageDataUrl = MeteorCamera.takeSnapshot();
+        Meteor.call('saveFile', imageDataUrl, jobId);
+        MeteorCamera.hide();
+            // **** playing with opening in new window
+            //     let returnUrl = Session.get('returnUrl');
+        //     Router.go(returnUrl);
+        // Session.set('returnUrl', '/jobHistory/' + jobId + '/' + foremenFilterParam());
+        // Router.go('/webCam');
+
+        // **** old code using mdg:camera
+        // let options = {
+        //     height: 1920,
+        //     width: 1240,
+        //     quality: 100
+        // };
+        // MeteorCamera.getPicture( options, function (error, data) {
+        //     // we have a picture
+        //     if (!error) {
+        //         onSuccess(data, jobId, null);
+        //     }
+        // });
     },
     'click #checkOutBtn': function (e) {
         e.preventDefault();

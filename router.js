@@ -103,6 +103,7 @@ Router.map(function () {
     this.route('/jobNew');
     this.route('/admin/reports/loading');
     this.route('/jobPictureView');
+    this.route('/webCam');
     this.route('/jobNew/:foremenId', function () {
         var data = {foremen: this.params.foremenId};
         this.render('jobNew', {

@@ -10,7 +10,6 @@ momentjs:moment
 less@2.8.0
 nemo64:bootstrap
 accounts-password@1.6.0
-mdg:camera
 meteor-base@1.4.0
 mobile-experience@1.1.0
 mongo@1.9.0
@@ -35,4 +34,9 @@ dynamic-import@0.5.1
 ecmascript@0.14.2
 chart:chart
 underscore@1.0.10
-lindoelio:accounts-office365
+accounts-ui
+accounts-base
+accounts-oauth
+
+useraccounts:materialize
+jaaaco:meteor-camera
