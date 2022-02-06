@@ -60,31 +60,19 @@ Template.jobHistory.events({
         e.preventDefault();
         Router.go('/checkInEdit/' + this._id + '/' + foremenFilterParam());
     },
-    "click #takePicture": function (e) {
-        e.preventDefault();
+    "click #takePicture": function () {
         let jobId = this._id;
-        MeteorCamera.showPreview(document.body);
-        let imageDataUrl = MeteorCamera.takeSnapshot();
-        Meteor.call('saveFile', imageDataUrl, jobId);
-        MeteorCamera.hide();
-            // **** playing with opening in new window
-            //     let returnUrl = Session.get('returnUrl');
-        //     Router.go(returnUrl);
-        // Session.set('returnUrl', '/jobHistory/' + jobId + '/' + foremenFilterParam());
-        // Router.go('/webCam');
-
-        // **** old code using mdg:camera
-        // let options = {
-        //     height: 1920,
-        //     width: 1240,
-        //     quality: 100
-        // };
-        // MeteorCamera.getPicture( options, function (error, data) {
-        //     // we have a picture
-        //     if (!error) {
-        //         onSuccess(data, jobId, null);
-        //     }
-        // });
+        let options = {
+            height: 1920,
+            width: 1240,
+            quality: 100
+        };
+        MeteorCamera.getPicture( options, function (error, data) {
+            // we have a picture
+            if (!error) {
+                onSuccess(data, jobId, null);
+            }
+        });
     },
     'click #checkOutBtn': function (e) {
         e.preventDefault();
@@ -115,7 +103,7 @@ Template.jobHistory.events({
             if (img.naturalHeight === 0) return;
             let w = img.naturalWidth;
             let h = img.naturalHeight;
-            if (picture._id == firstPic._id) {
+            if (picture._id === firstPic._id) {
                 Session.set('picIndex', index + 1)
             }
             items.push(

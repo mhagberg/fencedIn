@@ -66,7 +66,7 @@ Template.appBody.buildMeu = function () {
     const jobLimit = Session.get(JOB_LIMIT) ? Session.get(JOB_LIMIT) : 5;
     const jobSearchText = Session.get(JOB_SEARCH_TEXT) ? Session.get(JOB_SEARCH_TEXT) : "";
     const regex = new RegExp(".*" + jobSearchText + ".*", "i");
-    Meteor.subscribe('jobs');
+    Meteor.subscribe('jobs',jobLimit);
     if (foremanId) {
         jobs = Jobs.find({$and: [{'foremen._id': foremanId}, {$or: [{name: regex}, {number: regex}]}]}, {
             sort: {
@@ -76,7 +76,7 @@ Template.appBody.buildMeu = function () {
             }, limit: jobLimit
         }, {createDate: 1}).fetch();
     } else if (jobSearchText) {
-        let jobSearchTextFnc = Meteor.subscribe('jobsSearch', regex);
+        let jobSearchTextFnc = Meteor.subscribe('jobsSearch', regex, jobLimit);
         if (jobSearchTextFnc.ready()) {
             jobs = Jobs.find({$or: [{name: regex}, {number: regex}]}, {
                 sort: {status: 1, createDate: -1, name: 1},
