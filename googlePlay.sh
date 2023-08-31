@@ -2,20 +2,17 @@
 DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy fencedin.secomafence.com --settings /Users/mhagberg/meteor/projects/fencedIn/settings.json
 
 update the version number in mobile-config.js   version: '0.0.3'
-meteor build /Users/doug/productionBuild --server=fencedIn.secomafence.com
+meteor build /Users/mike/IdeaProjects/productionBuild --server=fencedIn.secomafence.com
 
-
-cd productionBuild
-cd android
-
-cp release-unsigned.apk ~/Library/Android/sdk/build-tools/26.0.2
-cd ~/Library/Android/sdk/build-tools/26.0.2
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 release-unsigned.apk fencedIn
-#password j6yb1rds for the keystore and j6yb1rd for the fencedIn allis
-./zipalign -f 4 release-unsigned.apk release-new.apk
+cd /Users/mike/IdeaProjects/productionBuild/android
+cp /Users/mike/IdeaProjects/productionBuild/android/project/app/build/outputs/apk/release/app-release-unsigned.apk $ANDROID_HOME/build-tools/32.0.0
+cd $ANDROID_HOME/build-tools/32.0.0
+./zipalign -f 4 app-release-unsigned.apk app-release-new.apk
+apksigner sign --ks ~/.keystore --ks-key-alias fencedin-upload-key --v2-signing-enabled true app-release-new.apk
+#jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 app-release-unsigned.apk fencedin-upload-key
 rm -rf  release-unsigned.apk
-mv release-new.apk ~/productionBuild
-cd ~/productionBuild
+mv app-release-new.apk /Users/mike/IdeaProjects/productionBuild
+cd /Users/mike/IdeaProjects/productionBuild
 
 
 

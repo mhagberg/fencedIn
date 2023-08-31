@@ -27,10 +27,6 @@ Template.admin.events({
         e.preventDefault();
         window.location.href = 'http://www.secomafence.com/recent-work-new/';
     },
-    'click .reportsDiv': function (e) {
-        e.preventDefault();
-        Router.go('/admin/checkInPerJobByForeman/');
-    },
     'click .jobStatusDiv': function (e) {
         e.preventDefault();
         Router.go('/admin/jobStatus/Assigned/');

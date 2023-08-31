@@ -9,11 +9,10 @@ iron:router
 momentjs:moment
 less@2.8.0
 nemo64:bootstrap
-accounts-password@1.6.0
 mdg:camera
 meteor-base@1.4.0
 mobile-experience@1.1.0
-mongo@1.9.0
+mongo@1.10.0
 blaze-html-templates@1.0.4
 session@1.2.0
 jquery@1.11.10
@@ -28,11 +27,8 @@ tsega:bootstrap3-datetimepicker
 spectrum:photoswipe
 standard-minifier-css@1.6.0
 standard-minifier-js@2.6.0
-email@1.2.3
-cunneen:mailgun
 shell-server@0.5.0
-dynamic-import@0.5.1
-ecmascript@0.14.2
+dynamic-import@0.5.2
+ecmascript@0.14.3
 chart:chart
 underscore@1.0.10
-lindoelio:accounts-office365

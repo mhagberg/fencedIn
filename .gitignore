@@ -5,3 +5,4 @@ local
 .idea
 /client/lib
 *.iml
+/productionBuild/

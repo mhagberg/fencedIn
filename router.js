@@ -90,10 +90,6 @@ Router.map(function () {
         return Router.jobCheckIn(this, this.params.job_id, this.params.foremenId)
     });
 
-    this.route('/admin/checkInPerJobByForeman/', function () {
-          return Router.checkInPerJobByForeman(this)
-      }
-    );
     this.route('home', {
         path: '/',
         action: function () {
@@ -404,37 +400,6 @@ Router.jobCheckIn = function (rout, job_id, foremenId) {
     });
 };
 
-
-Router.checkInPerJobByForeman = function (rout) {
-    // Prep the data needed for the
-    let foremanIdResults = Foreman.find({disableDate: null}, {fields: {_id: 1}}).fetch();
-    let foremanIds = [];
-    foremanIdResults.forEach(function (result) {
-        foremanIds.push(result._id);
-    });
-
-    // Prep bar chart data for all time.
-    let dateTo = moment().endOf('day').unix();
-    let dateFrom = moment().startOf('day').subtract(100, 'years').unix();
-    let allTimeSubscription = Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$avg");
-    // Prep bar chart data for last 30 days.
-    dateFrom = moment().startOf('day').subtract(30, 'days').unix();
-    let last30DaysSubscription = Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
-    // Prep bar chart data for yesterday.
-    dateFrom = moment().startOf('day').subtract(1, 'days').unix();
-    let yesterdaySubscription = Meteor.subscribe('barChartData', foremanIds, dateFrom, dateTo, "$sum");
-    let allJobs = Meteor.subscribe('allJobs');
-
-    if (allTimeSubscription.ready() && last30DaysSubscription.ready() && yesterdaySubscription.ready() && allJobs.ready()) {
-        rout.render('checkInPerJobByForeman', {
-            data: function () {
-                return {};
-            }
-        });
-    } else {
-        rout.render('loading');
-    }
-};
 
 Router.jobDetails = function (rout, job_id, foremenId) {
     Meteor.subscribe('jobPictures', job_id);

@@ -4,7 +4,7 @@ App.info({
   author: 'Mike Hagberg',
   email: 'mike@secomafence.com',
   website: 'http://secomafence.com',
-  version: '0.1.01'
+  version: '0.1.11'
 });
 
 App.icons({
@@ -44,4 +44,13 @@ App.launchScreens({
 
 App.setPreference('StatusBarOverlaysWebView', 'false');
 App.setPreference('StatusBarBackgroundColor', '#000000');
+App.setPreference('android-targetSdkVersion', '30');
+App.setPreference('android-compileSdkVersion', '30');
+App.setPreference('android-minSdkVersion', '26');
+// App.setPreference('android:exported', 'true');
+// App.setPreference('android:manifest', 'merge');
 
+
+// <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application/activity" xmlns:android="http://schemas.android.com/apk/res/android">
+//   <activity android:exported="true"></activity>
+// </edit-config>
